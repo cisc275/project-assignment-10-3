@@ -1,12 +1,14 @@
 
-public class Obstacle {
+public class Obstacle extends Items{
+	public Obstacle(int width, int length) {
+		super(width, length);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	private int width;
 	private int length;
-	
-	
-	
-	
-	
+
 	/*
 	 * Return: Boolean
 	 * Description: This method detects if the bird is get hit or not by the obstacle
@@ -20,9 +22,9 @@ public class Obstacle {
 	
 	
 	/*
-	 * Description: THe method will be called if beHit == TRUE;
+	 * Description: THe method will be called if beHit() == TRUE;
 	 * 
-	 * Effects: Obstacles dispear from the screen
+	 * Effects: Obstacles disappear from the screen
 	 */
 	public void exit() {
 		
