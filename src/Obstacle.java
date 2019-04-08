@@ -3,9 +3,13 @@ public class Obstacle extends Items{
 	
 	private int width;
 	private int length;
+	private int x;
+	private int y;
+	private int xVel;
+	private int yVel;
 	
-	public Obstacle(int width, int length) {
-		super(width, length);
+	public Obstacle() {
+		
 		// TODO Auto-generated constructor stub
 	}
 
