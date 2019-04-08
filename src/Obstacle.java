@@ -1,13 +1,13 @@
 
 public class Obstacle extends Items{
+	
+	private int width;
+	private int length;
+	
 	public Obstacle(int width, int length) {
 		super(width, length);
 		// TODO Auto-generated constructor stub
 	}
-
-
-	private int width;
-	private int length;
 
 	/*
 	 * Return: Boolean
