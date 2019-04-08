@@ -11,10 +11,12 @@ public class Controller implements ActionListener, KeyListener{
 	Action drawAction;
 	final int drawDelay = 30;
 	
+	//Controller Constructor
 	public Controller () {
 		
 	}
 	
+	//Uses ActionListener to run the start the program
 	public void start() {
 		
 	}
