@@ -10,6 +10,10 @@ public class StatusBar {
 		this.status = status;
 	}
 	
+	
+	/*
+	 * update the status of the bar
+	 */
 	public void updateStatus() {
 		
 	}

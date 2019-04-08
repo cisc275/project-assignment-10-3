@@ -4,7 +4,11 @@ public class ScoreBoard {
 	private int length;
 	private int score;
 	
-	
+	public ScoreBoard(int width, int length, int score) {
+		this.width = width;
+		this.length = length;
+		this.score = score;
+	}
 	/*
 	 * Description: Will be called if the bird hit an item, and changes the score depend on the item
 	 */
