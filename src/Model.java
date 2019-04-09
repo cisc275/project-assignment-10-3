@@ -24,14 +24,15 @@ public class Model {
 		
 	}
 
+	//this method detects collisions between bird and food and powerUp
 	public void goodCollision() {
 		
 	}
-	
+	//this method detects collisions between bird and obstacles
 	public void badCollision() {
 		
 	}
-	
+	//this method gives extra points
 	public void powerUp() {
 		
 	}
