@@ -23,5 +23,5 @@ public class Quiz {
 	 */
 	boolean checkCorrect() {
 		return false;
-		}
+	}
 }

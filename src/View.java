@@ -41,11 +41,11 @@ public class View extends JPanel{
     	
     }
     
-    public void createFoodClapperRail_Image() {
+    public void createFoodClapperRailImage() {
     	
     }
     
-    public void createFoodRedKnot_Image() {
+    public void createFoodRedKnotImage() {
     	
     }
     
@@ -55,6 +55,7 @@ public class View extends JPanel{
     public void createObstacleRedKnotImage() {
     	
     }
+    
     
     
     
