@@ -20,6 +20,20 @@ public class Model {
 		
 	}
 	
+	public void endGame() {
+		
+	}
+
+	public void goodCollision() {
+		
+	}
 	
+	public void badCollision() {
+		
+	}
+	
+	public void powerUp() {
+		
+	}
 	
 }
