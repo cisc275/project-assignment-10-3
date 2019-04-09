@@ -4,6 +4,7 @@ public class Model {
 	
 	private ClapperRail clapperrail;
 	private RedKnot redknot;
+	private ScoreBoard scoreboard;
 	
 	private int width;
     private int height;
@@ -12,14 +13,15 @@ public class Model {
 	/*
 	 * Constructor
 	 */
-	public Model() {
-		
+	public Model(ScoreBoard scoreboard) {
+		this.scoreboard = scoreboard;
 	}
 	
 	public void updateLocation() {
 		
 	}
 	
+	// when the game is complete, this method is called
 	public void endGame() {
 		
 	}
@@ -32,9 +34,10 @@ public class Model {
 	public void badCollision() {
 		
 	}
+	
 	//this method gives extra points
 	public void powerUp() {
-		
+		scoreboard.setScore(scoreboard.getScore()+5);
 	}
 	
 }
