@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 
 public class RedKnot{
 	private int x = 0;
@@ -74,6 +75,10 @@ public class RedKnot{
 
 	public void setyVel(int yVel) {
 		this.yVel = yVel;
+	}
+	
+	public Rectangle bounds() {
+		return (new Rectangle(x,y,32,32));
 	}
 	
 	

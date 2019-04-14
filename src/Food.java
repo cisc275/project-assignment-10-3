@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 
 public class Food extends Items{
 
@@ -30,6 +31,11 @@ public class Food extends Items{
 		
 		
 	}
+	
+	public Rectangle bounds() {
+		return (new Rectangle(x,y,32,32));
+	}
+	
 
 }
 

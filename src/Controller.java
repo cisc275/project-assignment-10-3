@@ -23,7 +23,7 @@ public class Controller implements ActionListener, KeyListener{
 		
 		view.button_redknote.addActionListener(this);
 		view.button_clapperrail.addActionListener(this);
-		//view.button_redknote.addKeyListener(this);
+		view.button_redknote.addKeyListener(this);
 	}
 	
 	//Uses ActionListener to run the start the program
@@ -52,14 +52,14 @@ public class Controller implements ActionListener, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if(keyCode == KeyEvent.VK_W) {
-			model.getRedKnot().setyVel(-5);
-		}else if(keyCode == KeyEvent.VK_A) {
-			model.getRedKnot().setxVel(-5);
-		}else if(keyCode == KeyEvent.VK_S) {
-			model.getRedKnot().setyVel(5);
-		}else if(keyCode == KeyEvent.VK_D) {
-			model.getRedKnot().setxVel(5);
+		if(keyCode == KeyEvent.VK_UP) {
+			model.getRedKnot().setyVel(-10);
+		}else if(keyCode == KeyEvent.VK_LEFT) {
+			model.getRedKnot().setxVel(-10);
+		}else if(keyCode == KeyEvent.VK_DOWN) {
+			model.getRedKnot().setyVel(10);
+		}else if(keyCode == KeyEvent.VK_RIGHT) {
+			model.getRedKnot().setxVel(10);
 		}
 		
 	}
@@ -67,13 +67,13 @@ public class Controller implements ActionListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if(keyCode == KeyEvent.VK_W) {
+		if(keyCode == KeyEvent.VK_UP) {
 			model.getRedKnot().setyVel(0);
-		}else if(keyCode == KeyEvent.VK_A) {
+		}else if(keyCode == KeyEvent.VK_LEFT) {
 			model.getRedKnot().setxVel(0);
-		}else if(keyCode == KeyEvent.VK_S) {
+		}else if(keyCode == KeyEvent.VK_DOWN) {
 			model.getRedKnot().setyVel(0);
-		}else if(keyCode == KeyEvent.VK_D) {
+		}else if(keyCode == KeyEvent.VK_RIGHT) {
 			model.getRedKnot().setxVel(0);
 		}
 		
@@ -82,8 +82,8 @@ public class Controller implements ActionListener, KeyListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if("redKnot".equals(e.getActionCommand())) {
-			view.remove(view.button_redknote);
-			view.remove(view.button_clapperrail);
+			//view.remove(view.button_redknote);
+			//view.remove(view.button_clapperrail);
 			view.addKeyListener(this);
 			model.setGamestatus(GameStatus.RN);
 			

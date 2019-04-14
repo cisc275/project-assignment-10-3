@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -56,7 +57,9 @@ public class Model {
 
 	//this method detects collisions between bird and food and powerUp
 	public void goodCollision(Items item, RedKnot redKnot) {
-		if(((redKnot.getX()+redKnot.getLength()-item.getX() <= 32) && (redKnot.getX()+redKnot.getLength()-item.getX() >= 0)) && ((redKnot.getX()+redKnot.getLength()-item.getX() <= 32) && (redKnot.getY()+redKnot.getWidth()-item.getY() >= 0)) ) {
+		Rectangle rk = redKnot.bounds();
+		Rectangle i = item.bounds();
+		if (rk.intersects(i)) {
 			iterator.remove();
 		}
 	}
@@ -71,3 +74,5 @@ public class Model {
 	}
 	
 }
+	
+

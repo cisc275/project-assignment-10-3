@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 
 public abstract class Items {
 	private int width = 32 ;
@@ -82,6 +83,10 @@ public abstract class Items {
 
 	public void setyVel(int yVel) {
 		this.yVel = yVel;
+	}
+	
+	public Rectangle bounds() {
+		return (new Rectangle(x,y,32,32));
 	}
 
 
