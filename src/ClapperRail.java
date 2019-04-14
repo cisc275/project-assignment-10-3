@@ -14,9 +14,9 @@ public class ClapperRail {
 	public ClapperRail() {
 		
 	}
-	public Rectangle bounds() {
+	/**public Rectangle bounds() {
 		return (new Rectangle(x,y,32,32));
-	}
+	}**/
 	
 	
 	

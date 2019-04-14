@@ -32,9 +32,9 @@ public class Food extends Items{
 		
 	}
 	
-	public Rectangle bounds() {
+	/**public Rectangle bounds() {
 		return (new Rectangle(x,y,32,32));
-	}
+	}**/
 	
 
 }
