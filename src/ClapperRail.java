@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 
 public class ClapperRail {
 	private int x;
@@ -53,6 +54,9 @@ public class ClapperRail {
 
 	public int getWidth() {
 		return width;
+	}
+	public Rectangle bounds() {
+		return (new Rectangle(x,y,32,32));
 	}
 	
 	

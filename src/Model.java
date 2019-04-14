@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class Model {
 	
-	private ClapperRail clapperrail;
+	private ClapperRail clapperRail;
 	private RedKnot redKnot;
 	private ScoreBoard scoreboard;
 	private Map mapRN;
@@ -21,9 +21,9 @@ public class Model {
 	
 	private int screenTime = 0;
     
-	public Model(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, ArrayList<Items> items, ArrayList<Items> CRitems) {
+	public Model(RedKnot redKnot, ClapperRail clapperRail, Map mapRN, ArrayList<Items> items, ArrayList<Items> CRitems) {
 		this.redKnot = redKnot;
-		this.clapperrail = clapperrail;
+		this.clapperRail = clapperRail;
 		this.mapRN = mapRN;
 		this.items = items;
 		this.CRitems = CRitems;
@@ -32,7 +32,7 @@ public class Model {
 	
 	
 	public ClapperRail getClapperrail() {
-		return clapperrail;
+		return clapperRail;
 	}
 
 
@@ -84,7 +84,10 @@ public class Model {
 			iterator = CRitems.iterator();
 			while(iterator.hasNext()) {
 				Items tempItem = iterator.next();
-				screenTime();
+				if(!goodCollision(tempItem, clapperRail)) {;
+					screenTime();
+				}
+				
 			}
 		}
 		
@@ -104,6 +107,16 @@ public class Model {
 			iterator.remove();
 		}
 	}
+	
+	public boolean goodCollision(Items item, ClapperRail clapperRail) {
+		Rectangle rk = clapperRail.bounds();
+		Rectangle i = item.bounds();
+		if (rk.intersects(i)) {
+			iterator.remove();
+			return true;
+		}
+		return false;
+	}
 	//this method detects collisions between bird and obstacles
 	public void badCollision() {
 		
@@ -111,8 +124,11 @@ public class Model {
 	
 	public void screenTime() {
 		screenTime++;
-		if(screenTime >= 5) {
+		if(screenTime >= 20) {
+			
 			iterator.remove();
+			
+			
 			screenTime = 0;
 		}
 		
