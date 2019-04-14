@@ -19,11 +19,12 @@ public class Controller implements ActionListener, KeyListener{
 	//Controller Constructor
 	public Controller () {
 		view = new View();
-		model = new Model(view.getRedKnot(), view.getMapRN(), view.getItems());
+		model = new Model(view.getRedKnot(), view.getClapperRail(), view.getMapRN(), view.getItems(), view.getCRitems());
 		
 		view.button_redknote.addActionListener(this);
 		view.button_clapperrail.addActionListener(this);
 		view.button_redknote.addKeyListener(this);
+		view.button_clapperrail.addKeyListener(this);
 	}
 	
 	//Uses ActionListener to run the start the program
@@ -31,7 +32,7 @@ public class Controller implements ActionListener, KeyListener{
 		drawAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				model.updateLocation();
-				view.update(model.getRedKnot(), model.getGamestatus());
+				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(), model.getGamestatus());
 			}
 		};
 		
@@ -52,30 +53,61 @@ public class Controller implements ActionListener, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if(keyCode == KeyEvent.VK_UP) {
-			model.getRedKnot().setyVel(-10);
-		}else if(keyCode == KeyEvent.VK_LEFT) {
-			model.getRedKnot().setxVel(-10);
-		}else if(keyCode == KeyEvent.VK_DOWN) {
-			model.getRedKnot().setyVel(10);
-		}else if(keyCode == KeyEvent.VK_RIGHT) {
-			model.getRedKnot().setxVel(10);
+		if(model.getGamestatus() == GameStatus.RN) {
+			
+			if(keyCode == KeyEvent.VK_UP) {
+				model.getRedKnot().setyVel(-5);
+			}else if(keyCode == KeyEvent.VK_LEFT) {
+				model.getRedKnot().setxVel(-5);
+			}else if(keyCode == KeyEvent.VK_DOWN) {
+				model.getRedKnot().setyVel(5);
+			}else if(keyCode == KeyEvent.VK_RIGHT) {
+				model.getRedKnot().setxVel(5);
+			}
+		}else if(model.getGamestatus() == GameStatus.CR) {
+			
+			if(keyCode == KeyEvent.VK_UP) {
+				
+				model.getClapperrail().setY(model.getClapperrail().getY()-100);
+			}else if(keyCode == KeyEvent.VK_LEFT) {
+				model.getClapperrail().setX(model.getClapperrail().getX()-100);
+			}else if(keyCode == KeyEvent.VK_DOWN) {
+				model.getClapperrail().setY(model.getClapperrail().getY()+100);
+			}else if(keyCode == KeyEvent.VK_RIGHT) {
+				model.getClapperrail().setX(model.getClapperrail().getX()+100);
+			}
 		}
+		
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if(keyCode == KeyEvent.VK_UP) {
-			model.getRedKnot().setyVel(0);
-		}else if(keyCode == KeyEvent.VK_LEFT) {
-			model.getRedKnot().setxVel(0);
-		}else if(keyCode == KeyEvent.VK_DOWN) {
-			model.getRedKnot().setyVel(0);
-		}else if(keyCode == KeyEvent.VK_RIGHT) {
-			model.getRedKnot().setxVel(0);
+		if(model.getGamestatus() == GameStatus.RN) {
+			if(keyCode == KeyEvent.VK_UP) {
+				model.getRedKnot().setyVel(0);
+			}else if(keyCode == KeyEvent.VK_LEFT) {
+				model.getRedKnot().setxVel(0);
+			}else if(keyCode == KeyEvent.VK_DOWN) {
+				model.getRedKnot().setyVel(0);
+			}else if(keyCode == KeyEvent.VK_RIGHT) {
+				model.getRedKnot().setxVel(0);
+			}
+		}else if(model.getGamestatus() == GameStatus.CR) {
+
+			if(keyCode == KeyEvent.VK_UP) {
+				
+				model.getClapperrail().setY(model.getClapperrail().getY()+100);
+			}else if(keyCode == KeyEvent.VK_LEFT) {
+				model.getClapperrail().setX(model.getClapperrail().getX()+100);
+			}else if(keyCode == KeyEvent.VK_DOWN) {
+				model.getClapperrail().setY(model.getClapperrail().getY()-100);
+			}else if(keyCode == KeyEvent.VK_RIGHT) {
+				model.getClapperrail().setX(model.getClapperrail().getX()-100);
+			}
 		}
+		
 		
 	}
 
@@ -88,7 +120,9 @@ public class Controller implements ActionListener, KeyListener{
 			model.setGamestatus(GameStatus.RN);
 			
 		}else if("clapperRail".equals(e.getActionCommand())) {
+			
 			model.setGamestatus(GameStatus.CR);
+			
 		}
 		
 	}

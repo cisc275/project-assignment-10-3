@@ -22,12 +22,14 @@ public class View extends JPanel{
     private ScoreBoard scoreboardRN = new ScoreBoard();
     private Map mapRN = new Map();
     ArrayList<Items> items = new ArrayList<>();
+    ArrayList<Items> CRitems = new ArrayList<>();
     Iterator<Items> iterator;
     
     private int itemSpawnCounter = 0;
     Random random;
     
     BufferedImage pic_redKnot;
+    BufferedImage pic_clapperRail;
     BufferedImage pic_food;
     BufferedImage pic_map;
     
@@ -54,12 +56,15 @@ public class View extends JPanel{
     	
     	
     	random = new Random();
+    	
     	redKnot = new RedKnot(frameHeight/2-32);
+    	clapperRail = new ClapperRail(frameWidth/2-32, frameHeight/2-32);
+    	
     	frame = new JFrame();
     	createBirdsImage();
     	createFoodRedKnotImage();
     	createMapRedKnotImage();
-    	//frame.setContentPane(this);
+    	
     	
     	frame.getContentPane().add(this);
     	frame.setBackground(Color.gray);
@@ -70,19 +75,24 @@ public class View extends JPanel{
     
     
     
-    public RedKnot getRedKnot() {
-		return redKnot;
-	}
-	public void setRedKnot(RedKnot redKnot) {
-		this.redKnot = redKnot;
+    public ArrayList<Items> getCRitems() {
+		return CRitems;
 	}
 
+
+
+	public RedKnot getRedKnot() {
+		return redKnot;
+	}
+
+	public ClapperRail getClapperRail() {
+		return clapperRail;
+	}
+
+	
 
 	public ArrayList<Items> getItems() {
 		return items;
-	}
-	public void setItems(ArrayList<Items> items) {
-		this.items = items;
 	}
 
 	public Map getMapRN() {
@@ -92,14 +102,28 @@ public class View extends JPanel{
 
 
 	public void paintComponent(Graphics g) {
+		
 		if(this.gameStatus == GameStatus.RN) {
 			iterator = items.iterator();
+			
 	    	while(iterator.hasNext()) {
 	    		
 	    		Items tempItem = iterator.next();
 	    		g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), Color.GRAY, this);
 	    	}
+	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 	    	g.drawImage(pic_redKnot, redKnot.getX(), redKnot.getY(), Color.GRAY, this);
+	    	g.drawLine(440, 20, mapRN.getStatus(), mapRN.getStatus_Y());
+	    	//g.drawLine(440, 20, 490, 70);
+	    	
+	    	
+		}else if(this.gameStatus == GameStatus.CR) {
+			iterator = CRitems.iterator();
+			while(iterator.hasNext()) {
+				Items tempItem = iterator.next();
+				g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), Color.GRAY, this);
+			}
+			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), Color.GRAY, this);
 		}
     	
     	
@@ -108,8 +132,9 @@ public class View extends JPanel{
     
     //repaint();
     //update birds location, items location, and score(status)
-    public void update(RedKnot redKnot, GameStatus gameStatus) {
+    public void update(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, GameStatus gameStatus ) {
     	this.gameStatus = gameStatus;
+    	
     	if(this.gameStatus == GameStatus.RN) {
     		itemSpawnCounter++;
         	if(itemSpawnCounter >= 10) {
@@ -118,6 +143,47 @@ public class View extends JPanel{
         	}
         	this.redKnot.setX(redKnot.getX());
         	this.redKnot.setY(redKnot.getY());
+        	/*
+        	 * Map Location 
+        	 */
+        	//this.mapRN.setStatus(mapRN.getStatus());
+        	//this.mapRN.setStatus_Y(mapRN.getStatus_Y());
+        	
+        	//System.out.println(mapRN.updateLocation());
+        	
+    	}else if(this.gameStatus == GameStatus.CR) {
+    		if(CRitems.size() == 0) {
+    			switch(random.nextInt(8)) {
+    			case 1:
+    				CRitems.add(new Food(frameWidth/2-32, frameWidth/2-32 - 100));
+    				break;
+    			case 2:
+    				CRitems.add(new Food(frameWidth/2-32, frameWidth/2-32 + 100));
+    				break;
+    			case 3:
+    				CRitems.add(new Food(frameWidth/2-32 - 100, frameWidth/2-32));
+    				break;
+    			case 4:
+    				CRitems.add(new Food(frameWidth/2-32 + 100, frameWidth/2-32));
+    				break;
+    			case 5:
+    				CRitems.add(new Food(frameWidth/2-32, frameWidth/2-32 - 100));
+    				break;
+    			case 6:
+    				CRitems.add(new Food(frameWidth/2-32, frameWidth/2-32 + 100));
+    				break;
+    			case 7:
+    				CRitems.add(new Food(frameWidth/2-32 - 100, frameWidth/2-32));
+    				break;
+    			case 8:
+    				CRitems.add(new Food(frameWidth/2-32 + 100, frameWidth/2-32));
+    				break;
+    			}
+    			
+    		}
+    		this.clapperRail.setX(clapperrail.getX());
+    		this.clapperRail.setY(clapperrail.getY());
+    		
     	}
     	
     	
@@ -136,7 +202,8 @@ public class View extends JPanel{
     
     public void createBirdsImage() {
     	try {
-    		pic_redKnot = ImageIO.read(new File("images/birds/Bird.png"));
+    		pic_redKnot = ImageIO.read(new File("images/birds/RN.png"));
+    		pic_clapperRail = ImageIO.read(new File("images/birds/CR.png"));
     	}catch (IOException e) {
     		e.printStackTrace();
     	}

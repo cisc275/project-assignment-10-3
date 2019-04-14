@@ -1,5 +1,4 @@
 import java.awt.Rectangle;
-
 public class Food extends Items{
 
 	

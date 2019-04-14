@@ -4,7 +4,8 @@ public class Map {
 	private final int length = 64;
 	private final int x = 430;//for current location on map 
 	private final int y = 10;
-	private int status = 0;// 0-100%
+	private int status = 440;// 0-50
+	private int status_Y = 20;
 	
 	
 	
@@ -24,7 +25,7 @@ public class Map {
 		return y;
 	}
 
-
+	
 
 
 	/*
@@ -33,12 +34,10 @@ public class Map {
 	 * 
 	 * Description: this function calculate the current location based on the status;
 	 */
-	public void updateLocation(int status) {
-		
+	public int getStatus_Y() {
+		return status_Y;
 	}
-	
-	
-	
-	
+	public void setStatus_Y(int status_Y) {
+		this.status_Y = status_Y;
+	}		
 }
-
