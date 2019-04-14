@@ -1,5 +1,7 @@
 
 public class PowerUp extends Items{
+	
+
 	private int width;
 	private int length;
 	private int x;
@@ -7,8 +9,8 @@ public class PowerUp extends Items{
 	private int xVel;
 	private int yVel;
 	
-	public PowerUp() {
-		
+	public PowerUp(int x, int y) {
+		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
 	

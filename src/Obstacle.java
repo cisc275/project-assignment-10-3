@@ -1,6 +1,9 @@
 
 public class Obstacle extends Items{
 	
+	
+
+
 	private int width;
 	private int length;
 	private int x;
@@ -8,8 +11,8 @@ public class Obstacle extends Items{
 	private int xVel;
 	private int yVel;
 	
-	public Obstacle() {
-		
+	public Obstacle(int x, int y) {
+		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
 

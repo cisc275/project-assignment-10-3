@@ -1,16 +1,32 @@
 
 public class Map {
-	private int width;
-	private int length;
-	private int x;//for current location on map 
-	private int y;
-	private int status;// 0-100%
+	private final int width = 64;
+	private final int length = 64;
+	private final int x = 430;//for current location on map 
+	private final int y = 10;
+	private int status = 0;// 0-100%
 	
-	public Map() {
-		
+	
+	
+	
+	public int getStatus() {
+		return status;
 	}
-	
-	
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+
+
+
 	/*
 	 * Parameter: 
 	 * 			int status: the percentage of completeness
@@ -25,3 +41,4 @@ public class Map {
 	
 	
 }
+

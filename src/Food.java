@@ -1,6 +1,7 @@
 
 public class Food extends Items{
 
+	
 	private int width;
 	private int length;
 	private int x;
@@ -8,8 +9,9 @@ public class Food extends Items{
 	private int xVel;
 	private int yVel;
 	
-	public Food() {
-		
+	public Food(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
 	}
 	/*
 	 * Return: boolean 
@@ -30,3 +32,4 @@ public class Food extends Items{
 	}
 
 }
+

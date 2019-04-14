@@ -1,17 +1,41 @@
 
 public class ScoreBoard {
-	private int width;
-	private int length;
-	private int score;
+	private int length = 80;
+	private int width = 30 ;
+	private final int x = 410;
+	private final int y = 10;
+	private int score = 0;
 	
-	public ScoreBoard(int width, int length, int score) {
-		this.width = width;
-		this.length = length;
-		this.score = score;
-	}
+	
+	
 	/*
 	 * Description: Will be called if the bird hit an item, and changes the score depend on the item
 	 */
+	
+	public int getLength() {
+		return length;
+	}
+
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
 	public void updateScore() {
 		
 	}
