@@ -6,7 +6,7 @@ public class Model {
 	
 	private ClapperRail clapperRail;
 	private RedKnot redKnot;
-	private ScoreBoard scoreboard;
+	private ScoreBoard scoreBoard;
 	private Map mapRN;
 	
 	private int width;
@@ -21,16 +21,24 @@ public class Model {
 	
 	private int screenTime = 0;
     
-	public Model(RedKnot redKnot, ClapperRail clapperRail, Map mapRN, ArrayList<Items> items, ArrayList<Items> CRitems) {
+	public Model(RedKnot redKnot, ClapperRail clapperRail, Map mapRN, ArrayList<Items> items, ArrayList<Items> CRitems, ScoreBoard scoreBoard) {
 		this.redKnot = redKnot;
 		this.clapperRail = clapperRail;
 		this.mapRN = mapRN;
 		this.items = items;
 		this.CRitems = CRitems;
+		this.scoreBoard = scoreBoard;
 		
 	}
 	
 	
+	
+	public ScoreBoard getScoreBoard() {
+		return scoreBoard;
+	}
+
+
+
 	public ClapperRail getClapperrail() {
 		return clapperRail;
 	}
@@ -104,7 +112,16 @@ public class Model {
 		Rectangle rk = redKnot.bounds();
 		Rectangle i = item.bounds();
 		if (rk.intersects(i)) {
-			iterator.remove();
+			if(item instanceof Food) {
+				scoreBoard.setScore(scoreBoard.getScore()+1);
+				iterator.remove();
+
+			}else if(item instanceof PowerUp) {
+				
+			}else if(item instanceof Obstacle) {
+				
+			}
+			
 		}
 	}
 	

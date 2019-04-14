@@ -2,8 +2,8 @@
 public class ScoreBoard {
 	private int length = 80;
 	private int width = 30 ;
-	private final int x = 410;
-	private final int y = 10;
+	private final int x = 20;
+	private final int y = 20;
 	private int score = 0;
 	
 	
@@ -34,10 +34,6 @@ public class ScoreBoard {
 
 	public int getY() {
 		return y;
-	}
-
-	public void updateScore() {
-		
 	}
 	
 	public int getScore() {

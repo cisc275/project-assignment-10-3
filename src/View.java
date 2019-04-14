@@ -19,8 +19,15 @@ public class View extends JPanel{
     
     private ClapperRail clapperRail;
     private RedKnot redKnot;
-    private ScoreBoard scoreboardRN = new ScoreBoard();
+
     private Map mapRN = new Map();
+    //
+    //
+    private StatusBar statusBar= new StatusBar();
+    //
+    //
+    private ScoreBoard scoreBoard = new ScoreBoard();
+    
     ArrayList<Items> items = new ArrayList<>();
     ArrayList<Items> CRitems = new ArrayList<>();
     Iterator<Items> iterator;
@@ -75,32 +82,30 @@ public class View extends JPanel{
     
     
     
-    public ArrayList<Items> getCRitems() {
-		return CRitems;
+    public ScoreBoard getScoreBoard() {
+		return scoreBoard;
 	}
 
 
 
+	public ArrayList<Items> getCRitems() {
+		return CRitems;
+	}
 	public RedKnot getRedKnot() {
 		return redKnot;
 	}
-
 	public ClapperRail getClapperRail() {
 		return clapperRail;
 	}
-
-	
-
 	public ArrayList<Items> getItems() {
 		return items;
 	}
-
 	public Map getMapRN() {
 		return mapRN;
 	}
-
-
-
+	public StatusBar getStatusBar() {
+		return statusBar;
+	}
 	public void paintComponent(Graphics g) {
 		
 		if(this.gameStatus == GameStatus.RN) {
@@ -113,7 +118,13 @@ public class View extends JPanel{
 	    	}
 	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 	    	g.drawImage(pic_redKnot, redKnot.getX(), redKnot.getY(), Color.GRAY, this);
-	    	g.drawLine(440, 20, mapRN.getStatus(), mapRN.getStatus_Y());
+	    	
+	    	g.setColor(Color.WHITE);
+	    	g.drawRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth());
+	    	g.fillRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth());
+	    	g.setColor(Color.BLACK);
+	    	g.drawString("Score: " + scoreBoard.getScore(), scoreBoard.getX()+5, scoreBoard.getY()+20);
+	    	//g.drawLine(440, 20, mapRN.getStatus(), mapRN.getStatus_Y());
 	    	//g.drawLine(440, 20, 490, 70);
 	    	
 	    	
@@ -124,6 +135,11 @@ public class View extends JPanel{
 				g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), Color.GRAY, this);
 			}
 			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), Color.GRAY, this);
+			
+			//g.drawRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getWidth());
+			//g.setColor(Color.black);
+			//g.fillRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getWidth());
+			
 		}
     	
     	
@@ -132,15 +148,17 @@ public class View extends JPanel{
     
     //repaint();
     //update birds location, items location, and score(status)
-    public void update(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, GameStatus gameStatus ) {
+    public void update(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, GameStatus gameStatus, ScoreBoard scoreBoard ) {
     	this.gameStatus = gameStatus;
     	
     	if(this.gameStatus == GameStatus.RN) {
+    		
     		itemSpawnCounter++;
         	if(itemSpawnCounter >= 10) {
         		itemSpawnCounter = 0;
         		items.add(new Food(frameWidth, random.nextInt(frameHeight)));
         	}
+        	this.scoreBoard.setScore(scoreBoard.getScore());
         	this.redKnot.setX(redKnot.getX());
         	this.redKnot.setY(redKnot.getY());
         	/*
@@ -240,9 +258,4 @@ public class View extends JPanel{
     		e.printStackTrace();
     	}
     }
-    
-    
-    
-    
-
 }
