@@ -136,9 +136,9 @@ public class View extends JPanel{
 			}
 			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), Color.GRAY, this);
 			
-			//g.drawRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getWidth());
-			//g.setColor(Color.black);
-			//g.fillRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getWidth());
+			g.drawRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getWidth());
+			g.setColor(Color.black);
+			g.fillRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getWidth());
 			
 		}
     	

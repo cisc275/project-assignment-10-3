@@ -3,21 +3,19 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class ModelTest {
+	View view;
+	Model model;
+	
+	public void setUp() {
+		view = new View();
+		model = new Model(view.getRedKnot(), view.getClapperRail(), view.getMapRN(), view.getItems(), view.getCRitems(), view.getScoreBoard());
+	}
 	
 	@Test
 	void UpdateLocationTest() {
 		fail("Not yet implemented");
 	}
-	
-	@Test
-	void powerUpTest() {
-		//ScoreBoard scoreboard = new ScoreBoard(0,0,0);
-		//Model m = new Model(scoreboard);
-		
-//		m.powerUp();
-//		assertEquals(5,scoreboard.getScore());
-	}
-	
+
 	@Test
 	void endGameTest() {
 		fail("Not yet implemented");
@@ -28,9 +26,12 @@ class ModelTest {
 		fail("Not yet implemented");
 	}
 	
-	@Test 
-	void badCollisionTest(){
-		fail("Not yet implemented");
+	@Test
+	void screenTimeTest() {
+		setUp();
+		model.setScreenTime(10);
+		model.screenTime();
+		assertEquals(11,model.getScreenTime());
 	}
 	
 	

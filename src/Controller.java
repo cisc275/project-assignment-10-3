@@ -106,9 +106,7 @@ public class Controller implements ActionListener, KeyListener{
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
 				model.getClapperrail().setX(model.getClapperrail().getX()-100);
 			}
-		}
-		
-		
+		}	
 	}
 
 	@Override
