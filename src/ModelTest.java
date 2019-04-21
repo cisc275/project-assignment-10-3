@@ -1,37 +1,86 @@
 import static org.junit.jupiter.api.Assertions.*;
+import java.awt.Rectangle;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.junit.jupiter.api.Test;
 
 class ModelTest {
-	View view;
 	Model model;
+	RedKnot RK;
+	ClapperRail CR;
+	Map map = new Map();
+	ArrayList<Items> items = new ArrayList<>();
+	ArrayList<Items> CRitems = new ArrayList<>();
+	ScoreBoard sb = new ScoreBoard();
 	
 	public void setUp() {
-		view = new View();
-		model = new Model(view.getRedKnot(), view.getClapperRail(), view.getMapRN(), view.getItems(), view.getCRitems(), view.getScoreBoard());
+		RK = new RedKnot(2);
+		CR = new ClapperRail(5, 20);
+		items.add(new Food(5,5));
+		items.add(new Food(6,6));
+		items.add(new Food(7,7));
+		
+		CRitems.add(new Food(5,5));
+		CRitems.add(new Food(6,6));
+		CRitems.add(new Food(7,7));
+
+		model = new Model(RK, CR, map, items, CRitems, sb);
+
 	}
 	
 	@Test
 	void UpdateLocationTest() {
-		fail("Not yet implemented");
+		setUp();
+		model.setGamestatus(GameStatus.RN);
+		model.updateLocation();
+		assertEquals(0,RK.getX());
+		model.setGamestatus(GameStatus.CR);
+		model.updateLocation();
+		assertEquals(0,model.getScreenTime());
 	}
 
 	@Test
-	void endGameTest() {
-		fail("Not yet implemented");
+	void goodCollisionTest1() {
+		setUp();
+		model.iterator = items.iterator();
+		model.iterator.next();
+		model.goodCollision(new Food(0,2), RK);
+		
+		assertEquals(1,sb.getScore());
+		
 	}
 	
 	@Test
-	void goodCollisionTest() {
-		fail("Not yet implemented");
+	void goodCollisionTest2() {
+		setUp();
+		model.iterator = CRitems.iterator();
+		model.iterator.next();
+		assertEquals(true,model.goodCollision(new Food(5,20), CR));
 	}
 	
 	@Test
 	void screenTimeTest() {
 		setUp();
-		model.setScreenTime(10);
+		model.iterator = CRitems.iterator();
+		model.iterator.next();
+		model.setScreenTime(19);
+		
 		model.screenTime();
-		assertEquals(11,model.getScreenTime());
+		System.out.println(model.getScreenTime());
+		assertEquals(0,model.getScreenTime());
+	}
+	
+	@Test
+	void geterTest() {
+		setUp();
+		model.getScoreBoard();
+		model.getClapperrail();
+		model.getMapRN();
+		model.getGamestatus();
+		model.getRedKnot();
+		
 	}
 	
 	

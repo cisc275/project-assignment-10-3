@@ -13,7 +13,7 @@ public class RedKnot{
 	 * Constructor 
 	 */
 	public RedKnot(int y) {
-		this.x = x;
+		
 		this.y = y;
 	}
 

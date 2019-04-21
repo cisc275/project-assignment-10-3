@@ -30,14 +30,14 @@ public class Model {
 		this.scoreBoard = scoreBoard;
 		
 	}
-	
-	
-	
+
+
+
 	public int getScreenTime() {
 		return screenTime;
 	}
 
-
+	
 
 	public void setScreenTime(int screenTime) {
 		this.screenTime = screenTime;
@@ -106,8 +106,7 @@ public class Model {
 				Items tempItem = iterator.next();
 				if(!goodCollision(tempItem, clapperRail)) {;
 					screenTime();
-				}
-				
+				}		
 			}
 		}
 		
