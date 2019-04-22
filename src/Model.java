@@ -8,6 +8,7 @@ public class Model {
 	private RedKnot redKnot;
 	private ScoreBoard scoreBoard;
 	private Map mapRN;
+	private StatusBar statusBar;
 	
 	private int frameWidth;
     private int frameHeight;
@@ -21,7 +22,7 @@ public class Model {
 	
 	private int screenTime = 0;
     
-	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, ArrayList<Items> items, ArrayList<Items> CRitems, ScoreBoard scoreBoard) {
+	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, ArrayList<Items> items, ArrayList<Items> CRitems, ScoreBoard scoreBoard, StatusBar statusBar) {
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
 		this.redKnot = redKnot;
@@ -30,11 +31,24 @@ public class Model {
 		this.items = items;
 		this.CRitems = CRitems;
 		this.scoreBoard = scoreBoard;
+		this.statusBar = statusBar;
 		
 	}
 	
 	
 	
+	public ArrayList<Items> getCRitems() {
+		return CRitems;
+	}
+
+
+
+	public StatusBar getStatusBar() {
+		return statusBar;
+	}
+
+
+
 	public ArrayList<Items> getItems() {
 		return items;
 	}
@@ -102,28 +116,25 @@ public class Model {
 			/*
 			 * Map Location
 			 */
-			//processCounterRN++;
-//			if(processCounterRN >= 20) {
-//				mapRN.setStatus(mapRN.getStatus()+1);
-//				mapRN.setStatus_Y((5/7)*mapRN.getStatus()-280);
-//				
-//			}
-//			if(mapRN.getStatus() >= 1000) {
-//				gamestatus = GameStatus.Menu;
-//			}
-	
+			processCounterRN++;
+			if(processCounterRN >= 20) {
+				mapRN.setStatus(mapRN.getStatus()+1);
+				mapRN.setStatus_Y((5/7)*mapRN.getStatus()-280);	
+			}
+			if(mapRN.getStatus() >= 1000) {
+				gamestatus = GameStatus.Menu;
+				mapRN.setStatus(440);
+				//Need Reset Everything?			
+			}
 		}else if(gamestatus == GameStatus.CR) {
 			iterator = CRitems.iterator();
 			while(iterator.hasNext()) {
 				Items tempItem = iterator.next();
 				if(!collisionCR(tempItem, clapperRail)) {;
 					screenTime();
-				}
-				
+				}				
 			}
-		}
-		
-		
+		}			
 	}
 	
 	// when the game is complete, this method is called
@@ -181,7 +192,23 @@ public class Model {
 		Rectangle rk = clapperRail.bounds();
 		Rectangle i = item.bounds();
 		if (rk.intersects(i)) {
-			iterator.remove();
+			switch(item.getItemID()) {
+			case Food:
+				statusBar.setStatus(statusBar.getStatus()+10);
+				if(statusBar.getStatus() > 300) {
+					statusBar.setStatus(300);
+				}
+				iterator.remove();
+				break;
+			case Obstacle:
+				statusBar.setStatus(statusBar.getStatus()-10);
+				if(statusBar.getStatus() < 0) {
+					statusBar.setStatus(0);
+				}
+				iterator.remove();
+				break;
+			}
+			
 			return true;
 		}
 		return false;

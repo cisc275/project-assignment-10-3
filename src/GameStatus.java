@@ -2,5 +2,8 @@
 public enum GameStatus {
 	Menu(),
 	RN(),
-	CR();
+	CR(),
+	CRQUIZ,
+	RNQUIZ();
+	
 }

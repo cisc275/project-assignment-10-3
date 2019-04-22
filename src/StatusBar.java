@@ -3,7 +3,7 @@ public class StatusBar {
 	private int x;
 	private int y;
 	private final int width = 32;
-	private final int length = 160;
+	private final int length = 300;
 	private int status = 0;
 	
 	
