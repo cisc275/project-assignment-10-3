@@ -1,5 +1,7 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,16 +16,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class View extends JPanel{
-	private final int frameWidth = 500;// TBD
-    private final int frameHeight = 500;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private final int frameWidth = screenSize.width;
+    private final int frameHeight = screenSize.height;
     
     private ClapperRail clapperRail;
     private RedKnot redKnot;
 
-    private Map mapRN = new Map();
+    private Map mapRN = new Map(frameWidth-80);
     //
     //
-    private StatusBar statusBar= new StatusBar();
+    private StatusBar statusBar= new StatusBar(frameWidth/2-100,frameHeight-150);
     //
     //
     private ScoreBoard scoreBoard = new ScoreBoard();
@@ -47,8 +50,11 @@ public class View extends JPanel{
     
     GameStatus gameStatus = GameStatus.Menu;
     
+    
+    
+    
     public View() {
-    	
+    	System.out.println(frameWidth + " " + frameHeight);
     	button_redknote = new JButton("Red Knot");  
     	button_redknote.setBackground(Color.GRAY);
     	button_redknote.setOpaque(true);
@@ -73,11 +79,16 @@ public class View extends JPanel{
     	createMapRedKnotImage();
     	
     	
+    	
     	frame.getContentPane().add(this);
     	frame.setBackground(Color.gray);
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	frame.setSize(frameWidth, frameHeight);
-    	frame.setVisible(true);	
+    	
+    	frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+    	frame.setUndecorated(false);
+    	frame.setVisible(true);
+    	
     }
     
     
@@ -172,29 +183,29 @@ public class View extends JPanel{
     	}else if(this.gameStatus == GameStatus.CR) {
     		if(CRitems.size() == 0) {
     			switch(random.nextInt(8)) {
+    			case 0:
+    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+100));
+    				break;
     			case 1:
-    				CRitems.add(new Food(frameWidth/2-32, frameWidth/2-32 - 100));
+    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-100));
     				break;
     			case 2:
-    				CRitems.add(new Food(frameWidth/2-32, frameWidth/2-32 + 100));
+    				CRitems.add(new Food(frameWidth/2-32+100, frameHeight/2-32));
     				break;
     			case 3:
-    				CRitems.add(new Food(frameWidth/2-32 - 100, frameWidth/2-32));
+    				CRitems.add(new Food(frameWidth/2-32-100, frameHeight/2-32));
     				break;
     			case 4:
-    				CRitems.add(new Food(frameWidth/2-32 + 100, frameWidth/2-32));
+    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+100));
     				break;
     			case 5:
-    				CRitems.add(new Food(frameWidth/2-32, frameWidth/2-32 - 100));
+    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-100));
     				break;
     			case 6:
-    				CRitems.add(new Food(frameWidth/2-32, frameWidth/2-32 + 100));
+    				CRitems.add(new Food(frameWidth/2-32+100, frameHeight/2-32));
     				break;
     			case 7:
-    				CRitems.add(new Food(frameWidth/2-32 - 100, frameWidth/2-32));
-    				break;
-    			case 8:
-    				CRitems.add(new Food(frameWidth/2-32 + 100, frameWidth/2-32));
+    				CRitems.add(new Food(frameWidth/2-32-100, frameHeight/2-32));
     				break;
     			}
     			
@@ -207,7 +218,7 @@ public class View extends JPanel{
     	
     	frame.repaint();
 		try {
-			Thread.sleep(100);
+			Thread.sleep(20);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -258,4 +269,5 @@ public class View extends JPanel{
     		e.printStackTrace();
     	}
     }
+
 }

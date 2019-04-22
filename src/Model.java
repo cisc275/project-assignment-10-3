@@ -30,21 +30,9 @@ public class Model {
 		this.scoreBoard = scoreBoard;
 		
 	}
-
-
-
-	public int getScreenTime() {
-		return screenTime;
-	}
-
 	
-
-	public void setScreenTime(int screenTime) {
-		this.screenTime = screenTime;
-	}
-
-
-
+	
+	
 	public ScoreBoard getScoreBoard() {
 		return scoreBoard;
 	}
@@ -106,7 +94,8 @@ public class Model {
 				Items tempItem = iterator.next();
 				if(!goodCollision(tempItem, clapperRail)) {;
 					screenTime();
-				}		
+				}
+				
 			}
 		}
 		
@@ -135,7 +124,7 @@ public class Model {
 			
 		}
 	}
-
+	
 	public boolean goodCollision(Items item, ClapperRail clapperRail) {
 		Rectangle rk = clapperRail.bounds();
 		Rectangle i = item.bounds();
@@ -144,6 +133,10 @@ public class Model {
 			return true;
 		}
 		return false;
+	}
+	//this method detects collisions between bird and obstacles
+	public void badCollision() {
+		
 	}
 	
 	public void screenTime() {

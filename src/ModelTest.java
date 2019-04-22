@@ -10,7 +10,7 @@ class ModelTest {
 	Model model;
 	RedKnot RK;
 	ClapperRail CR;
-	Map map = new Map();
+	Map map = new Map(20);
 	ArrayList<Items> items = new ArrayList<>();
 	ArrayList<Items> CRitems = new ArrayList<>();
 	ScoreBoard sb = new ScoreBoard();

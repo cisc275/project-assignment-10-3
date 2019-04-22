@@ -56,13 +56,13 @@ public class Controller implements ActionListener, KeyListener{
 		if(model.getGamestatus() == GameStatus.RN) {
 			
 			if(keyCode == KeyEvent.VK_UP) {
-				model.getRedKnot().setyVel(-5);
+				model.getRedKnot().setyVel(-10);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
-				model.getRedKnot().setxVel(-5);
+				model.getRedKnot().setxVel(-10);
 			}else if(keyCode == KeyEvent.VK_DOWN) {
-				model.getRedKnot().setyVel(5);
+				model.getRedKnot().setyVel(10);
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
-				model.getRedKnot().setxVel(5);
+				model.getRedKnot().setxVel(10);
 			}
 		}else if(model.getGamestatus() == GameStatus.CR) {
 			
@@ -106,7 +106,9 @@ public class Controller implements ActionListener, KeyListener{
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
 				model.getClapperrail().setX(model.getClapperrail().getX()-100);
 			}
-		}	
+		}
+		
+		
 	}
 
 	@Override

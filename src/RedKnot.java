@@ -13,7 +13,7 @@ public class RedKnot{
 	 * Constructor 
 	 */
 	public RedKnot(int y) {
-		
+		this.x = x;
 		this.y = y;
 	}
 
@@ -80,7 +80,5 @@ public class RedKnot{
 	public Rectangle bounds() {
 		return (new Rectangle(x,y,32,32));
 	}
-	
-	
 
 }

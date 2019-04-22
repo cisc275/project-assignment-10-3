@@ -2,13 +2,15 @@
 public class Map {
 	private final int width = 64;
 	private final int length = 64;
-	private final int x = 430;//for current location on map 
+	private int x;//for current location on map 
 	private final int y = 10;
 	private int status = 440;// 0-50
 	private int status_Y = 20;
 	
 	
-	
+	public Map(int x) {
+		this.x = x;
+	}
 	
 	public int getStatus() {
 		return status;
