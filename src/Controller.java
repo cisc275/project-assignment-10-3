@@ -19,7 +19,7 @@ public class Controller implements ActionListener, KeyListener{
 	//Controller Constructor
 	public Controller () {
 		view = new View();
-		model = new Model(view.getRedKnot(), view.getClapperRail(), view.getMapRN(), view.getItems(), view.getCRitems(), view.getScoreBoard());
+		model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getRedKnot(), view.getClapperRail(), view.getMapRN(), view.getItems(), view.getCRitems(), view.getScoreBoard());
 		
 		view.button_redknote.addActionListener(this);
 		view.button_clapperrail.addActionListener(this);
@@ -32,7 +32,7 @@ public class Controller implements ActionListener, KeyListener{
 		drawAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				model.updateLocation();
-				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(), model.getGamestatus(), model.getScoreBoard());
+				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(), model.getGamestatus(), model.getScoreBoard(), model.getItems());
 			}
 		};
 		

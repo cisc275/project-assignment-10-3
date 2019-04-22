@@ -9,8 +9,8 @@ public class Model {
 	private ScoreBoard scoreBoard;
 	private Map mapRN;
 	
-	private int width;
-    private int height;
+	private int frameWidth;
+    private int frameHeight;
 
     ArrayList<Items> items;
     ArrayList<Items> CRitems;
@@ -21,7 +21,9 @@ public class Model {
 	
 	private int screenTime = 0;
     
-	public Model(RedKnot redKnot, ClapperRail clapperRail, Map mapRN, ArrayList<Items> items, ArrayList<Items> CRitems, ScoreBoard scoreBoard) {
+	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, ArrayList<Items> items, ArrayList<Items> CRitems, ScoreBoard scoreBoard) {
+		this.frameWidth = frameWidth;
+		this.frameHeight = frameHeight;
 		this.redKnot = redKnot;
 		this.clapperRail = clapperRail;
 		this.mapRN = mapRN;
@@ -33,6 +35,12 @@ public class Model {
 	
 	
 	
+	public ArrayList<Items> getItems() {
+		return items;
+	}
+
+
+
 	public int getScreenTime() {
 		return screenTime;
 	}
@@ -82,11 +90,15 @@ public class Model {
 				Items tempItem = iterator.next();
 				tempItem.setX(tempItem.getX()+tempItem.getxVel());
 				tempItem.setY(tempItem.getY()+tempItem.getyVel());
-				goodCollision(tempItem,redKnot);
+				if(!collisionRK(tempItem,redKnot)) {;
+				itemsOutOfBounds(tempItem);
+				}
+				
 			}
+			
 			redKnot.setX(redKnot.getX()+redKnot.getxVel());
 			redKnot.setY(redKnot.getY()+redKnot.getyVel());
-			
+			birdOutOfBounds(redKnot);
 			/*
 			 * Map Location
 			 */
@@ -104,7 +116,7 @@ public class Model {
 			iterator = CRitems.iterator();
 			while(iterator.hasNext()) {
 				Items tempItem = iterator.next();
-				if(!goodCollision(tempItem, clapperRail)) {;
+				if(!collisionCR(tempItem, clapperRail)) {;
 					screenTime();
 				}
 				
@@ -118,9 +130,33 @@ public class Model {
 	public void endGame() {
 		
 	}
+	
+	public void birdOutOfBounds(RedKnot redKnot) {
+		if(redKnot.getX() <= 0) {
+			redKnot.setX(0);
+		}
+		if(redKnot.getY() <= 0) {
+			redKnot.setY(0);
+		}
+		if(redKnot.getX() >= frameWidth - redKnot.getLength()) {
+			redKnot.setX(frameWidth - redKnot.getWidth());
+		}
+		
+		if(redKnot.getY() >= frameHeight - 127) {
+			
+			redKnot.setY(frameHeight - 127);
+		}
 
-	//this method detects collisions between bird and food and powerUp
-	public void goodCollision(Items item, RedKnot redKnot) {
+
+	}
+
+	public void itemsOutOfBounds(Items item) {
+		if(item.getX() <= 0-item.getLength()) {
+			iterator.remove();
+		}
+	}
+
+	public boolean collisionRK(Items item, RedKnot redKnot) {
 		Rectangle rk = redKnot.bounds();
 		Rectangle i = item.bounds();
 		if (rk.intersects(i)) {
@@ -135,12 +171,13 @@ public class Model {
 			case Obstacle:
 				break;
 			}
-
-			
+			return true;
+	
 		}
+		return false;
 	}
 	
-	public boolean goodCollision(Items item, ClapperRail clapperRail) {
+	public boolean collisionCR(Items item, ClapperRail clapperRail) {
 		Rectangle rk = clapperRail.bounds();
 		Rectangle i = item.bounds();
 		if (rk.intersects(i)) {

@@ -93,13 +93,23 @@ public class View extends JPanel{
     
     
     
-    public ScoreBoard getScoreBoard() {
-		return scoreBoard;
+    public int getFrameWidth() {
+		return frameWidth;
 	}
 
 
 
-	public ArrayList<Items> getCRitems() {
+	public int getFrameHeight() {
+		return frameHeight;
+	}
+
+
+
+	public ScoreBoard getScoreBoard() {
+		return scoreBoard;
+	}
+
+    public ArrayList<Items> getCRitems() {
 		return CRitems;
 	}
 	public RedKnot getRedKnot() {
@@ -159,8 +169,9 @@ public class View extends JPanel{
     
     //repaint();
     //update birds location, items location, and score(status)
-    public void update(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, GameStatus gameStatus, ScoreBoard scoreBoard ) {
+    public void update(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, GameStatus gameStatus, ScoreBoard scoreBoard, ArrayList<Items> items) {
     	this.gameStatus = gameStatus;
+    	this.items = items;
     	
     	if(this.gameStatus == GameStatus.RN) {
     		
@@ -169,6 +180,7 @@ public class View extends JPanel{
         		itemSpawnCounter = 0;
         		items.add(new Food(frameWidth, random.nextInt(frameHeight), ItemsID.Food));
         	}
+        	
         	this.scoreBoard.setScore(scoreBoard.getScore());
         	this.redKnot.setX(redKnot.getX());
         	this.redKnot.setY(redKnot.getY());
