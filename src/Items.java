@@ -7,14 +7,24 @@ public abstract class Items {
 	private int y;
 	private int xVel = -8;
 	private int yVel = 0;
+	private ItemsID itemID;
 	
-	public Items(int x, int y) {
+	public Items(int x, int y, ItemsID itemID) {
 		this.x = x;
 		this.y = y;
+		this.itemID = itemID;
+		
+		
 	}
 	
 	
 	
+	public ItemsID getItemID() {
+		return itemID;
+	}
+
+
+
 	public int getWidth() {
 		return width;
 	}

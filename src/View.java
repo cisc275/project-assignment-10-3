@@ -167,7 +167,7 @@ public class View extends JPanel{
     		itemSpawnCounter++;
         	if(itemSpawnCounter >= 10) {
         		itemSpawnCounter = 0;
-        		items.add(new Food(frameWidth, random.nextInt(frameHeight)));
+        		items.add(new Food(frameWidth, random.nextInt(frameHeight), ItemsID.Food));
         	}
         	this.scoreBoard.setScore(scoreBoard.getScore());
         	this.redKnot.setX(redKnot.getX());
@@ -184,28 +184,28 @@ public class View extends JPanel{
     		if(CRitems.size() == 0) {
     			switch(random.nextInt(8)) {
     			case 0:
-    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+100));
+    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+100, ItemsID.Food));
     				break;
     			case 1:
-    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-100));
+    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-100, ItemsID.Food));
     				break;
     			case 2:
-    				CRitems.add(new Food(frameWidth/2-32+100, frameHeight/2-32));
+    				CRitems.add(new Food(frameWidth/2-32+100, frameHeight/2-32, ItemsID.Food));
     				break;
     			case 3:
-    				CRitems.add(new Food(frameWidth/2-32-100, frameHeight/2-32));
+    				CRitems.add(new Food(frameWidth/2-32-100, frameHeight/2-32, ItemsID.Food));
     				break;
     			case 4:
-    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+100));
+    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+100, ItemsID.Food));
     				break;
     			case 5:
-    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-100));
+    				CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-100, ItemsID.Food));
     				break;
     			case 6:
-    				CRitems.add(new Food(frameWidth/2-32+100, frameHeight/2-32));
+    				CRitems.add(new Food(frameWidth/2-32+100, frameHeight/2-32, ItemsID.Food));
     				break;
     			case 7:
-    				CRitems.add(new Food(frameWidth/2-32-100, frameHeight/2-32));
+    				CRitems.add(new Food(frameWidth/2-32-100, frameHeight/2-32, ItemsID.Food));
     				break;
     			}
     			

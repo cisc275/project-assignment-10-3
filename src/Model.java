@@ -33,6 +33,18 @@ public class Model {
 	
 	
 	
+	public int getScreenTime() {
+		return screenTime;
+	}
+
+
+
+	public void setScreenTime(int screenTime) {
+		this.screenTime = screenTime;
+	}
+
+
+
 	public ScoreBoard getScoreBoard() {
 		return scoreBoard;
 	}
@@ -112,15 +124,18 @@ public class Model {
 		Rectangle rk = redKnot.bounds();
 		Rectangle i = item.bounds();
 		if (rk.intersects(i)) {
-			if(item instanceof Food) {
+			
+			switch(item.getItemID()) {
+			case Food:
 				scoreBoard.setScore(scoreBoard.getScore()+1);
 				iterator.remove();
-
-			}else if(item instanceof PowerUp) {
-				
-			}else if(item instanceof Obstacle) {
-				
+				break;
+			case PowerUp:
+				break;
+			case Obstacle:
+				break;
 			}
+
 			
 		}
 	}

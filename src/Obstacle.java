@@ -10,9 +10,10 @@ public class Obstacle extends Items{
 	private int y;
 	private int xVel;
 	private int yVel;
+	private ItemsID itemID;
 	
-	public Obstacle(int x, int y) {
-		super(x, y);
+	public Obstacle(int x, int y, ItemsID itemID) {
+		super(x, y, itemID);
 		// TODO Auto-generated constructor stub
 	}
 
