@@ -59,30 +59,32 @@ public class View extends JPanel{
     	//Buttons
     	button_redknote = new JButton("Red Knot");  
     	button_redknote.setBackground(Color.GRAY);
-    	button_redknote.setOpaque(true
-    			);
+    	button_redknote.setOpaque(true);
     	button_redknote.setActionCommand("redKnot");
+    	button_redknote.setVisible(true);
     	
     	button_clapperrail = new JButton("Clapper Rail");  
     	button_clapperrail.setBackground(Color.GRAY);
     	button_clapperrail.setOpaque(true);
     	button_clapperrail.setActionCommand("clapperRail");
+    	button_clapperrail.setVisible(true);
     	
     	button_menu = new JButton("Menu");
     	button_menu.setBackground(Color.GRAY);
     	button_menu.setOpaque(true);
     	button_menu.setActionCommand("menu");
+    	button_menu.setVisible(false);
     	
     	this.add(button_redknote);
+    	this.add(button_menu);
     	this.add(button_clapperrail);
-    	//this.add(button_menu);
+    	
 
     	random = new Random();
     	
     	//Create Birds
     	redKnot = new RedKnot(frameHeight/2-32);
     	clapperRail = new ClapperRail(frameWidth/2-32, frameHeight/2-32);
-    	
     	frame = new JFrame();
     	
     	//Create Images
@@ -191,6 +193,9 @@ public class View extends JPanel{
     	this.CRitems = CRitems;
     	
     	if(this.gameStatus == GameStatus.RN) {
+    		button_redknote.setVisible(false);
+			button_clapperrail.setVisible(false);
+			button_menu.setVisible(true);
     		
     		itemSpawnCounter++;
         	if(itemSpawnCounter >= 10) {
@@ -210,6 +215,9 @@ public class View extends JPanel{
         	//System.out.println(mapRN.updateLocation());
         	
     	}else if(this.gameStatus == GameStatus.CR) {
+    		button_redknote.setVisible(false);
+			button_clapperrail.setVisible(false);
+			button_menu.setVisible(true);
     		if(this.CRitems.size() == 0) {
     			switch(random.nextInt(8)) {
     			case 0:
@@ -246,6 +254,10 @@ public class View extends JPanel{
 			
 		}else if(this.gameStatus == GameStatus.RNQUIZ) {
 			
+		}else if(this.gameStatus == GameStatus.Menu) {
+			button_menu.setVisible(false);
+			button_redknote.setVisible(true);
+	    	button_clapperrail.setVisible(true);
 		}
     	
     	

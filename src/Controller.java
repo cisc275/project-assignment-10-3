@@ -13,7 +13,8 @@ public class Controller implements ActionListener, KeyListener{
 	private View view;
 	Action drawAction;
 	final int drawDelay = 30;
-	
+	final int frameWidth;
+	final int frameHeight;
 	
 	
 	//Controller Constructor
@@ -23,8 +24,12 @@ public class Controller implements ActionListener, KeyListener{
 		
 		view.button_redknote.addActionListener(this);
 		view.button_clapperrail.addActionListener(this);
-		view.button_redknote.addKeyListener(this);
-		view.button_clapperrail.addKeyListener(this);
+		view.button_menu.addActionListener(this);
+		view.addKeyListener(this);
+		this.frameWidth = view.getFrameWidth();
+		this.frameHeight = view.getFrameHeight();
+//		view.button_redknote.addKeyListener(this);
+//		view.button_clapperrail.addKeyListener(this);
 	}
 	
 	//Uses ActionListener to run the start the program
@@ -67,14 +72,13 @@ public class Controller implements ActionListener, KeyListener{
 		}else if(model.getGamestatus() == GameStatus.CR) {
 			
 			if(keyCode == KeyEvent.VK_UP) {
-				
-				model.getClapperrail().setY(model.getClapperrail().getY()-100);
+				model.getClapperrail().setY(frameHeight/2-32-100);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
-				model.getClapperrail().setX(model.getClapperrail().getX()-100);
+				model.getClapperrail().setX(frameWidth/2-32-100);
 			}else if(keyCode == KeyEvent.VK_DOWN) {
-				model.getClapperrail().setY(model.getClapperrail().getY()+100);
+				model.getClapperrail().setY(frameHeight/2-32+100);
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
-				model.getClapperrail().setX(model.getClapperrail().getX()+100);
+				model.getClapperrail().setX(frameWidth/2-32+100);
 			}
 		}
 		
@@ -98,13 +102,13 @@ public class Controller implements ActionListener, KeyListener{
 
 			if(keyCode == KeyEvent.VK_UP) {
 				
-				model.getClapperrail().setY(model.getClapperrail().getY()+100);
+				model.getClapperrail().setY(frameHeight/2-32);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
-				model.getClapperrail().setX(model.getClapperrail().getX()+100);
+				model.getClapperrail().setX(frameWidth/2-32);
 			}else if(keyCode == KeyEvent.VK_DOWN) {
-				model.getClapperrail().setY(model.getClapperrail().getY()-100);
+				model.getClapperrail().setY(frameHeight/2-32);
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
-				model.getClapperrail().setX(model.getClapperrail().getX()-100);
+				model.getClapperrail().setX(frameWidth/2-32);
 			}
 		}
 		
@@ -113,19 +117,21 @@ public class Controller implements ActionListener, KeyListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if("redKnot".equals(e.getActionCommand())) {
-			//view.remove(view.button_redknote);
-			//view.remove(view.button_clapperrail);
-			view.addKeyListener(this);
+		switch(e.getActionCommand()) {
+		case "redKnot":
 			model.setGamestatus(GameStatus.RN);
+			break;
 			
-		}else if("clapperRail".equals(e.getActionCommand())) {
-			
+		case "clapperRail":
 			model.setGamestatus(GameStatus.CR);
+			break;
 			
-		}else if("menu".equals(e.getActionCommand())) {
+		case "menu":
 			model.setGamestatus(GameStatus.Menu);
+			break;
 		}
+		
+		view.requestFocusInWindow();
 		
 	}
 

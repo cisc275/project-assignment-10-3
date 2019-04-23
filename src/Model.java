@@ -153,12 +153,10 @@ public class Model {
 			redKnot.setX(frameWidth - redKnot.getWidth());
 		}
 		
-		if(redKnot.getY() >= frameHeight - 127) {
+		if(redKnot.getY() >= frameHeight - redKnot.getWidth()) {
 			
-			redKnot.setY(frameHeight - 127);
+			redKnot.setY(frameHeight - redKnot.getWidth());
 		}
-
-
 	}
 
 	public void itemsOutOfBounds(Items item) {
