@@ -1,4 +1,3 @@
-
 public class PowerUp extends Items{
 	
 
@@ -21,7 +20,6 @@ public class PowerUp extends Items{
 	 */
 	@Override
 	public boolean beHit() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -30,7 +28,6 @@ public class PowerUp extends Items{
 	 */
 	@Override
 	public void exit() {
-		// TODO Auto-generated method stub
 		
 	}
 

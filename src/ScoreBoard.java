@@ -1,4 +1,3 @@
-
 public class ScoreBoard {
 	private int length = 80;
 	private int width = 30 ;
@@ -43,7 +42,4 @@ public class ScoreBoard {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
-	
-	
 }

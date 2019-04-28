@@ -1,4 +1,3 @@
-
 public class StatusBar {
 	private int x;
 	private int y;
@@ -35,7 +34,7 @@ public class StatusBar {
 	/*
 	 * update the status of the bar
 	 */
-	public void updateStatus() {
-		
-	}
+//	public void updateStatus() {
+//		
+//	}
 }

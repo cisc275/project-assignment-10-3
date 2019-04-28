@@ -1,8 +1,4 @@
-
 public class Obstacle extends Items{
-	
-	
-
 
 	private int width;
 	private int length;

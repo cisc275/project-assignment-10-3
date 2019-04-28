@@ -57,8 +57,5 @@ public class ClapperRail {
 	}
 	public Rectangle bounds() {
 		return (new Rectangle(x,y,32,32));
-	}
-	
-	
-	
+	}	
 }

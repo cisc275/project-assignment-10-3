@@ -23,7 +23,7 @@ public class View extends JPanel{
     private ClapperRail clapperRail;
     private RedKnot redKnot;
 
-    private Map mapRN = new Map(frameWidth-80);
+    private Map mapRN = new Map(frameWidth-148, frameWidth-130);
     //
     //
     private StatusBar statusBar= new StatusBar(frameWidth/2-150,frameHeight-150);
@@ -39,10 +39,12 @@ public class View extends JPanel{
     Random random;
     
     BufferedImage pic_redKnot;
+    BufferedImage pic_redKnot_mini;
     BufferedImage pic_clapperRail;
     BufferedImage pic_food;
     BufferedImage pic_map;
     BufferedImage pic_obstacle;
+    
     
     JFrame frame;
     
@@ -57,6 +59,7 @@ public class View extends JPanel{
     
     public View() {
     	//Buttons
+    	
     	button_redknote = new JButton("Red Knot");  
     	button_redknote.setBackground(Color.GRAY);
     	button_redknote.setOpaque(true);
@@ -146,14 +149,19 @@ public class View extends JPanel{
 	    		Items tempItem = iterator.next();
 	    		g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), Color.GRAY, this);
 	    	}
-	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 	    	g.drawImage(pic_redKnot, redKnot.getX(), redKnot.getY(), Color.GRAY, this);
+	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
+	    	
 	    	
 	    	g.setColor(Color.WHITE);
 	    	g.drawRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth());
 	    	g.fillRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth());
 	    	g.setColor(Color.BLACK);
 	    	g.drawString("Score: " + scoreBoard.getScore(), scoreBoard.getX()+5, scoreBoard.getY()+20);
+	    	//
+	    	//
+//	    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
+	    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
 	    	//g.drawLine(440, 20, mapRN.getStatus(), mapRN.getStatus_Y());
 	    	//g.drawLine(440, 20, 490, 70);
 	    	
@@ -191,6 +199,7 @@ public class View extends JPanel{
     	this.gameStatus = gameStatus;
     	this.items = items;
     	this.CRitems = CRitems;
+    	this.mapRN = mapRN;
     	
     	if(this.gameStatus == GameStatus.RN) {
     		button_redknote.setVisible(false);
@@ -278,6 +287,7 @@ public class View extends JPanel{
     	try {
     		pic_redKnot = ImageIO.read(new File("images/birds/RN.png"));
     		pic_clapperRail = ImageIO.read(new File("images/birds/CR.png"));
+    		pic_redKnot_mini = ImageIO.read(new File("images/birds/RN_mini.png"));
     	}catch (IOException e) {
     		e.printStackTrace();
     	}

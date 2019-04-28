@@ -1,5 +1,4 @@
 public class Food extends Items{
-
 	
 	private int width;
 	private int length;

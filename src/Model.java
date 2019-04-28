@@ -117,13 +117,17 @@ public class Model {
 			 * Map Location
 			 */
 			processCounterRN++;
-			if(processCounterRN >= 20) {
+			if(processCounterRN >= 10) {
+				processCounterRN = 0;
+				
 				mapRN.setStatus(mapRN.getStatus()+1);
-				mapRN.setStatus_Y((5/7)*mapRN.getStatus()-280);	
+				mapRN.setStatus_Y((int)(0.625*(mapRN.getStatus()-frameWidth)+ 111.25));
 			}
-			if(mapRN.getStatus() >= 1000) {
+			
+			if(mapRN.getStatus() >= frameWidth-50) {
+				
 				gamestatus = GameStatus.Menu;
-				mapRN.setStatus(440);
+				mapRN.setStatus(frameWidth-130);
 				//Need Reset Everything?			
 			}
 		}else if(gamestatus == GameStatus.CR) {
