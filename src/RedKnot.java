@@ -3,8 +3,8 @@ import java.awt.Rectangle;
 public class RedKnot{
 	private int x = 0;
 	private int y;
-	private int length = 32;
-	private int width = 32;
+	private int length = 10;
+	private int width = 10;
 	private int xVel = 0;
 	private int yVel = 0;
 	
@@ -78,7 +78,7 @@ public class RedKnot{
 	}
 	
 	public Rectangle bounds() {
-		return (new Rectangle(x,y,32,32));
+		return (new Rectangle(x+150,y+150,50,50));
 	}
 
 }

@@ -149,7 +149,7 @@ public class View extends JPanel{
 	    		Items tempItem = iterator.next();
 	    		g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), Color.GRAY, this);
 	    	}
-	    	g.drawImage(pic_redKnot, redKnot.getX(), redKnot.getY(), Color.GRAY, this);
+	    	g.drawImage(pic_redKnot, redKnot.getX(), redKnot.getY(), 200, 200, this);
 	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 	    	
 	    	
