@@ -84,6 +84,12 @@ public class View extends JPanel{
     private boolean answerRightFlag = false;
     private boolean answerWrongFlag = false;
     
+    final int frameCountFly=4;
+    private int picNumFly=0;
+    
+   ArrayList<BufferedImage> flypics =new ArrayList();
+   ArrayList<BufferedImage> flypicsFile= new ArrayList();
+   BufferedImage[] pics;
     
     public View() {
     	//Buttons
@@ -102,6 +108,7 @@ public class View extends JPanel{
     	random = new Random();
     	
     	//Create Birds
+  
     	redKnot = new RedKnot(frameHeight/2-32);
     	clapperRail = new ClapperRail(frameWidth/2-120, frameHeight/2-100);
     	frame = new JFrame();
@@ -115,6 +122,7 @@ public class View extends JPanel{
     	quiz_CR.closeFile();
     	
     	//Create Images
+    	createFlyImage();
     	createBirdsImage();
     	createFoodRedKnotImage();
     	createMapRedKnotImage();
@@ -190,6 +198,30 @@ public class View extends JPanel{
 	public StatusBar getStatusBar() {
 		return statusBar;
 	}
+	private void createFlyImage() {
+		BufferedImage bufferedImage;
+		
+		try {
+			bufferedImage = ImageIO.read(new File("Images/birds/RN1.png"));
+			flypics.add(bufferedImage);
+			
+			bufferedImage = ImageIO.read(new File("Images/birds/RN2.png"));
+			flypics.add(bufferedImage);
+			
+			bufferedImage = ImageIO.read(new File("Images/birds/RN3.png"));
+			flypics.add(bufferedImage);
+			
+			bufferedImage = ImageIO.read(new File("Images/birds/RN4.png"));
+			flypics.add(bufferedImage);
+			
+
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	
 	/**
 	 * makes, writes, and places both text boxes into menu 
@@ -294,7 +326,8 @@ public class View extends JPanel{
 	    		Items tempItem = iterator.next();
 	    		g.drawImage(pic_RNFood, tempItem.getX(), tempItem.getY(), 64, 64, this);
 	    	}
-	    	g.drawImage(pic_redKnot, redKnot.getX(), redKnot.getY(), 200,200, this);
+	    	picNumFly=(picNumFly+1)%frameCountFly;
+	    	g.drawImage(flypics.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
 	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 	    	
 	    	
