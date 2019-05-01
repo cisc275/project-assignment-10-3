@@ -13,8 +13,6 @@ public abstract class Items {
 		this.x = x;
 		this.y = y;
 		this.itemID = itemID;
-		
-		
 	}
 	
 	

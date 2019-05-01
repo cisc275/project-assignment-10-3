@@ -1,5 +1,7 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -11,15 +13,17 @@ import java.util.Iterator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 
 public class View extends JPanel{
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private final int frameWidth = screenSize.width;
     private final int frameHeight = screenSize.height;
-    
+
     private ClapperRail clapperRail;
     private RedKnot redKnot;
 
@@ -58,19 +62,24 @@ public class View extends JPanel{
     
     
     public View() {
+    	
     	//Buttons
     	
-    	button_redknote = new JButton("Red Knot");  
-    	button_redknote.setBackground(Color.GRAY);
+    	button_redknote = new JButton("Red Knot", new ImageIcon("/images/birds/rkbutton.jpg"));  
+    	button_redknote.setBackground(Color.BLUE);
     	button_redknote.setOpaque(true);
     	button_redknote.setActionCommand("redKnot");
     	button_redknote.setVisible(true);
+    	button_redknote.setPreferredSize(new Dimension(frameWidth / 4, frameHeight / 4));
+    	button_redknote.setFont(new Font("Arial", Font.PLAIN, 40));
     	
-    	button_clapperrail = new JButton("Clapper Rail");  
-    	button_clapperrail.setBackground(Color.GRAY);
+    	button_clapperrail = new JButton("Clapper Rail", new ImageIcon("/images/birds/crbutton.jpg"));  
+    	button_clapperrail.setBackground(Color.BLUE);
     	button_clapperrail.setOpaque(true);
     	button_clapperrail.setActionCommand("clapperRail");
     	button_clapperrail.setVisible(true);
+    	button_clapperrail.setPreferredSize(new Dimension(frameWidth / 4, frameHeight / 4));
+    	button_clapperrail.setFont(new Font("Arial", Font.PLAIN, 40));
     	
     	button_menu = new JButton("Menu");
     	button_menu.setBackground(Color.GRAY);
@@ -89,6 +98,7 @@ public class View extends JPanel{
     	redKnot = new RedKnot(frameHeight/2-32);
     	clapperRail = new ClapperRail(frameWidth/2-32, frameHeight/2-32);
     	frame = new JFrame();
+
     	
     	//Create Images
     	createBirdsImage();
