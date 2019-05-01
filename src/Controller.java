@@ -72,13 +72,13 @@ public class Controller implements ActionListener, KeyListener{
 		}else if(model.getGamestatus() == GameStatus.CR) {
 			
 			if(keyCode == KeyEvent.VK_UP) {
-				model.getClapperrail().setY(frameHeight/2-32-100);
+				model.getClapperrail().setY(frameHeight/2-200-100);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
-				model.getClapperrail().setX(frameWidth/2-32-100);
+				model.getClapperrail().setX(frameWidth/2-200-100);
 			}else if(keyCode == KeyEvent.VK_DOWN) {
-				model.getClapperrail().setY(frameHeight/2-32+100);
+				model.getClapperrail().setY(frameHeight/2-50+100);
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
-				model.getClapperrail().setX(frameWidth/2-32+100);
+				model.getClapperrail().setX(frameWidth/2-50+100);
 			}
 		}
 		
@@ -100,15 +100,14 @@ public class Controller implements ActionListener, KeyListener{
 			}
 		}else if(model.getGamestatus() == GameStatus.CR) {
 
-			if(keyCode == KeyEvent.VK_UP) {
-				
-				model.getClapperrail().setY(frameHeight/2-32);
+			if(keyCode == KeyEvent.VK_UP) {			
+				model.getClapperrail().setY(frameHeight/2-100);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
-				model.getClapperrail().setX(frameWidth/2-32);
+				model.getClapperrail().setX(frameWidth/2-100);
 			}else if(keyCode == KeyEvent.VK_DOWN) {
-				model.getClapperrail().setY(frameHeight/2-32);
+				model.getClapperrail().setY(frameHeight/2-100);
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
-				model.getClapperrail().setX(frameWidth/2-32);
+				model.getClapperrail().setX(frameWidth/2-100);
 			}
 		}
 		
