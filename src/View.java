@@ -288,7 +288,7 @@ public class View extends JPanel{
     	
     	frame.repaint();
 		try {
-			Thread.sleep(30);
+			Thread.sleep(20);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
