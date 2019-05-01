@@ -20,16 +20,25 @@ public class Controller implements ActionListener, KeyListener{
 	//Controller Constructor
 	public Controller () {
 		view = new View();
-		model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getRedKnot(), view.getClapperRail(), view.getMapRN(), view.getItems(), view.getCRitems(), view.getScoreBoard(), view.getStatusBar());
+		model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getRedKnot(), view.getClapperRail(), view.getMapRN(), 
+				view.getItems(), view.getCRitems(), view.getScoreBoard(), view.getStatusBar(), view.getQuiz_RN(), view.getQuiz_CR(),
+				view.isAnswerRightFlag(), view.isAnswerWrongFlag());
 		
 		view.button_redknote.addActionListener(this);
 		view.button_clapperrail.addActionListener(this);
 		view.button_menu.addActionListener(this);
+		view.button_submit.addActionListener(this);
+		
+		view.button_A.addActionListener(this);
+		view.button_B.addActionListener(this);
+		view.button_C.addActionListener(this);
+		view.button_D.addActionListener(this);
+		
+		//view.button_submit;
 		view.addKeyListener(this);
 		this.frameWidth = view.getFrameWidth();
 		this.frameHeight = view.getFrameHeight();
-//		view.button_redknote.addKeyListener(this);
-//		view.button_clapperrail.addKeyListener(this);
+
 	}
 	
 	//Uses ActionListener to run the start the program
@@ -37,7 +46,10 @@ public class Controller implements ActionListener, KeyListener{
 		drawAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				model.updateLocation();
-				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(), model.getGamestatus(), model.getScoreBoard(), model.getItems(), model.getCRitems());
+				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(),
+						model.getGamestatus(), model.getScoreBoard(), model.getItems(), 
+						model.getCRitems(), model.getQuiz_RN(), model.getQuiz_CR(),
+						model.isAnswerRightFlag(), model.isAnswerWrongFlag());
 			}
 		};
 		
@@ -127,6 +139,52 @@ public class Controller implements ActionListener, KeyListener{
 			
 		case "menu":
 			model.setGamestatus(GameStatus.Menu);
+			break;
+		case "submit":
+			if(model.getGamestatus().equals(GameStatus.RNQUIZ)) {
+				if(model.getQuiz_RN().getSelected().equals(model.getQuiz_RN().getQuestions().get(model.getQuiz_RN().getQuestionIndex()).correctanswer)) {
+					model.setAnswerRightFlag(true);
+					model.setAnswerWrongFlag(false);
+				}else {
+					model.setAnswerRightFlag(false);
+					model.setAnswerWrongFlag(true);
+				}
+			}else if (model.getGamestatus().equals(GameStatus.CRQUIZ)){
+				
+			}
+			break;
+		case "A":
+			view.button_submit.setEnabled(true);
+			if(model.getGamestatus().equals(GameStatus.RNQUIZ)) {
+				model.getQuiz_RN().setSelected("A");
+			}else if (model.getGamestatus().equals(GameStatus.CRQUIZ)){
+				model.getQuiz_CR().setSelected("A");
+			}
+			
+			break;
+		case "B":
+			view.button_submit.setEnabled(true);
+			if(model.getGamestatus().equals(GameStatus.RNQUIZ)) {
+				model.getQuiz_RN().setSelected("B");
+			}else if (model.getGamestatus().equals(GameStatus.CRQUIZ)){
+				model.getQuiz_CR().setSelected("B");
+			}
+			break;
+		case "C":
+			view.button_submit.setEnabled(true);
+			if(model.getGamestatus().equals(GameStatus.RNQUIZ)) {
+				model.getQuiz_RN().setSelected("C");
+			}else if (model.getGamestatus().equals(GameStatus.CRQUIZ)){
+				model.getQuiz_CR().setSelected("C");
+			}
+			break;
+		case "D":
+			view.button_submit.setEnabled(true);
+			if(model.getGamestatus().equals(GameStatus.RNQUIZ)) {
+				model.getQuiz_RN().setSelected("D");
+			}else if (model.getGamestatus().equals(GameStatus.CRQUIZ)){
+				model.getQuiz_CR().setSelected("D");
+			};
 			break;
 		}
 		
