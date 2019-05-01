@@ -1,8 +1,11 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -17,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 
 public class View extends JPanel{
@@ -55,7 +59,12 @@ public class View extends JPanel{
     JButton button_clapperrail;
     JButton button_redknote;
     JButton button_menu;
+    JPanel rkSide;
+    JPanel crSide;
     
+    private JTextArea rkTextArea;
+    private JTextArea crTextArea;
+       
     GameStatus gameStatus = GameStatus.Menu;
     
     
@@ -63,35 +72,17 @@ public class View extends JPanel{
     
     public View() {
     	
+    	this.setLayout(new FlowLayout());
+    	
+    	
+    	//make text areas for instructions for games
+    	makeTextAreas();
+    	
     	//Buttons
+    	makeButtons();
     	
-    	button_redknote = new JButton("Red Knot", new ImageIcon("/images/birds/rkbutton.jpg"));  
-    	button_redknote.setBackground(Color.BLUE);
-    	button_redknote.setOpaque(true);
-    	button_redknote.setActionCommand("redKnot");
-    	button_redknote.setVisible(true);
-    	button_redknote.setPreferredSize(new Dimension(frameWidth / 4, frameHeight / 4));
-    	button_redknote.setFont(new Font("Arial", Font.PLAIN, 40));
     	
-    	button_clapperrail = new JButton("Clapper Rail", new ImageIcon("/images/birds/crbutton.jpg"));  
-    	button_clapperrail.setBackground(Color.BLUE);
-    	button_clapperrail.setOpaque(true);
-    	button_clapperrail.setActionCommand("clapperRail");
-    	button_clapperrail.setVisible(true);
-    	button_clapperrail.setPreferredSize(new Dimension(frameWidth / 4, frameHeight / 4));
-    	button_clapperrail.setFont(new Font("Arial", Font.PLAIN, 40));
     	
-    	button_menu = new JButton("Menu");
-    	button_menu.setBackground(Color.GRAY);
-    	button_menu.setOpaque(true);
-    	button_menu.setActionCommand("menu");
-    	button_menu.setVisible(false);
-    	
-    	this.add(button_redknote);
-    	this.add(button_menu);
-    	this.add(button_clapperrail);
-    	
-
     	random = new Random();
     	
     	//Create Birds
@@ -148,6 +139,64 @@ public class View extends JPanel{
 		return statusBar;
 	}
 	
+	/**
+	 * makes, writes, and places both text boxes into menu 
+	 */
+	private void makeTextAreas() {
+	/*	rkTextArea = new JTextArea(
+				"This is an editable JTextArea. " +
+					    "A text area is a \"plain\" text component, " +
+					    "which means that although it can display text " +
+					    "in any font, all of the text is in the same font.");
+		crTextArea = new JTextArea("This is an editable JTextArea. " +
+			    "A text area is a \"plain\" text component, " +
+			    "which means that although it can display text " +
+			    "in any font, all of the text is in the same font.");
+		
+		rkTextArea.setEditable(false);
+		rkTextArea.setFont(new Font("Arial", Font.PLAIN, 16));
+		rkTextArea.setVisible(true);
+		
+		crTextArea.setEditable(false);
+		crTextArea.setFont(new Font("Arial", Font.PLAIN, 16));
+		crTextArea.setVisible(true);
+		
+		this.add(rkTextArea, 2, 0);
+		this.add(crTextArea, 2, 1);
+		*/
+	}
+	
+	/**
+	 * makes buttons and styles for menu
+	 */
+	private void makeButtons() {
+		button_redknote = new JButton("Red Knot", new ImageIcon("/images/birds/rkbutton.jpg"));  
+    	button_redknote.setBackground(Color.GRAY);
+    	button_redknote.setOpaque(true);
+    	button_redknote.setActionCommand("redKnot");
+    	button_redknote.setVisible(true);
+    	button_redknote.setPreferredSize(new Dimension(frameWidth / 4, frameHeight / 4));
+    	button_redknote.setFont(new Font("Arial", Font.PLAIN, 40));
+    	
+    	button_clapperrail = new JButton("Clapper Rail", new ImageIcon("/images/birds/crbutton.jpg"));  
+    	button_clapperrail.setBackground(Color.GRAY);
+    	button_clapperrail.setOpaque(true);
+    	button_clapperrail.setActionCommand("clapperRail");
+    	button_clapperrail.setVisible(true);
+    	button_clapperrail.setPreferredSize(new Dimension(frameWidth / 4, frameHeight / 4));
+    	button_clapperrail.setFont(new Font("Arial", Font.PLAIN, 40));
+    	
+    	button_menu = new JButton("Menu");
+    	button_menu.setBackground(Color.GRAY);
+    	button_menu.setOpaque(true);
+    	button_menu.setActionCommand("menu");
+    	button_menu.setVisible(false);
+    	//button_menu.setPreferredSize(new Dimension(frameWidth - (frameWidth / 8), frameHeight - (frameHeight / 32)));
+    	
+    	this.add(button_redknote);
+    	this.add(button_clapperrail);
+    	this.add(button_menu, 0, 0);
+	}
 	
 	public void paintComponent(Graphics g) {
 		
@@ -159,7 +208,7 @@ public class View extends JPanel{
 	    		Items tempItem = iterator.next();
 	    		g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), Color.GRAY, this);
 	    	}
-	    	g.drawImage(pic_redKnot, redKnot.getX(), redKnot.getY(), 200, 200, this);
+	    	g.drawImage(pic_redKnot, redKnot.getX(), redKnot.getY(), Color.GRAY, this);
 	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 	    	
 	    	
@@ -197,6 +246,16 @@ public class View extends JPanel{
 			
 		}else if(this.gameStatus == GameStatus.RNQUIZ) {
 			
+		} else if(this.gameStatus == GameStatus.Menu){
+			
+			try {
+				g.drawImage(ImageIO.read(new File("images/Sunny_BG.png")).getScaledInstance(this.frameWidth,
+						this.frameHeight-32,Image.SCALE_SMOOTH), 0, 0, this);
+				//g.drawImage(new JPanel(rkTextArea), 400, frameHeight / 4, this);
+				//g.drawImage(ImageIO.read(new File("images/crGameRules.png")), frameWidth / 2, frameHeight / 4, this);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
     	
     	
@@ -214,8 +273,11 @@ public class View extends JPanel{
     	if(this.gameStatus == GameStatus.RN) {
     		button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);
+			//crTextArea.setVisible(false);
+			//rkTextArea.setVisible(false);
 			button_menu.setVisible(true);
     		
+			
     		itemSpawnCounter++;
         	if(itemSpawnCounter >= 10) {
         		itemSpawnCounter = 0;
@@ -236,6 +298,8 @@ public class View extends JPanel{
     	}else if(this.gameStatus == GameStatus.CR) {
     		button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);
+			//crTextArea.setVisible(false);
+			//rkTextArea.setVisible(false);
 			button_menu.setVisible(true);
     		if(this.CRitems.size() == 0) {
     			switch(random.nextInt(8)) {
