@@ -1,7 +1,6 @@
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 
 public class Model {
 	
@@ -18,23 +17,12 @@ public class Model {
     ArrayList<Items> CRitems;
     Iterator<Items> iterator;
     
-    Quiz quiz_RN;
-    Quiz quiz_CR;
-    
 	GameStatus gamestatus = GameStatus.Menu;
 	private int processCounterRN = 0;
 	
 	private int screenTime = 0;
-	Random r = new Random();
-	int QuestionIndex;
-	
-	private boolean answerRightFlag;
-	private boolean answerWrongFlag;
     
-	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, 
-			ArrayList<Items> items, ArrayList<Items> CRitems,
-			ScoreBoard scoreBoard, StatusBar statusBar, Quiz quiz_RN, Quiz quiz_CR,
-			boolean answerRightFlag, boolean answerWrongFlag) {
+	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, ArrayList<Items> items, ArrayList<Items> CRitems, ScoreBoard scoreBoard, StatusBar statusBar) {
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
 		this.redKnot = redKnot;
@@ -44,51 +32,11 @@ public class Model {
 		this.CRitems = CRitems;
 		this.scoreBoard = scoreBoard;
 		this.statusBar = statusBar;
-		this.quiz_CR = quiz_CR;
-		this.quiz_RN = quiz_RN;
-		this.answerRightFlag = answerRightFlag;
-		this.answerWrongFlag = answerWrongFlag;
 		
 	}
 	
 	
 	
-	public boolean isAnswerRightFlag() {
-		return answerRightFlag;
-	}
-
-
-
-	public void setAnswerRightFlag(boolean answerRightFlag) {
-		this.answerRightFlag = answerRightFlag;
-	}
-
-
-
-	public boolean isAnswerWrongFlag() {
-		return answerWrongFlag;
-	}
-
-
-
-	public void setAnswerWrongFlag(boolean answerWrongFlag) {
-		this.answerWrongFlag = answerWrongFlag;
-	}
-
-
-
-	public Quiz getQuiz_RN() {
-		return quiz_RN;
-	}
-
-
-
-	public Quiz getQuiz_CR() {
-		return quiz_CR;
-	}
-
-
-
 	public ArrayList<Items> getCRitems() {
 		return CRitems;
 	}
@@ -169,7 +117,7 @@ public class Model {
 			 * Map Location
 			 */
 			processCounterRN++;
-			if(processCounterRN >= 10) { //>= 10
+			if(processCounterRN >= 10) {
 				processCounterRN = 0;
 				
 				mapRN.setStatus(mapRN.getStatus()+1);
@@ -177,9 +125,8 @@ public class Model {
 			}
 			
 			if(mapRN.getStatus() >= frameWidth-50) {
-				quiz_RN.setQuestionIndex(r.nextInt(quiz_RN.getQuestions().size()));
 				
-				gamestatus = GameStatus.RNQUIZ;
+				gamestatus = GameStatus.Menu;
 				mapRN.setStatus(frameWidth-130);
 				//Need Reset Everything?			
 			}
@@ -191,11 +138,7 @@ public class Model {
 					screenTime();
 				}				
 			}
-		}else if(gamestatus == GameStatus.RNQUIZ) {			
-			
-		}else if(gamestatus == GameStatus.CRQUIZ) {
-			
-		}
+		}			
 	}
 	
 	// when the game is complete, this method is called
