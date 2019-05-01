@@ -1,12 +1,24 @@
-Question: nmsl?
-A
-B
+Question: CR1
+F
+F 
+R 
+F
 C
-D
-2
-Question: nimasile?
-A
+Question: CR2
+F
+R 
+F 
+F
 B
-C
+Question: CR3
+R
+F 
+F 
+F
+A
+Question: CR4
+F
+F 
+F 
+R
 D
-0
