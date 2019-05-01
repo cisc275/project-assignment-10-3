@@ -78,7 +78,7 @@ public class RedKnot{
 	}
 	
 	public Rectangle bounds() {
-		return (new Rectangle(x+150,y+150,50,50));
+		return (new Rectangle(x,y,180,180));
 	}
 
 }

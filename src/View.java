@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -87,7 +88,7 @@ public class View extends JPanel{
     	
     	//Create Birds
     	redKnot = new RedKnot(frameHeight/2-32);
-    	clapperRail = new ClapperRail(frameWidth/2-32, frameHeight/2-32);
+    	clapperRail = new ClapperRail(frameWidth/2-120, frameHeight/2-100);
     	frame = new JFrame();
     	
     	//Create Images
@@ -151,7 +152,7 @@ public class View extends JPanel{
 	    	}
 	    	g.drawImage(pic_redKnot, redKnot.getX(), redKnot.getY(), 200, 200, this);
 	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
-	    	
+
 	    	
 	    	g.setColor(Color.WHITE);
 	    	g.drawRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth());
@@ -177,7 +178,7 @@ public class View extends JPanel{
 				}
 				
 			}
-			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), Color.GRAY, this);
+			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
 			
 			g.drawRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getWidth());
 			g.setColor(Color.PINK);
@@ -230,28 +231,28 @@ public class View extends JPanel{
     		if(this.CRitems.size() == 0) {
     			switch(random.nextInt(8)) {
     			case 0:
-    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+100, ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, ItemsID.Food));
     				break;
     			case 1:
-    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-100, ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, ItemsID.Food));
     				break;
     			case 2:
-    				this.CRitems.add(new Food(frameWidth/2-32+100, frameHeight/2-32, ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, ItemsID.Food));
     				break;
     			case 3:
-    				this.CRitems.add(new Food(frameWidth/2-32-100, frameHeight/2-32, ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, ItemsID.Food));
     				break;
     			case 4:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+100, ItemsID.Obstacle));
+    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, ItemsID.Obstacle));
     				break;
     			case 5:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-100, ItemsID.Obstacle));
+    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200, ItemsID.Obstacle));
     				break;
     			case 6:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32+100, frameHeight/2-32, ItemsID.Obstacle));
+    				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32, ItemsID.Obstacle));
     				break;
     			case 7:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32-100, frameHeight/2-32, ItemsID.Obstacle));
+    				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32, ItemsID.Obstacle));
     				break;
     			}
     			
