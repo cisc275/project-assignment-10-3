@@ -532,18 +532,16 @@ public class View extends JPanel{
     public void createImages() {
     	BufferedImage bufferedImage;
     	try {
-    		
-    		pic_clapperRail = ImageIO.read(new File("images/birds/CR.png"));
-    		pic_redKnot_mini = ImageIO.read(new File("images/birds/RN_mini.png"));
-    		
     		pic_food = ImageIO.read(new File("images/projectile/Food.png"));
     		pic_RNFood = ImageIO.read(new File("images/projectile/RN_Food.png"));
     		pic_snake = ImageIO.read(new File("images/projectile/Snake.png"));
     		pic_obstacle = ImageIO.read(new File("images/projectile/Obstacles.png"));
     		pic_map = ImageIO.read(new File("images/Components/Map.png"));
     		pic_menu = ImageIO.read(new File("images/Sunny_BG.png"));
+
     		
-    		
+    		pic_clapperRail = ImageIO.read(new File("images/birds/CR.png"));
+    		pic_redKnot_mini = ImageIO.read(new File("images/birds/RN_mini.png"));
     		bufferedImage = ImageIO.read(new File("Images/birds/RN1.png"));
 			pics_redKnot.add(bufferedImage);
 			bufferedImage = ImageIO.read(new File("Images/birds/RN2.png"));
