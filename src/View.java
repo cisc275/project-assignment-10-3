@@ -47,7 +47,6 @@ public class View extends JPanel{
     private int itemSpawnCounter = 0;
     Random random;
     
-    BufferedImage pic_redKnot;
     BufferedImage pic_redKnot_mini;
     BufferedImage pic_clapperRail;
     BufferedImage pic_food;
@@ -55,6 +54,8 @@ public class View extends JPanel{
     BufferedImage pic_obstacle;
     BufferedImage pic_snake;
     BufferedImage pic_RNFood;
+    BufferedImage pic_menu;
+    ArrayList<BufferedImage> pics_redKnot =new ArrayList<>();
     
     
     Quiz quiz_RN = new Quiz("quiz/RNQuiz.txt");
@@ -87,8 +88,8 @@ public class View extends JPanel{
     final int frameCountFly=4;
     private int picNumFly=0;
     
-   ArrayList<BufferedImage> flypics =new ArrayList();
-   ArrayList<BufferedImage> flypicsFile= new ArrayList();
+   
+   
    BufferedImage[] pics;
     
     public View() {
@@ -102,9 +103,7 @@ public class View extends JPanel{
     	
     	//Buttons
     	makeButtons();
-    	
-    	
-    	
+
     	random = new Random();
     	
     	//Create Birds
@@ -122,13 +121,7 @@ public class View extends JPanel{
     	quiz_CR.closeFile();
     	
     	//Create Images
-    	createFlyImage();
-    	createBirdsImage();
-    	createFoodRedKnotImage();
-    	createMapRedKnotImage();
-    	createObstacleRedKnotImage();
-    	createObstacleClapperRailImage();
-    	createFoodClapperRailImage();
+    	createImages();
 
     	//Set Frame
     	frame.getContentPane().add(this);
@@ -198,29 +191,7 @@ public class View extends JPanel{
 	public StatusBar getStatusBar() {
 		return statusBar;
 	}
-	private void createFlyImage() {
-		BufferedImage bufferedImage;
-		
-		try {
-			bufferedImage = ImageIO.read(new File("Images/birds/RN1.png"));
-			flypics.add(bufferedImage);
-			
-			bufferedImage = ImageIO.read(new File("Images/birds/RN2.png"));
-			flypics.add(bufferedImage);
-			
-			bufferedImage = ImageIO.read(new File("Images/birds/RN3.png"));
-			flypics.add(bufferedImage);
-			
-			bufferedImage = ImageIO.read(new File("Images/birds/RN4.png"));
-			flypics.add(bufferedImage);
-			
-
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
-
-	}
+	
 
 	
 	/**
@@ -327,7 +298,7 @@ public class View extends JPanel{
 	    		g.drawImage(pic_RNFood, tempItem.getX(), tempItem.getY(), 64, 64, this);
 	    	}
 	    	picNumFly=(picNumFly+1)%frameCountFly;
-	    	g.drawImage(flypics.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
+	    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
 	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 	    	
 	    	
@@ -387,14 +358,10 @@ public class View extends JPanel{
 			
 		}else if(this.gameStatus == GameStatus.Menu){
 			
-			try {
-				g.drawImage(ImageIO.read(new File("images/Sunny_BG.png")).getScaledInstance(this.frameWidth,
-						this.frameHeight-32,Image.SCALE_SMOOTH), 0, 0, this);
-				//g.drawImage(new JPanel(rkTextArea), 400, frameHeight / 4, this);
-				//g.drawImage(ImageIO.read(new File("images/crGameRules.png")), frameWidth / 2, frameHeight / 4, this);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			
+				g.drawImage(pic_menu.getScaledInstance(this.frameWidth,
+						this.frameHeight,Image.SCALE_DEFAULT), 0, 0, this);
+			
 		}
     	
     	
@@ -562,58 +529,31 @@ public class View extends JPanel{
     //Create Images 
     //
     
-    public void createBirdsImage() {
+    public void createImages() {
+    	BufferedImage bufferedImage;
     	try {
-    		pic_redKnot = ImageIO.read(new File("images/birds/RN.png"));
+    		
     		pic_clapperRail = ImageIO.read(new File("images/birds/CR.png"));
     		pic_redKnot_mini = ImageIO.read(new File("images/birds/RN_mini.png"));
-    	}catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    	
-    }
-    
-    public void createPowerUpImage() {
-    	
-    }
-    
-    public void createFoodClapperRailImage() {
-    	try {
+    		
     		pic_food = ImageIO.read(new File("images/projectile/Food.png"));
-    	}catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    }
-    
-    public void createFoodRedKnotImage() {
-    	try {
     		pic_RNFood = ImageIO.read(new File("images/projectile/RN_Food.png"));
-    	}catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    }
-    
-    public void createObstacleClapperRailImage() {
-    	try {
     		pic_snake = ImageIO.read(new File("images/projectile/Snake.png"));
-    	}catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    }
-    public void createObstacleRedKnotImage() {
-    	try {
     		pic_obstacle = ImageIO.read(new File("images/projectile/Obstacles.png"));
-    	}catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    }
-    
-    public void createMapRedKnotImage() {
-    	try {
     		pic_map = ImageIO.read(new File("images/Components/Map.png"));
+    		pic_menu = ImageIO.read(new File("images/Sunny_BG.png"));
+    		
+    		
+    		bufferedImage = ImageIO.read(new File("Images/birds/RN1.png"));
+			pics_redKnot.add(bufferedImage);
+			bufferedImage = ImageIO.read(new File("Images/birds/RN2.png"));
+			pics_redKnot.add(bufferedImage);
+			bufferedImage = ImageIO.read(new File("Images/birds/RN3.png"));
+			pics_redKnot.add(bufferedImage);
+			bufferedImage = ImageIO.read(new File("Images/birds/RN4.png"));
+			pics_redKnot.add(bufferedImage);
     	}catch (IOException e) {
     		e.printStackTrace();
     	}
     }
-
 }
