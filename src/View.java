@@ -54,8 +54,11 @@ public class View extends JPanel{
     BufferedImage pic_obstacle;
     BufferedImage pic_snake;
     BufferedImage pic_RNFood;
-    BufferedImage pic_menu;
+    Image pic_menu;
     ArrayList<BufferedImage> pics_redKnot =new ArrayList<>();
+    BufferedImage pic_icon_RN;
+    BufferedImage pic_icon_CR;
+    
     
     
     Quiz quiz_RN = new Quiz("quiz/RNQuiz.txt");
@@ -94,10 +97,13 @@ public class View extends JPanel{
     
     public View() {
     	//Buttons
-    	
+    	System.out.println(frameWidth);
+    	System.out.println(frameHeight);
     	this.setLayout(new FlowLayout());
     	
-    	
+    	//Create Images
+    	createImages();
+
     	//make text areas for instructions for games
     	makeTextAreas();
     	
@@ -120,9 +126,7 @@ public class View extends JPanel{
     	quiz_CR.readFile();
     	quiz_CR.closeFile();
     	
-    	//Create Images
-    	createImages();
-
+    	
     	//Set Frame
     	frame.getContentPane().add(this);
     	frame.setBackground(Color.gray);
@@ -225,19 +229,21 @@ public class View extends JPanel{
 	 * makes buttons and styles for menu
 	 */
 	private void makeButtons() {
-		button_redknote = new JButton("Red Knot", new ImageIcon("/images/birds/rkbutton.jpg"));  
+		button_redknote = new JButton("Red Knot", new ImageIcon(pic_icon_RN));  
     	button_redknote.setBackground(Color.BLUE);
-    	button_redknote.setOpaque(true);
+    	button_redknote.setOpaque(false);
+    	button_redknote.setContentAreaFilled(false);
+    	button_redknote.setBorderPainted(false);
     	button_redknote.setActionCommand("redKnot");
-    	button_redknote.setPreferredSize(new Dimension(frameWidth / 4, frameHeight / 4));
     	button_redknote.setFont(new Font("Arial", Font.PLAIN, 40));
     	button_redknote.setVisible(true);
     	
-    	button_clapperrail = new JButton("Clapper Rail", new ImageIcon("/images/birds/crbutton.jpg"));  
+    	button_clapperrail = new JButton("Clapper Rail", new ImageIcon(pic_icon_CR));  
     	button_clapperrail.setBackground(Color.BLUE);
-    	button_clapperrail.setOpaque(true);
+    	button_clapperrail.setOpaque(false);
+    	button_clapperrail.setContentAreaFilled(false);
+    	button_clapperrail.setBorderPainted(false);
     	button_clapperrail.setActionCommand("clapperRail");
-    	button_clapperrail.setPreferredSize(new Dimension(frameWidth / 4, frameHeight / 4));
     	button_clapperrail.setFont(new Font("Arial", Font.PLAIN, 40));
     	button_clapperrail.setVisible(true);
     	
@@ -359,8 +365,7 @@ public class View extends JPanel{
 		}else if(this.gameStatus == GameStatus.Menu){
 			
 			
-				g.drawImage(pic_menu.getScaledInstance(this.frameWidth,
-						this.frameHeight,Image.SCALE_DEFAULT), 0, 0, this);
+				g.drawImage(pic_menu, 0, 0, this);
 			
 		}
     	
@@ -511,8 +516,6 @@ public class View extends JPanel{
 	    	button_C.setVisible(false);
 	    	button_D.setVisible(false);
 	    	
-//	    	group.clearSelection();
-	    	
 		}
     	
     	
@@ -537,8 +540,10 @@ public class View extends JPanel{
     		pic_snake = ImageIO.read(new File("images/projectile/Snake.png"));
     		pic_obstacle = ImageIO.read(new File("images/projectile/Obstacles.png"));
     		pic_map = ImageIO.read(new File("images/Components/Map.png"));
-    		pic_menu = ImageIO.read(new File("images/Sunny_BG.png"));
-
+    		pic_menu = ImageIO.read(new File("images/background/menu_BG.png")).getScaledInstance(this.frameWidth,this.frameHeight,Image.SCALE_SMOOTH);
+    		
+    		pic_icon_RN = ImageIO.read(new File("images/birds/icon_RN.png"));
+    		pic_icon_CR = ImageIO.read(new File("images/birds/icon_CR.png"));
     		
     		pic_clapperRail = ImageIO.read(new File("images/birds/CR.png"));
     		pic_redKnot_mini = ImageIO.read(new File("images/birds/RN_mini.png"));
