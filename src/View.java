@@ -229,7 +229,9 @@ public class View extends JPanel{
 	 * makes buttons and styles for menu
 	 */
 	private void makeButtons() {
+		this.setLayout(null);
 		button_redknote = new JButton("Red Knot", new ImageIcon(pic_icon_RN));  
+		button_redknote.setBounds(frameWidth/2-650, 25, 512, 256);
     	button_redknote.setBackground(Color.BLUE);
     	button_redknote.setOpaque(false);
     	button_redknote.setContentAreaFilled(false);
@@ -239,6 +241,7 @@ public class View extends JPanel{
     	button_redknote.setVisible(true);
     	
     	button_clapperrail = new JButton("Clapper Rail", new ImageIcon(pic_icon_CR));  
+    	button_clapperrail.setBounds(frameWidth/2-100, frameHeight-300, 512, 256);
     	button_clapperrail.setBackground(Color.BLUE);
     	button_clapperrail.setOpaque(false);
     	button_clapperrail.setContentAreaFilled(false);
@@ -248,12 +251,14 @@ public class View extends JPanel{
     	button_clapperrail.setVisible(true);
     	
     	button_menu = new JButton("Menu");
+    	button_menu.setBounds(frameWidth/2-32, 0, 64, 32);
     	button_menu.setBackground(Color.GRAY);
-    	button_menu.setOpaque(true);
+    	button_menu.setOpaque(false);
     	button_menu.setActionCommand("menu");
     	button_menu.setVisible(false);
     	
     	button_submit = new JButton("Submit");
+    	button_submit.setBounds(frameWidth/2+200, frameHeight-300, 64, 32);
     	button_submit.setBackground(Color.GRAY);
     	button_submit.setOpaque(true);
     	button_submit.setActionCommand("submit");
@@ -264,6 +269,11 @@ public class View extends JPanel{
     	button_B = new JRadioButton();
     	button_C = new JRadioButton();
     	button_D = new JRadioButton();
+    	
+    	button_A.setBounds(frameWidth/2-200, frameHeight/2-128, 512, 32);
+    	button_B.setBounds(frameWidth/2-200, frameHeight/2-64, 512, 32);
+    	button_C.setBounds(frameWidth/2-200, frameHeight/2, 512, 32);
+    	button_D.setBounds(frameWidth/2-200, frameHeight/2+64, 512, 32);
     	
 //    	ButtonGroup group = new ButtonGroup();
 		group.add(button_A);
@@ -337,28 +347,28 @@ public class View extends JPanel{
 			g.fillRect(statusBar.getX(), statusBar.getY(), statusBar.getStatus(), statusBar.getWidth());
 			
 		}else if(this.gameStatus == GameStatus.CRQUIZ) {
-			g.setFont(new Font("Arial", Font.PLAIN, 40));
-			g.drawString(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getQuestion(), frameWidth/2-100, frameHeight/2);
+			g.setFont(new Font("Arial", Font.PLAIN, 30));
+			g.drawString(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getQuestion(), 200, 200);
 			if(answerRightFlag) {
-				g.drawString("Your Answer is Correct! " , frameWidth/2-300, frameHeight/2+200);
+				g.drawString("Your Answer is Correct! " , frameWidth/2-300, frameHeight/2+250);
 				button_submit.setEnabled(false);
 			}else if(answerWrongFlag) {
 				g.drawString("Unfortunately The right answer is " + 
-			quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getCorrectanswer(), frameWidth/2-500, frameHeight/2+200);
+			quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getCorrectanswer(), frameWidth/2-500, frameHeight/2+250);
 				button_submit.setEnabled(false);
 			}
 			
 		}else if(this.gameStatus == GameStatus.RNQUIZ) {
 			//print the result on the screen
-			g.setFont(new Font("Arial", Font.PLAIN, 40));
-			g.drawString(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getQuestion(), frameWidth/2-100, frameHeight/2);
+			g.setFont(new Font("Arial", Font.PLAIN, 30));
+			g.drawString(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getQuestion(), 200, 200);
 			if(answerRightFlag) {
-				g.drawString("Good Job! Your Final Score is " + (scoreBoard.getScore()+10), frameWidth/2-300, frameHeight/2+200);
+				g.drawString("Good Job! Your Final Score is " + (scoreBoard.getScore()+10), frameWidth/2-300, frameHeight/2+250);
 				button_submit.setEnabled(false);
 			}else if(answerWrongFlag) {
 				g.drawString("Unfortunately The right answer is " + 
 			quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getCorrectanswer()
-			 + " Your Final Score is " + scoreBoard.getScore(), frameWidth/2-500, frameHeight/2+200);
+			 + " Your Final Score is " + scoreBoard.getScore(), frameWidth/2-500, frameHeight/2+250);
 				button_submit.setEnabled(false);
 			}
 			
