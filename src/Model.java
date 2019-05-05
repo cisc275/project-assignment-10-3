@@ -30,11 +30,12 @@ public class Model {
 	
 	private boolean answerRightFlag;
 	private boolean answerWrongFlag;
+	private boolean  tutorialFlag;
     
 	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, 
 			ArrayList<Items> items, ArrayList<Items> CRitems,
 			ScoreBoard scoreBoard, StatusBar statusBar, Quiz quiz_RN, Quiz quiz_CR,
-			boolean answerRightFlag, boolean answerWrongFlag) {
+			boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag) {
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
 		this.redKnot = redKnot;
@@ -48,11 +49,24 @@ public class Model {
 		this.quiz_RN = quiz_RN;
 		this.answerRightFlag = answerRightFlag;
 		this.answerWrongFlag = answerWrongFlag;
+		this.tutorialFlag = tutorialFlag;
 		
 	}
 	
 	
 	
+	public boolean isTutorialFlag() {
+		return tutorialFlag;
+	}
+
+
+
+	public void setTutorialFlag(boolean tutorialFlag) {
+		this.tutorialFlag = tutorialFlag;
+	}
+
+
+
 	public boolean isAnswerRightFlag() {
 		return answerRightFlag;
 	}
@@ -151,37 +165,40 @@ public class Model {
 
 	public void updateLocation() {
 		if(gamestatus == GameStatus.RN) {
-			iterator = items.iterator();
-			while(iterator.hasNext()) {
-				Items tempItem = iterator.next();
-				tempItem.setX(tempItem.getX()+tempItem.getxVel());
-				tempItem.setY(tempItem.getY()+tempItem.getyVel());
-				if(!collisionRK(tempItem,redKnot)) {;
-				itemsOutOfBounds(tempItem);
+			if(!tutorialFlag) {
+				iterator = items.iterator();
+				while(iterator.hasNext()) {
+					Items tempItem = iterator.next();
+					tempItem.setX(tempItem.getX()+tempItem.getxVel());
+					tempItem.setY(tempItem.getY()+tempItem.getyVel());
+					if(!collisionRK(tempItem,redKnot)) {;
+					itemsOutOfBounds(tempItem);
+					}
+					
 				}
 				
-			}
-			
-			redKnot.setX(redKnot.getX()+redKnot.getxVel());
-			redKnot.setY(redKnot.getY()+redKnot.getyVel());
-			birdOutOfBounds(redKnot);
-			/*
-			 * Map Location
-			 */
-			processCounterRN++;
-			if(processCounterRN >= 10) { //>= 10
-				processCounterRN = 0;
+				redKnot.setX(redKnot.getX()+redKnot.getxVel());
+				redKnot.setY(redKnot.getY()+redKnot.getyVel());
+				birdOutOfBounds(redKnot);
+				/*
+				 * Map Location
+				 */
+				processCounterRN++;
+				if(processCounterRN >= 10) { //>= 10
+					processCounterRN = 0;
+					
+					mapRN.setStatus(mapRN.getStatus()+1);
+					mapRN.setStatus_Y((int)(0.625*(mapRN.getStatus()-frameWidth)+ 111.25));
+				}
 				
-				mapRN.setStatus(mapRN.getStatus()+1);
-				mapRN.setStatus_Y((int)(0.625*(mapRN.getStatus()-frameWidth)+ 111.25));
+				if(mapRN.getStatus() >= frameWidth-50) {
+					quiz_RN.setQuestionIndex(r.nextInt(quiz_RN.getQuestions().size()));
+					
+					gamestatus = GameStatus.RNQUIZ;
+					mapRN.setStatus(frameWidth-130);
+					//Need Reset Everything?		
 			}
-			
-			if(mapRN.getStatus() >= frameWidth-50) {
-				quiz_RN.setQuestionIndex(r.nextInt(quiz_RN.getQuestions().size()));
 				
-				gamestatus = GameStatus.RNQUIZ;
-				mapRN.setStatus(frameWidth-130);
-				//Need Reset Everything?			
 			}
 		}else if(gamestatus == GameStatus.CR) {
 			iterator = CRitems.iterator();
@@ -191,7 +208,7 @@ public class Model {
 					screenTime();
 				}				
 			}
-			if(statusBar.getStatus() >= 300) {
+			if(statusBar.getStatus() >= 300) { //300
 				gamestatus = GameStatus.CRQUIZ;
 				clapperRail.setY(frameHeight/2-100);
 				clapperRail.setX(frameWidth/2-100);

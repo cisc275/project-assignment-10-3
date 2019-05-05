@@ -22,12 +22,13 @@ public class Controller implements ActionListener, KeyListener{
 		view = new View();
 		model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getRedKnot(), view.getClapperRail(), view.getMapRN(), 
 				view.getItems(), view.getCRitems(), view.getScoreBoard(), view.getStatusBar(), view.getQuiz_RN(), view.getQuiz_CR(),
-				view.isAnswerRightFlag(), view.isAnswerWrongFlag());
+				view.isAnswerRightFlag(), view.isAnswerWrongFlag(), view.isTutorialFlag());
 		
 		view.button_redknote.addActionListener(this);
 		view.button_clapperrail.addActionListener(this);
 		view.button_menu.addActionListener(this);
 		view.button_submit.addActionListener(this);
+		view.button_start.addActionListener(this);
 		
 		view.button_A.addActionListener(this);
 		view.button_B.addActionListener(this);
@@ -49,7 +50,7 @@ public class Controller implements ActionListener, KeyListener{
 				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(),
 						model.getGamestatus(), model.getScoreBoard(), model.getItems(), 
 						model.getCRitems(), model.getQuiz_RN(), model.getQuiz_CR(),
-						model.isAnswerRightFlag(), model.isAnswerWrongFlag());
+						model.isAnswerRightFlag(), model.isAnswerWrongFlag(), model.isTutorialFlag());
 			}
 		};
 		
@@ -142,6 +143,7 @@ public class Controller implements ActionListener, KeyListener{
 			model.setAnswerRightFlag(false);
 			model.setAnswerWrongFlag(false);
 			model.setGamestatus(GameStatus.Menu);
+			model.setTutorialFlag(true);
 			
 			break;
 		case "submit":
@@ -164,8 +166,9 @@ public class Controller implements ActionListener, KeyListener{
 					model.setAnswerWrongFlag(true);
 				}
 			}
-			
-			
+			break;
+		case "start":
+			model.setTutorialFlag(false);
 			break;
 		case "A":
 			view.button_submit.setEnabled(true);
