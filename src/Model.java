@@ -263,8 +263,12 @@ public class Model {
 				iterator.remove();
 				break;
 			case PowerUp:
+				scoreBoard.setScore(scoreBoard.getScore()+5);
+				iterator.remove();
 				break;
 			case Obstacle:
+				scoreBoard.setScore(scoreBoard.getScore()-1);
+				iterator.remove();
 				break;
 			}
 			return true;
