@@ -218,27 +218,27 @@ public class View extends JPanel{
 	 */
 	private void makeTextAreas() {
 		final int textAreaWidth = 500;
-		final int textAreaHeight = 250;
+		final int textAreaHeight = 500;
 		// init textareas
 		rkTextArea = new JTextArea();
 		crTextArea = new JTextArea();
 						
 		// read instructions to textareas
-		readInstructionFile("rkInstructions.txt", rkTextArea);
-		readInstructionFile("crInstructions.txt", crTextArea);
+		readInstructionFile("instructions/rkInstructions.txt", rkTextArea);
+		readInstructionFile("instructions/crInstructions.txt", crTextArea);
 				
 		rkTextArea.setEditable(false);
-		rkTextArea.setFont(new Font("Arial", Font.PLAIN, 16));
+		rkTextArea.setFont(new Font("Arial", Font.PLAIN, 20));
 		rkTextArea.setVisible(false);
-		rkTextArea.setBackground(Color.WHITE);
-		rkTextArea.setBounds(frameWidth / 2,100,textAreaWidth,textAreaHeight);
+		rkTextArea.setOpaque(false);
+		rkTextArea.setBounds(frameWidth/2-250,100,textAreaWidth,textAreaHeight);
 		rkTextArea.setLineWrap(true);
 				
 		crTextArea.setEditable(false);
-		crTextArea.setFont(new Font("Arial", Font.PLAIN, 16));
+		crTextArea.setFont(new Font("Arial", Font.PLAIN, 20));
 		crTextArea.setVisible(false);
-		crTextArea.setBackground(Color.WHITE);
-		crTextArea.setBounds(100,frameHeight / 2, textAreaWidth,textAreaHeight);
+		crTextArea.setOpaque(false);
+		crTextArea.setBounds(frameWidth/2-250,100, textAreaWidth,textAreaHeight);
 		crTextArea.setLineWrap(true);
 				
 		this.add(rkTextArea);
