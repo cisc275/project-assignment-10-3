@@ -51,6 +51,7 @@ public class View extends JPanel{
     
     BufferedImage pic_redKnot_mini;
     BufferedImage pic_clapperRail;
+    BufferedImage pic_clapperRail_mini;
     BufferedImage pic_food;
     BufferedImage pic_map;
     BufferedImage pic_obstacle;
@@ -272,7 +273,7 @@ public class View extends JPanel{
 	private void makeButtons() {
 		this.setLayout(null);
 		button_redknote = new JButton("Red Knot", new ImageIcon(pic_icon_RN));  
-		button_redknote.setBounds(frameWidth/2-650, 25, 512, 256);
+		button_redknote.setBounds(frameWidth/2-650, 200, 512, 256);
     	button_redknote.setBackground(Color.BLUE);
     	button_redknote.setOpaque(false);
     	button_redknote.setContentAreaFilled(false);
@@ -282,7 +283,7 @@ public class View extends JPanel{
     	button_redknote.setVisible(true);
     	
     	button_clapperrail = new JButton("Clapper Rail", new ImageIcon(pic_icon_CR));  
-    	button_clapperrail.setBounds(frameWidth/2-100, frameHeight-300, 512, 256);
+    	button_clapperrail.setBounds(frameWidth/2-100, 200, 512, 256);
     	button_clapperrail.setBackground(Color.BLUE);
     	button_clapperrail.setOpaque(false);
     	button_clapperrail.setContentAreaFilled(false);
@@ -387,6 +388,10 @@ public class View extends JPanel{
 		}else if(this.gameStatus == GameStatus.CR) {
 			g.drawImage(pic_water, 0, 0, this);
 			if(!tutorialFlag) {
+				g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
+				g.drawImage(pic_clapperRail_mini, frameWidth-50, (int)(0.625*(-50)+ 111.25), this);
+				g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+				
 				iterator = CRitems.iterator();
 				while(iterator.hasNext()) {
 					Items tempItem = iterator.next();
@@ -632,6 +637,7 @@ public class View extends JPanel{
     		
     		pic_clapperRail = ImageIO.read(new File("images/birds/CR.png"));
     		pic_redKnot_mini = ImageIO.read(new File("images/birds/RN_mini.png"));
+    		pic_clapperRail_mini = ImageIO.read(new File("images/birds/CR_mini.png"));
     		bufferedImage = ImageIO.read(new File("Images/birds/RN1.png"));
 			pics_redKnot.add(bufferedImage);
 			bufferedImage = ImageIO.read(new File("Images/birds/RN2.png"));
