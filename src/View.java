@@ -37,7 +37,7 @@ public class View extends JPanel{
     private Map mapRN = new Map(frameWidth-148, frameWidth-130);
     //
     //
-    private StatusBar statusBar= new StatusBar(frameWidth/2-150,frameHeight-150);
+    private StatusBar statusBar= new StatusBar(100,frameHeight/2-150);
     //
     //
     private ScoreBoard scoreBoard = new ScoreBoard();
@@ -346,6 +346,7 @@ public class View extends JPanel{
 	    	picNumFly=(picNumFly+1)%frameCountFly;
 	    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
 	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
+	    	g.drawRect(mapRN.getX(), mapRN.getY(),pic_map.getWidth(),pic_map.getHeight());
 	    	
 	    	
 	    	g.setColor(Color.WHITE);
@@ -375,7 +376,7 @@ public class View extends JPanel{
 			
 			g.drawRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getWidth());
 			g.setColor(Color.PINK);
-			g.fillRect(statusBar.getX(), statusBar.getY(), statusBar.getStatus(), statusBar.getWidth());
+			g.fillRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getStatus());
 			
 		}else if(this.gameStatus == GameStatus.CRQUIZ) {
 			g.setFont(new Font("Arial", Font.PLAIN, 30));
