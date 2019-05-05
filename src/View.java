@@ -60,6 +60,7 @@ public class View extends JPanel{
     ArrayList<BufferedImage> pics_redKnot =new ArrayList<>();
     BufferedImage pic_icon_RN;
     BufferedImage pic_icon_CR;
+    Image pic_water;
     
     
     
@@ -334,12 +335,13 @@ public class View extends JPanel{
 	public void paintComponent(Graphics g) {
 		
 		if(this.gameStatus == GameStatus.RN) {
+			g.drawImage(pic_menu, 0, 0, this);
 			iterator = items.iterator();
 			
 	    	while(iterator.hasNext()) {
 	    		
 	    		Items tempItem = iterator.next();
-	    		g.drawImage(pic_RNFood, tempItem.getX(), tempItem.getY(), 64, 64, this);
+	    		g.drawImage(pic_RNFood, tempItem.getX(), tempItem.getY(), 32, 32, this);
 	    	}
 	    	picNumFly=(picNumFly+1)%frameCountFly;
 	    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
@@ -358,6 +360,7 @@ public class View extends JPanel{
 	    	
 	    	
 		}else if(this.gameStatus == GameStatus.CR) {
+			g.drawImage(pic_water, 0, 0, this);
 			iterator = CRitems.iterator();
 			while(iterator.hasNext()) {
 				Items tempItem = iterator.next();
@@ -584,6 +587,7 @@ public class View extends JPanel{
     		pic_obstacle = ImageIO.read(new File("images/projectile/Obstacles.png"));
     		pic_map = ImageIO.read(new File("images/Components/Map.png"));
     		pic_menu = ImageIO.read(new File("images/background/menu_BG.png")).getScaledInstance(this.frameWidth,this.frameHeight,Image.SCALE_SMOOTH);
+    		pic_water = ImageIO.read(new File("images/background/Water.png")).getScaledInstance(this.frameWidth,this.frameHeight,Image.SCALE_SMOOTH);
     		
     		pic_icon_RN = ImageIO.read(new File("images/birds/icon_RN.png"));
     		pic_icon_CR = ImageIO.read(new File("images/birds/icon_CR.png"));

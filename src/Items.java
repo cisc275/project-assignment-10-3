@@ -1,5 +1,7 @@
 import java.awt.Rectangle;
 
+import javax.imageio.ImageIO;
+
 public abstract class Items {
 	private int width = 32 ;
 	private int length = 32;
