@@ -10,10 +10,12 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
@@ -202,27 +204,53 @@ public class View extends JPanel{
 	 * makes, writes, and places both text boxes into menu 
 	 */
 	private void makeTextAreas() {
-	/*	rkTextArea = new JTextArea(
-				"This is an editable JTextArea. " +
-					    "A text area is a \"plain\" text component, " +
-					    "which means that although it can display text " +
-					    "in any font, all of the text is in the same font.");
-		crTextArea = new JTextArea("This is an editable JTextArea. " +
-			    "A text area is a \"plain\" text component, " +
-			    "which means that although it can display text " +
-			    "in any font, all of the text is in the same font.");
-		
+		final int textAreaWidth = 500;
+		final int textAreaHeight = 250;
+		// init textareas
+		rkTextArea = new JTextArea();
+		crTextArea = new JTextArea();
+						
+		// read instructions to textareas
+		readInstructionFile("rkInstructions.txt", rkTextArea);
+		readInstructionFile("crInstructions.txt", crTextArea);
+				
 		rkTextArea.setEditable(false);
 		rkTextArea.setFont(new Font("Arial", Font.PLAIN, 16));
 		rkTextArea.setVisible(true);
-		
+		rkTextArea.setBackground(Color.WHITE);
+		rkTextArea.setBounds(frameWidth / 2,100,textAreaWidth,textAreaHeight);
+		rkTextArea.setLineWrap(true);
+				
 		crTextArea.setEditable(false);
 		crTextArea.setFont(new Font("Arial", Font.PLAIN, 16));
 		crTextArea.setVisible(true);
+		crTextArea.setBackground(Color.WHITE);
+		crTextArea.setBounds(100,frameHeight / 2, textAreaWidth,textAreaHeight);
+		crTextArea.setLineWrap(true);
+				
+		this.add(rkTextArea);
+		this.add(crTextArea);
+				
+	}
+	
+	/**
+	 * copies text from file to print instructions in a textarea
+	 * @param filename String of filename w/ instructions
+	 * @param jta textarea the instructions are written in
+	 */
+	private void readInstructionFile(String filename, JTextArea jta) {
+		try {
+			Scanner sc = new Scanner(new File(filename));
+			
+			while(sc.hasNextLine()) {
+				jta.append(sc.nextLine() + "\n");
+			}
+			
+			sc.close();
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		
-		this.add(rkTextArea, 2, 0);
-		this.add(crTextArea, 2, 1);
-		*/
 	}
 	
 	/**
@@ -401,7 +429,8 @@ public class View extends JPanel{
     	this.scoreBoard = scoreBoard;
     	
     	if(this.gameStatus == GameStatus.RN) {
-    		
+    		rkTextArea.setVisible(false);
+    		crTextArea.setVisible(false);
     		button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);
 			button_menu.setVisible(true);
@@ -436,6 +465,8 @@ public class View extends JPanel{
         	//System.out.println(mapRN.updateLocation());
         	
     	}else if(this.gameStatus == GameStatus.CR) {
+    		rkTextArea.setVisible(false);
+    		crTextArea.setVisible(false);
     		button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);
 			button_menu.setVisible(true);
@@ -515,6 +546,8 @@ public class View extends JPanel{
 			
 			
 		}else if(this.gameStatus == GameStatus.Menu) {
+			rkTextArea.setVisible(true);
+    		crTextArea.setVisible(true);
 			button_menu.setVisible(false);
 			button_redknote.setVisible(true);
 			button_clapperrail.setVisible(true);

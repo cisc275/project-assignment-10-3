@@ -1,0 +1,10 @@
+   RED KNOT INSTRUCTIONS (SIDE-SCROLLING GAME)
+   
+- Using the Arrow Keys (Up, Down, Left, Right), control the Red Knot 
+  as it migrates south and stops at Delaware along its way to South 
+  America.
+- It will to eat throughout its flight so collect food to earn points (+1). 
+- But WATCH OUT because the Red Knot will encounter different 
+  obstacles: planes and buildings.
+  (Hitting these means you lose a point (-1))
+- The map at the top of the screen shows your progress in migrating to Delaware.
