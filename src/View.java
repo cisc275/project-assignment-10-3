@@ -311,7 +311,7 @@ public class View extends JPanel{
     	button_menu.setVisible(false);
     	
     	button_submit = new JButton("Submit");
-    	button_submit.setBounds(frameWidth/2+200, frameHeight-300, 64, 32);
+    	button_submit.setBounds(frameWidth/2+200, frameHeight-300, 96, 32);
     	button_submit.setBackground(Color.GRAY);
     	button_submit.setOpaque(false);
     	button_submit.setActionCommand("submit");
