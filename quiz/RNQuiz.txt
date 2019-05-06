@@ -1,26 +1,26 @@
 Question: Where was the Red Knot migrating from?
-Canada.
-Mexico. 
-Japan. 
-United States.
+A) Canada.
+B) Mexico. 
+C) Japan. 
+D) United States.
 A
 Question: What did the Red Knot enjoy eating, causing the score to increase?
-Pizza.
-Cheese.
-Snails.
-Snakes.
-C
+A) Pizza.
+B) Flys.
+C) Snails.
+D) Both B and C.
+D
 Question: Where was the Red Knot Flying to?
-Canada.
-Mexico.
-United States.
-Japan.
+A) Canada.
+B) Mexico.
+C) United States.
+D) Japan.
 C
 Question: What did the Red Knot not enjoy, causing the score to decrease?
-People.
-Nothing.
-Snails.
-Planes.
+A) Snails.
+B) Cars.
+C) Planes.
+D) Both B and C.
 D
 
 
