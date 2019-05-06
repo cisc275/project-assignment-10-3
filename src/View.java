@@ -109,6 +109,8 @@ public class View extends JPanel{
    BufferedImage[] pics;
     
     public View() {
+    	System.out.println(frameWidth);
+    	System.out.println(frameHeight);
     	background.add(0);
     	background.add(frameWidth);
     	this.setLayout(new FlowLayout());
@@ -116,12 +118,11 @@ public class View extends JPanel{
     	//Create Images
     	createImages();
 
-    	//make text areas for instructions for games
-    	makeTextAreas();
-    	
     	//Buttons
     	makeButtons();
 
+    	//make text areas for instructions for games
+    	makeTextAreas();
     	random = new Random();
     	
     	//Create Birds
@@ -319,7 +320,7 @@ public class View extends JPanel{
     	button_submit.setVisible(false);
     	
     	button_start = new JButton("Start");
-    	button_start.setBounds(frameWidth/2+200, frameHeight-300, 64, 32);
+    	button_start.setBounds(frameWidth/2+200, frameHeight-200, 64, 32); //64 , 32
     	button_start.setBackground(Color.GRAY);
     	button_start.setOpaque(false);
     	button_start.setActionCommand("start");
