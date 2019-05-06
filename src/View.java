@@ -57,6 +57,10 @@ public class View extends JPanel{
     BufferedImage pic_obstacle;
     BufferedImage pic_snake;
     BufferedImage pic_RNFood;
+    BufferedImage pic_RNCar;
+    BufferedImage pic_RNPlane;
+    BufferedImage pic_RNFly;
+    BufferedImage pic_RNSnail;
     Image pic_menu;
     ArrayList<BufferedImage> pics_redKnot =new ArrayList<>();
     BufferedImage pic_icon_RN;
@@ -218,7 +222,7 @@ public class View extends JPanel{
 	 * makes, writes, and places both text boxes into menu 
 	 */
 	private void makeTextAreas() {
-		final int textAreaWidth = 530;
+		final int textAreaWidth = 500;
 		final int textAreaHeight = 500;
 		// init textareas
 		rkTextArea = new JTextArea();
@@ -302,7 +306,7 @@ public class View extends JPanel{
     	button_submit = new JButton("Submit");
     	button_submit.setBounds(frameWidth/2+200, frameHeight-300, 64, 32);
     	button_submit.setBackground(Color.GRAY);
-    	button_submit.setOpaque(true);
+    	button_submit.setOpaque(false);
     	button_submit.setActionCommand("submit");
     	button_submit.setEnabled(false);
     	button_submit.setVisible(false);
@@ -357,6 +361,7 @@ public class View extends JPanel{
 		
 		if(this.gameStatus == GameStatus.RN) {
 			g.drawImage(pic_menu, 0, 0, this);
+			
 			if(!tutorialFlag) {
 				
 				iterator = items.iterator();
@@ -364,7 +369,24 @@ public class View extends JPanel{
 		    	while(iterator.hasNext()) {
 		    		
 		    		Items tempItem = iterator.next();
-		    		g.drawImage(pic_RNFood, tempItem.getX(), tempItem.getY(), 32, 32, this);
+		    		switch(tempItem.getItemID()) {
+		    		case Fly:
+		    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+		    			break;
+		    		case Plane:
+		    			g.drawImage(pic_RNPlane, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+		    			break;
+		    		case Snail:
+		    			g.drawImage(pic_RNSnail, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+		    			break;
+		    		case Car:
+		    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+		    			break;
+		    			
+		    		}
+		    		
+		    		
+		    		
 		    	}
 		    	picNumFly=(picNumFly+1)%frameCountFly;
 		    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
@@ -411,6 +433,7 @@ public class View extends JPanel{
 			
 			
 		}else if(this.gameStatus == GameStatus.CRQUIZ) {
+			g.drawImage(pic_water, 0, 0, this);
 			g.setFont(new Font("Arial", Font.PLAIN, 30));
 			g.drawString(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getQuestion(), 200, 200);
 			if(answerRightFlag) {
@@ -424,6 +447,7 @@ public class View extends JPanel{
 			
 		}else if(this.gameStatus == GameStatus.RNQUIZ) {
 			//print the result on the screen
+			g.drawImage(pic_menu, 0, 0, this);
 			g.setFont(new Font("Arial", Font.PLAIN, 30));
 			g.drawString(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getQuestion(), 200, 200);
 			if(answerRightFlag) {
@@ -488,9 +512,25 @@ public class View extends JPanel{
     	    	button_C.setVisible(false);
     	    	button_D.setVisible(false);
     	    	itemSpawnCounter++;
-            	if(itemSpawnCounter >= 10) {
+            	if(itemSpawnCounter >= 40) {
             		itemSpawnCounter = 0;
-            		this.items.add(new Food(frameWidth, random.nextInt(frameHeight), ItemsID.Food));
+            		switch(random.nextInt(4)) {
+            		case 0:
+            			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 220, 150, ItemsID.Plane));
+            			break;
+            		case 1:
+            			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, ItemsID.Snail));
+            			break;
+            		case 2:
+            			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, ItemsID.Fly));
+            			break;
+            		case 3:
+            			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
+            			break;
+
+            			
+            		}
+            		
             	}
     		}	
     	}else if(this.gameStatus == GameStatus.CR) {
@@ -526,28 +566,28 @@ public class View extends JPanel{
         		if(this.CRitems.size() == 0) {
         			switch(random.nextInt(8)) {
         			case 0:
-        				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, ItemsID.Food));
+        				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , ItemsID.Food));
         				break;
         			case 1:
-        				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, ItemsID.Food));
+        				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , ItemsID.Food));
         				break;
         			case 2:
-        				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, ItemsID.Food));
+        				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 , ItemsID.Food));
         				break;
         			case 3:
-        				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, ItemsID.Food));
+        				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , ItemsID.Food));
         				break;
         			case 4:
-        				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, ItemsID.Obstacle));
+        				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, 32, 32, ItemsID.Obstacle));
         				break;
         			case 5:
-        				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200, ItemsID.Obstacle));
+        				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200,32, 32, ItemsID.Obstacle));
         				break;
         			case 6:
-        				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32, ItemsID.Obstacle));
+        				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32,32, 32, ItemsID.Obstacle));
         				break;
         			case 7:
-        				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32, ItemsID.Obstacle));
+        				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32,32, 32, ItemsID.Obstacle));
         				break;
         			}
     		}
@@ -631,6 +671,11 @@ public class View extends JPanel{
     		pic_map = ImageIO.read(new File("images/Components/Map.png"));
     		pic_menu = ImageIO.read(new File("images/background/menu_BG.png")).getScaledInstance(this.frameWidth,this.frameHeight,Image.SCALE_SMOOTH);
     		pic_water = ImageIO.read(new File("images/background/Water.png")).getScaledInstance(this.frameWidth,this.frameHeight,Image.SCALE_SMOOTH);
+    		pic_RNCar = ImageIO.read(new File("images/projectile/Car.png"));
+    		pic_RNCar = ImageIO.read(new File("images/projectile/Car.png"));
+    		pic_RNFly = ImageIO.read(new File("images/projectile/Fly.png"));
+    		pic_RNPlane = ImageIO.read(new File("images/projectile/Plane.png"));
+    		pic_RNSnail = ImageIO.read(new File("images/projectile/Snail.png"));
     		
     		pic_icon_RN = ImageIO.read(new File("images/birds/icon_RN.png"));
     		pic_icon_CR = ImageIO.read(new File("images/birds/icon_CR.png"));

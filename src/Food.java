@@ -8,8 +8,8 @@ public class Food extends Items{
 	private int yVel;
 	private ItemsID itemID;
 	
-	public Food(int x, int y, ItemsID itemID) {
-		super(x, y, itemID);
+	public Food(int x, int y, int width, int length, ItemsID itemID) {
+		super(x, y, width, length, itemID);
 		// TODO Auto-generated constructor stub
 	}
 	/*
@@ -29,11 +29,4 @@ public class Food extends Items{
 		
 		
 	}
-	
-	/**public Rectangle bounds() {
-		return (new Rectangle(x,y,32,32));
-	}**/
-	
-
 }
-

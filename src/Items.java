@@ -3,17 +3,19 @@ import java.awt.Rectangle;
 import javax.imageio.ImageIO;
 
 public abstract class Items {
-	private int width = 32 ;
-	private int length = 32;
+	private int width;
+	private int length;
 	private int x;
 	private int y;
 	private int xVel = -8;
 	private int yVel = 0;
 	private ItemsID itemID;
 	
-	public Items(int x, int y, ItemsID itemID) {
+	public Items(int x, int y, int width, int length, ItemsID itemID) {
 		this.x = x;
 		this.y = y;
+		this.width = width;
+		this.length = length;
 		this.itemID = itemID;
 	}
 	

@@ -8,8 +8,8 @@ public class Obstacle extends Items{
 	private int yVel;
 	private ItemsID itemID;
 	
-	public Obstacle(int x, int y, ItemsID itemID) {
-		super(x, y, itemID);
+	public Obstacle(int x, int y, int width, int length, ItemsID itemID) {
+		super(x, y, width, length, itemID);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -258,15 +258,13 @@ public class Model {
 		if (rk.intersects(i)) {
 			
 			switch(item.getItemID()) {
-			case Food:
+			case Fly:
+			case Snail:
 				scoreBoard.setScore(scoreBoard.getScore()+1);
 				iterator.remove();
 				break;
-			case PowerUp:
-				scoreBoard.setScore(scoreBoard.getScore()+5);
-				iterator.remove();
-				break;
-			case Obstacle:
+			case Plane:
+			case Car:
 				scoreBoard.setScore(scoreBoard.getScore()-1);
 				iterator.remove();
 				break;
