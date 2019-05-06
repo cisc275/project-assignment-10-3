@@ -229,7 +229,7 @@ public class View extends JPanel{
 	 * makes, writes, and places both text boxes into menu 
 	 */
 	private void makeTextAreas() {
-		final int textAreaWidth = 500;
+		final int textAreaWidth = 530;
 		final int textAreaHeight = 500;
 		// init textareas
 		rkTextArea = new JTextArea();
