@@ -98,7 +98,7 @@ public abstract class Items {
 	}
 	
 	public Rectangle bounds() {
-		return (new Rectangle(x,y,32,32));
+		return (new Rectangle(x,y,getLength(),getWidth()));
 	}
 
 

@@ -44,6 +44,9 @@ public class View extends JPanel{
     
     ArrayList<Items> items = new ArrayList<>();
     ArrayList<Items> CRitems = new ArrayList<>();
+    
+    ArrayList<Integer> background = new ArrayList<>();
+    Iterator<Integer> itbackground;
     Iterator<Items> iterator;
     
     private int itemSpawnCounter = 0;
@@ -106,9 +109,8 @@ public class View extends JPanel{
    BufferedImage[] pics;
     
     public View() {
-    	//Buttons
-    	System.out.println(frameWidth);
-    	System.out.println(frameHeight);
+    	background.add(0);
+    	background.add(frameWidth);
     	this.setLayout(new FlowLayout());
     	
     	//Create Images
@@ -155,6 +157,11 @@ public class View extends JPanel{
     public int getFrameWidth() {
 		return frameWidth;
 	}  
+	public ArrayList<Integer> getBackGround() {
+		return background;
+	}
+
+
 	public boolean isTutorialFlag() {
 		return tutorialFlag;
 	}
@@ -360,7 +367,12 @@ public class View extends JPanel{
 	public void paintComponent(Graphics g) {
 		
 		if(this.gameStatus == GameStatus.RN) {
-			g.drawImage(pic_menu, 0, 0, this);
+			//g.drawImage(pic_menu, 0, 0, this);
+			itbackground = background.iterator();
+			while(itbackground.hasNext()) {
+				int tempInt = itbackground.next();
+				g.drawImage(pic_menu, tempInt, 0, this);
+			}
 			
 			if(!tutorialFlag) {
 				
@@ -469,7 +481,8 @@ public class View extends JPanel{
     //update birds location, items location, and score(status)
     public void update(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, 
     		GameStatus gameStatus, ScoreBoard scoreBoard, ArrayList<Items> items,
-    		ArrayList<Items> CRitems, Quiz quiz_RN, Quiz quiz_CR, boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag ) {
+    		ArrayList<Items> CRitems, Quiz quiz_RN, Quiz quiz_CR, 
+    		boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag, ArrayList<Integer> background ) {
     	this.gameStatus = gameStatus;
     	this.items = items;
     	this.CRitems = CRitems;
@@ -482,6 +495,7 @@ public class View extends JPanel{
     	this.redKnot = redKnot;
     	this.clapperRail = clapperRail;
     	this.scoreBoard = scoreBoard;
+    	this.background = background;
     	
     	if(this.gameStatus == GameStatus.RN) {
     		
@@ -594,11 +608,17 @@ public class View extends JPanel{
 }
     		
     	}else if(this.gameStatus == GameStatus.CRQUIZ) {
+    		
     		button_A.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[0]);
     		button_B.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[1]);
     		button_C.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[2]);
     		button_D.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[3]);
     		
+    		button_A.setFont(new Font("Arial", Font.PLAIN, 30));
+			button_B.setFont(new Font("Arial", Font.PLAIN, 30));
+			button_C.setFont(new Font("Arial", Font.PLAIN, 30));
+			button_D.setFont(new Font("Arial", Font.PLAIN, 30));
+			
     		button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);
 			button_menu.setVisible(true);
@@ -615,6 +635,11 @@ public class View extends JPanel{
 			button_B.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[1]);
 			button_C.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[2]);
 			button_D.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[3]);
+			
+			button_A.setFont(new Font("Arial", Font.PLAIN, 30));
+			button_B.setFont(new Font("Arial", Font.PLAIN, 30));
+			button_C.setFont(new Font("Arial", Font.PLAIN, 30));
+			button_D.setFont(new Font("Arial", Font.PLAIN, 30));
 			
 			button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);

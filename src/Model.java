@@ -31,11 +31,13 @@ public class Model {
 	private boolean answerRightFlag;
 	private boolean answerWrongFlag;
 	private boolean  tutorialFlag;
+	ArrayList<Integer> background = new ArrayList<>();
+	Iterator<Integer> itbackground;
     
 	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, 
 			ArrayList<Items> items, ArrayList<Items> CRitems,
 			ScoreBoard scoreBoard, StatusBar statusBar, Quiz quiz_RN, Quiz quiz_CR,
-			boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag) {
+			boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag, ArrayList<Integer> background) {
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
 		this.redKnot = redKnot;
@@ -50,11 +52,18 @@ public class Model {
 		this.answerRightFlag = answerRightFlag;
 		this.answerWrongFlag = answerWrongFlag;
 		this.tutorialFlag = tutorialFlag;
+		this.background = background;
 		
 	}
 	
 	
 	
+	public ArrayList<Integer> getBackground() {
+		return background;
+	}
+
+
+
 	public boolean isTutorialFlag() {
 		return tutorialFlag;
 	}
@@ -166,6 +175,19 @@ public class Model {
 	public void updateLocation() {
 		if(gamestatus == GameStatus.RN) {
 			if(!tutorialFlag) {
+				background.set(0, background.get(0)-1);
+				background.set(1, background.get(1)-1);
+				itbackground = background.iterator();
+				while(itbackground.hasNext()) {
+					int tempInt = itbackground.next();
+					if(tempInt <= -frameWidth) {
+						itbackground.remove();
+					}
+				}
+				if(background.size() <= 1) {
+					background.add(frameWidth);
+				}
+				
 				iterator = items.iterator();
 				while(iterator.hasNext()) {
 					Items tempItem = iterator.next();
@@ -184,7 +206,7 @@ public class Model {
 				 * Map Location
 				 */
 				processCounterRN++;
-				if(processCounterRN >= 10) { //>= 10
+				if(processCounterRN >= 15) { //>= 10
 					processCounterRN = 0;
 					
 					mapRN.setStatus(mapRN.getStatus()+1);
@@ -217,11 +239,12 @@ public class Model {
 			
 			
 			
-		}else if(gamestatus == GameStatus.RNQUIZ) {			
-			
-		}else if(gamestatus == GameStatus.CRQUIZ) {
-			
 		}
+//		else if(gamestatus == GameStatus.RNQUIZ) {			
+//			
+//		}else if(gamestatus == GameStatus.CRQUIZ) {
+//			
+//		}
 	}
 	
 	// when the game is complete, this method is called
@@ -281,14 +304,14 @@ public class Model {
 		if (rk.intersects(i)) {
 			switch(item.getItemID()) {
 			case Food:
-				statusBar.setStatus(statusBar.getStatus()+10);
+				statusBar.setStatus(statusBar.getStatus()+15);
 				if(statusBar.getStatus() > 300) {
 					statusBar.setStatus(300);
 				}
 				iterator.remove();
 				break;
 			case Obstacle:
-				statusBar.setStatus(statusBar.getStatus()-10);
+				statusBar.setStatus(statusBar.getStatus()-15);
 				if(statusBar.getStatus() < 0) {
 					statusBar.setStatus(0);
 				}
