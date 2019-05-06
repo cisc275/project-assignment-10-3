@@ -1,12 +1,12 @@
 Question: What did the Clapper Rail enjoy eating, causing the status bar to increase?
-Eggs.
-Snakes.
-Crabs.
-Trash.
+A) Eggs.
+B) Snakes.
+C) Crabs.
+D) Trash.
 C
 Question: What was a threat to the Clapper Rail's baby, causing the status bar to decrease?
-Snakes.
-Crabs.
-Eggs.
-People.
+A) Snakes.
+B) Crabs.
+C) Eggs.
+D) People.
 A
