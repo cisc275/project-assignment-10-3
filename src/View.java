@@ -241,9 +241,7 @@ public class View extends JPanel{
 		rkTextArea = new JTextArea();
 		crTextArea = new JTextArea();
 						
-		// read instructions to textareas
-		readInstructionFile("instructions/rkInstructions.txt", rkTextArea);
-		readInstructionFile("instructions/crInstructions.txt", crTextArea);
+
 				
 		rkTextArea.setEditable(false);
 		rkTextArea.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -264,25 +262,7 @@ public class View extends JPanel{
 				
 	}
 	
-	/**
-	 * copies text from file to print instructions in a textarea
-	 * @param filename String of filename w/ instructions
-	 * @param jta textarea the instructions are written in
-	 */
-	private void readInstructionFile(String filename, JTextArea jta) {
-		try {
-			Scanner sc = new Scanner(new File(filename));
-			
-			while(sc.hasNextLine()) {
-				jta.append(sc.nextLine() + "\n");
-			}
-			
-			sc.close();
-		} catch(FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-	}
+
 	
 	/**
 	 * makes buttons and styles for menu

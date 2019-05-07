@@ -283,13 +283,12 @@ public class Model {
 			switch(item.getItemID()) {
 			case Fly:
 			case Snail:
-				scoreBoard.setScore(scoreBoard.getScore()+1);
+				scoreBoard.setScore(scoreBoard.getScore()+20);
 				iterator.remove();
 				break;
 			case Plane:
 			case Car:
 				scoreBoard.setScore(scoreBoard.getScore()-1);
-				iterator.remove();
 				break;
 			}
 			return true;
@@ -299,9 +298,9 @@ public class Model {
 	}
 	
 	public boolean collisionCR(Items item, ClapperRail clapperRail) {
-		Rectangle rk = clapperRail.bounds();
+		Rectangle cr = clapperRail.bounds();
 		Rectangle i = item.bounds();
-		if (rk.intersects(i)) {
+		if (cr.intersects(i)) {
 			switch(item.getItemID()) {
 			case Food:
 				statusBar.setStatus(statusBar.getStatus()+15);
