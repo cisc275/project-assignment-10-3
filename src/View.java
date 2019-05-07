@@ -27,48 +27,53 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 
 public class View extends JPanel{
+	//Finding the size of screen for the frame to match
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private final int frameWidth = screenSize.width;
     private final int frameHeight = screenSize.height;
     
-    private ClapperRail clapperRail;
-    private RedKnot redKnot;
+    private ClapperRail clapperRail; //Clapper Rail
+    private RedKnot redKnot; //Red Knot
 
-    private Map mapRN = new Map(frameWidth-148, frameWidth-130);
+    private Map mapRN = new Map(frameWidth-148, frameWidth-130);            //Creating a map to show migration
     //
     //
-    private StatusBar statusBar= new StatusBar(100,frameHeight/2-150);
+    private StatusBar statusBar= new StatusBar(100,frameHeight/2-150);      //Status bar for CR game
     //
     //
-    private ScoreBoard scoreBoard = new ScoreBoard();
+    private ScoreBoard scoreBoard = new ScoreBoard();                       // Scoreboard for RK game
     
-    ArrayList<Items> items = new ArrayList<>();
+    //Creating array lists to draw multiple items to the frame during the games
+    ArrayList<Items> items = new ArrayList<>();              
     ArrayList<Items> CRitems = new ArrayList<>();
     
     ArrayList<Integer> background = new ArrayList<>();
+    
+    //Iterators to go through array of items and background images
     Iterator<Integer> itbackground;
     Iterator<Items> iterator;
     
-    private int itemSpawnCounter = 0;
+    private int itemSpawnCounter = 0;                                      //Keeps track of items on screen in RN game 
     Random random;
     
-    BufferedImage pic_redKnot_mini;
-    BufferedImage pic_clapperRail;
-    BufferedImage pic_clapperRail_mini;
-    BufferedImage pic_food;
-    BufferedImage pic_map;
-    BufferedImage pic_obstacle;
-    BufferedImage pic_snake;
-    BufferedImage pic_RNFood;
-    BufferedImage pic_RNCar;
-    BufferedImage pic_RNPlane;
-    BufferedImage pic_RNFly;
-    BufferedImage pic_RNSnail;
-    Image pic_menu;
-    ArrayList<BufferedImage> pics_redKnot =new ArrayList<>();
-    BufferedImage pic_icon_RN;
-    BufferedImage pic_icon_CR;
-    Image pic_water;
+    BufferedImage pic_redKnot_mini;                                       //BufferedImage for RN minimap image
+    BufferedImage pic_clapperRail;                                        //BufferedImage for CR image
+    BufferedImage pic_clapperRail_mini;                                   //BufferedImage for CR minimap image
+    BufferedImage pic_food;                                               //BufferedImage for CR food image
+    BufferedImage pic_map;												  //BufferedImage for minimap image
+    BufferedImage pic_delaware;
+    BufferedImage pic_obstacle;                                           //BufferedImage for obstacle images
+    BufferedImage pic_snake;                                              //BufferedImage for CR snake image
+    BufferedImage pic_RNFood;                                             //BufferedImage for RN food image
+    BufferedImage pic_RNCar;                                              //BufferedImage for RN car image
+    BufferedImage pic_RNPlane;                                            //BufferedImage for RN plane image
+    BufferedImage pic_RNFly;                                              //BufferedImage for RN plane image
+    BufferedImage pic_RNSnail;                                            //BufferedImage for RN minimap image
+    Image pic_menu;                                                       //BufferedImage for RN snail image
+    ArrayList<BufferedImage> pics_redKnot =new ArrayList<>();             //Array list for red knot pics to be drawn to screen
+    BufferedImage pic_icon_RN;                                            //BufferedImage for RN image on main menu
+    BufferedImage pic_icon_CR;                                            //BufferedImage for CR image on main menu
+    Image pic_water;                                                      //BufferedImage for water image
     
     
     
@@ -423,10 +428,10 @@ public class View extends JPanel{
 		}else if(this.gameStatus == GameStatus.CR) {
 			g.drawImage(pic_water, 0, 0, this);
 			if(!tutorialFlag) {
-				g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
-				g.drawImage(pic_clapperRail_mini, frameWidth-50, (int)(0.625*(-50)+ 111.25), this);
-				g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-				
+				g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
+				g.drawImage(pic_clapperRail_mini, frameWidth-100, (int)(0.625*(-50)+ 111.25), this);
+			//	g.drawRect(mapRN.getX(), mapRN.getY(), pic_delaware.get,pic_delaware.getHeight());
+			
 				iterator = CRitems.iterator();
 				while(iterator.hasNext()) {
 					Items tempItem = iterator.next();
@@ -531,7 +536,7 @@ public class View extends JPanel{
             		itemSpawnCounter = 0;
             		switch(random.nextInt(4)) {
             		case 0:
-            			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 220, 150, ItemsID.Plane));
+            			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, ItemsID.Plane));
             			break;
             		case 1:
             			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, ItemsID.Snail));
@@ -695,6 +700,7 @@ public class View extends JPanel{
     		pic_snake = ImageIO.read(new File("images/projectile/Snake.png"));
     		pic_obstacle = ImageIO.read(new File("images/projectile/Obstacles.png"));
     		pic_map = ImageIO.read(new File("images/Components/Map.png"));
+    		pic_delaware=ImageIO.read(new File("images/Components/delaware.png"));
     		pic_menu = ImageIO.read(new File("images/background/menu_BG.png")).getScaledInstance(this.frameWidth,this.frameHeight,Image.SCALE_SMOOTH);
     		pic_water = ImageIO.read(new File("images/background/Water.png")).getScaledInstance(this.frameWidth,this.frameHeight,Image.SCALE_SMOOTH);
     		pic_RNCar = ImageIO.read(new File("images/projectile/Car.png"));
