@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 public class Obstacle extends Items{
 
 	private int width;
@@ -23,6 +25,7 @@ public class Obstacle extends Items{
 	public boolean beHit() {
 		return false;
 	}
+
 	
 	
 	/*
@@ -33,4 +36,6 @@ public class Obstacle extends Items{
 	public void exit() {
 		
 	}
+	
+
 }
