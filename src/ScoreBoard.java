@@ -1,6 +1,6 @@
 public class ScoreBoard {
-	private int length = 80;
-	private int width = 30 ;
+	private int length = 250;
+	private int width = 60 ;
 	private final int x = 20;
 	private final int y = 20;
 	private int score = 0;

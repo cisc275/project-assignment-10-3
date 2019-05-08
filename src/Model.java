@@ -281,6 +281,8 @@ public class Model {
 		if (rk.intersects(i)) {
 			
 			switch(item.getItemID()) {
+			case PowerUp:
+				scoreBoard.setScore(scoreBoard.getScore()+200);
 			case Fly:
 			case Snail:
 				scoreBoard.setScore(scoreBoard.getScore()+20);

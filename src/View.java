@@ -69,6 +69,7 @@ public class View extends JPanel{
     BufferedImage pic_RNPlane;                                            //BufferedImage for RN plane image
     BufferedImage pic_RNFly;                                              //BufferedImage for RN plane image
     BufferedImage pic_RNSnail;                                            //BufferedImage for RN minimap image
+    BufferedImage pic_power;
     Image pic_menu;                                                       //BufferedImage for RN snail image
     ArrayList<BufferedImage> pics_redKnot =new ArrayList<>();             //Array list for red knot pics to be drawn to screen
     BufferedImage pic_icon_RN;                                            //BufferedImage for RN image on main menu
@@ -240,8 +241,7 @@ public class View extends JPanel{
 		// init textareas
 		rkTextArea = new JTextArea();
 		crTextArea = new JTextArea();
-						
-
+					
 				
 		rkTextArea.setEditable(false);
 		rkTextArea.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -262,7 +262,6 @@ public class View extends JPanel{
 				
 	}
 	
-
 	
 	/**
 	 * makes buttons and styles for menu
@@ -305,7 +304,7 @@ public class View extends JPanel{
     	button_submit.setVisible(false);
     	
     	button_start = new JButton("Start");
-    	button_start.setBounds(frameWidth/2+200, frameHeight-200, 64, 32); //64 , 32
+    	button_start.setBounds(frameWidth/2-64, frameHeight/2-32, 128, 64); //64 , 32
     	button_start.setBackground(Color.GRAY);
     	button_start.setOpaque(false);
     	button_start.setActionCommand("start");
@@ -368,6 +367,8 @@ public class View extends JPanel{
 		    		
 		    		Items tempItem = iterator.next();
 		    		switch(tempItem.getItemID()) {
+		    		case PowerUp:
+		    			g.drawImage(pic_power, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
 		    		case Fly:
 		    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
 		    			break;
@@ -391,12 +392,18 @@ public class View extends JPanel{
 		    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 		    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
 		    	
-		    	
+		    
 		    	g.setColor(Color.WHITE);
-		    	g.drawRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth());
-		    	g.fillRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth());
+		    	g.fillRoundRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth(), 5, 5);
 		    	g.setColor(Color.BLACK);
-		    	g.drawString("Score: " + scoreBoard.getScore(), scoreBoard.getX()+5, scoreBoard.getY()+20);
+		    	g.drawRoundRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth(), 5, 5);
+		    
+		    
+		    	
+		    	g.setColor(Color.RED); 
+		    	Font font = new Font("Serif", Font.BOLD, 50);
+		    	g.setFont(font);
+		    	g.drawString("Score: " + scoreBoard.getScore(), scoreBoard.getX()+10, scoreBoard.getY()+50);
 		    	//
 		    	//
 		    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
@@ -409,6 +416,7 @@ public class View extends JPanel{
 			g.drawImage(pic_water, 0, 0, this);
 			if(!tutorialFlag) {
 				g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
+				g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
 				g.drawImage(pic_clapperRail_mini, frameWidth-100, (int)(0.625*(-50)+ 111.25), this);
 			//	g.drawRect(mapRN.getX(), mapRN.getY(), pic_delaware.get,pic_delaware.getHeight());
 			
@@ -432,12 +440,14 @@ public class View extends JPanel{
 			
 		}else if(this.gameStatus == GameStatus.CRQUIZ) {
 			g.drawImage(pic_water, 0, 0, this);
-			g.setFont(new Font("Arial", Font.PLAIN, 30));
+			g.setFont(new Font("Serif", Font.PLAIN, 30));
 			g.drawString(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getQuestion(), 200, 200);
 			if(answerRightFlag) {
+				g.setFont(new Font("Serif", Font.PLAIN, 30));
 				g.drawString("Your Answer is Correct! " , frameWidth/2-300, frameHeight/2+250);
 				button_submit.setEnabled(false);
 			}else if(answerWrongFlag) {
+				g.setFont(new Font("Serif", Font.PLAIN, 30));
 				g.drawString("Unfortunately The right answer is " + 
 			quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getCorrectanswer(), frameWidth/2-500, frameHeight/2+250);
 				button_submit.setEnabled(false);
@@ -446,12 +456,14 @@ public class View extends JPanel{
 		}else if(this.gameStatus == GameStatus.RNQUIZ) {
 			//print the result on the screen
 			g.drawImage(pic_menu, 0, 0, this);
-			g.setFont(new Font("Arial", Font.PLAIN, 30));
+			g.setFont(new Font("Serif", Font.PLAIN, 30));
 			g.drawString(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getQuestion(), 200, 200);
 			if(answerRightFlag) {
+				g.setFont(new Font("Serif", Font.PLAIN, 30));
 				g.drawString("Good Job! Your Final Score is " + (scoreBoard.getScore()+10), frameWidth/2-300, frameHeight/2+250);
 				button_submit.setEnabled(false);
 			}else if(answerWrongFlag) {
+				g.setFont(new Font("Serif", Font.PLAIN, 30));
 				g.drawString("Unfortunately The right answer is " + 
 			quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getCorrectanswer()
 			 + " Your Final Score is " + scoreBoard.getScore(), frameWidth/2-500, frameHeight/2+250);
@@ -514,7 +526,7 @@ public class View extends JPanel{
     	    	itemSpawnCounter++;
             	if(itemSpawnCounter >= 40) {
             		itemSpawnCounter = 0;
-            		switch(random.nextInt(4)) {
+            		switch(random.nextInt(5)) {
             		case 0:
             			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, ItemsID.Plane));
             			break;
@@ -527,9 +539,12 @@ public class View extends JPanel{
             		case 3:
             			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
             			break;
-
+            		case 4:
+            			this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),64,64,ItemsID.PowerUp));
             			
             		}
+            		//this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),64,64,ItemsID.PowerUp));
+            		
             		
             	}
     		}	
@@ -675,6 +690,7 @@ public class View extends JPanel{
     public void createImages() {
     	BufferedImage bufferedImage;
     	try {
+    		pic_power=ImageIO.read(new File("images/components/powerup.png"));
     		pic_food = ImageIO.read(new File("images/projectile/Food.png"));
     		pic_RNFood = ImageIO.read(new File("images/projectile/RN_Food.png"));
     		pic_snake = ImageIO.read(new File("images/projectile/Snake.png"));
