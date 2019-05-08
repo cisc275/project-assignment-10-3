@@ -53,6 +53,7 @@ public class View extends JPanel{
     Iterator<Integer> itbackground;
     Iterator<Items> iterator;
     
+    private int powerupSpawnCounter=0;
     private int itemSpawnCounter = 0;                                      //Keeps track of items on screen in RN game 
     Random random;
     
@@ -369,6 +370,7 @@ public class View extends JPanel{
 		    		switch(tempItem.getItemID()) {
 		    		case PowerUp:
 		    			g.drawImage(pic_power, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
+		    			break;
 		    		case Fly:
 		    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
 		    			break;
@@ -526,7 +528,8 @@ public class View extends JPanel{
     	    	itemSpawnCounter++;
             	if(itemSpawnCounter >= 40) {
             		itemSpawnCounter = 0;
-            		switch(random.nextInt(5)) {
+            		
+            		switch(random.nextInt(4)) {
             		case 0:
             			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, ItemsID.Plane));
             			break;
@@ -539,13 +542,16 @@ public class View extends JPanel{
             		case 3:
             			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
             			break;
-            		case 4:
-            			this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),64,64,ItemsID.PowerUp));
+
             			
             		}
-            		//this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),64,64,ItemsID.PowerUp));
+
             		
-            		
+            	}
+            	powerupSpawnCounter++;
+            	if(powerupSpawnCounter==500) {
+            		powerupSpawnCounter=0;
+            		this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),32,32,ItemsID.PowerUp));
             	}
     		}	
     	}else if(this.gameStatus == GameStatus.CR) {
