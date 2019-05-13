@@ -24,18 +24,18 @@ public class Controller implements ActionListener, KeyListener{
 				view.getItems(), view.getCRitems(), view.getScoreBoard(), view.getStatusBar(), view.getQuiz_RN(), view.getQuiz_CR(),
 				view.isAnswerRightFlag(), view.isAnswerWrongFlag(), view.isTutorialFlag(), view.getBackGround());
 		
+		// add ActionListener to Jbuttons and JRadioButtons
 		view.button_redknote.addActionListener(this);
 		view.button_clapperrail.addActionListener(this);
 		view.button_menu.addActionListener(this);
 		view.button_submit.addActionListener(this);
 		view.button_start.addActionListener(this);
-		
 		view.button_A.addActionListener(this);
 		view.button_B.addActionListener(this);
 		view.button_C.addActionListener(this);
 		view.button_D.addActionListener(this);
 		
-		//view.button_submit;
+		//add KeyListener;
 		view.addKeyListener(this);
 		this.frameWidth = view.getFrameWidth();
 		this.frameHeight = view.getFrameHeight();
@@ -46,8 +46,8 @@ public class Controller implements ActionListener, KeyListener{
 	public void start() {
 		drawAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				model.updateLocation();
-				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(),
+				model.updateLocation();  // update everything with model
+				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(), // update data in View with the data from Model
 						model.getGamestatus(), model.getScoreBoard(), model.getItems(), 
 						model.getCRitems(), model.getQuiz_RN(), model.getQuiz_CR(),
 						model.isAnswerRightFlag(), model.isAnswerWrongFlag(), model.isTutorialFlag(), model.getBackground());
@@ -55,7 +55,7 @@ public class Controller implements ActionListener, KeyListener{
 		};
 		
 		EventQueue.invokeLater(new Runnable(){
-			public void run(){
+			public void run(){ 
 				Timer t = new Timer(drawDelay, drawAction);
 				t.start();
 			}
@@ -71,7 +71,7 @@ public class Controller implements ActionListener, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if(model.getGamestatus() == GameStatus.RN) {
+		if(model.getGamestatus() == GameStatus.RN) { //Arrow Keys for the Red Knot Game: Set the x or y Velocity to 10 or -10
 			
 			if(keyCode == KeyEvent.VK_UP) {
 				model.getRedKnot().setyVel(-10);
@@ -82,7 +82,7 @@ public class Controller implements ActionListener, KeyListener{
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
 				model.getRedKnot().setxVel(10);
 			}
-		}else if(model.getGamestatus() == GameStatus.CR) {
+		}else if(model.getGamestatus() == GameStatus.CR) { //Arrow Keys for the Clapper Rail Game: Move the bird to a specific position
 			
 			if(keyCode == KeyEvent.VK_UP) {
 				model.getClapperrail().setY(frameHeight/2-200-100);
@@ -101,7 +101,7 @@ public class Controller implements ActionListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if(model.getGamestatus() == GameStatus.RN) {
+		if(model.getGamestatus() == GameStatus.RN) { //Arrow Keys for the Red Knot Game: Set the x or y Velocity to 0
 			if(keyCode == KeyEvent.VK_UP) {
 				model.getRedKnot().setyVel(0);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
@@ -111,7 +111,7 @@ public class Controller implements ActionListener, KeyListener{
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
 				model.getRedKnot().setxVel(0);
 			}
-		}else if(model.getGamestatus() == GameStatus.CR) {
+		}else if(model.getGamestatus() == GameStatus.CR) { //Arrow Keys for the Clapper Rail Game: Move the bird back to the original position
 
 			if(keyCode == KeyEvent.VK_UP) {			
 				model.getClapperrail().setY(frameHeight/2-100);
@@ -128,9 +128,10 @@ public class Controller implements ActionListener, KeyListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	//implementation with different action command to make action when click the button
+	public void actionPerformed(ActionEvent e) { 
 		switch(e.getActionCommand()) {
-		case "redKnot":
+		case "redKnot": 
 			model.setGamestatus(GameStatus.RN);
 			break;
 			

@@ -28,9 +28,9 @@ public class Model {
 	Random r = new Random();
 	int QuestionIndex;
 	
-	private boolean answerRightFlag;
-	private boolean answerWrongFlag;
-	private boolean  tutorialFlag;
+	private boolean answerRightFlag; // a flag to indicate if the answer is right
+	private boolean answerWrongFlag; // a flag to indicate if the answer is wrong 
+	private boolean  tutorialFlag;   // a flag to make sure the tutorial is before the game
 	ArrayList<Integer> background = new ArrayList<>();
 	Iterator<Integer> itbackground;
     
@@ -172,22 +172,26 @@ public class Model {
 		return redKnot;
 	}
 
-	public void updateLocation() {
+	//Calculate everything here 
+	public void updateLocation() { 
 		if(gamestatus == GameStatus.RN) {
-			if(!tutorialFlag) {
+			if(!tutorialFlag) { // is tutorialFlag is false, the game will start
+				//Make Sure the background is moving
 				background.set(0, background.get(0)-1);
 				background.set(1, background.get(1)-1);
 				itbackground = background.iterator();
 				while(itbackground.hasNext()) {
 					int tempInt = itbackground.next();
+					//if the background is out of picture, remove the background
 					if(tempInt <= -frameWidth) {
 						itbackground.remove();
 					}
 				}
+				// if there is only one background in the arraylist add another one to make sure the screen is smooth
 				if(background.size() <= 1) {
 					background.add(frameWidth);
 				}
-				
+				//Update the location and check for the collision and out of screen of the items in the ArrayList 
 				iterator = items.iterator();
 				while(iterator.hasNext()) {
 					Items tempItem = iterator.next();
@@ -198,13 +202,11 @@ public class Model {
 					}
 					
 				}
-				
 				redKnot.setX(redKnot.getX()+redKnot.getxVel());
 				redKnot.setY(redKnot.getY()+redKnot.getyVel());
 				birdOutOfBounds(redKnot);
-				/*
-				 * Map Location
-				 */
+				
+				//Calculate the mini bird location on the mini map
 				processCounterRN++;
 				if(processCounterRN >= 15) { //>= 10
 					processCounterRN = 0;
@@ -212,7 +214,7 @@ public class Model {
 					mapRN.setStatus(mapRN.getStatus()+1);
 					mapRN.setStatus_Y((int)(0.625*(mapRN.getStatus()-frameWidth)+ 111.25));
 				}
-				
+				//The RN game end if this condition is true, move to the quiz part
 				if(mapRN.getStatus() >= frameWidth-50) {
 					quiz_RN.setQuestionIndex(r.nextInt(quiz_RN.getQuestions().size()));
 					
@@ -223,6 +225,7 @@ public class Model {
 				
 			}
 		}else if(gamestatus == GameStatus.CR) {
+			//Check for the collision and pops item on screen one at a time
 			iterator = CRitems.iterator();
 			while(iterator.hasNext()) {
 				Items tempItem = iterator.next();
@@ -230,23 +233,17 @@ public class Model {
 					screenTime();
 				}				
 			}
+			// if this condition is true, game end; moves to the quiz
 			if(statusBar.getStatus() >= 300) { //300
 				gamestatus = GameStatus.CRQUIZ;
 				clapperRail.setY(frameHeight/2-100);
 				clapperRail.setX(frameWidth/2-100);
 				statusBar.setStatus(0);
 			}
-			
-			
-			
 		}
-//		else if(gamestatus == GameStatus.RNQUIZ) {			
-//			
-//		}else if(gamestatus == GameStatus.CRQUIZ) {
-//			
-//		}
 	}
 	
+	//RN: Make sure the bird is always within the screen
 	public void birdOutOfBounds(RedKnot redKnot) {
 		if(redKnot.getX() <= 0) {
 			redKnot.setX(0);
@@ -264,12 +261,14 @@ public class Model {
 		}
 	}
 
+	//RN: check if the item is out of screen; if true, remove the item from the collection using iterator
 	public void itemsOutOfBounds(Items item) {
 		if(item.getX() <= 0-item.getLength()) {
 			iterator.remove();
 		}
 	}
 
+	//RN: check if the bird is collided with the item; does action depends on the itemID when collides
 	public boolean collisionRK(Items item, RedKnot redKnot) {
 		Rectangle rk = redKnot.bounds();
 		Rectangle i = item.bounds();
@@ -294,10 +293,12 @@ public class Model {
 		return false;
 	}
 	
+	//CR: check if the bird is collided with the item; does action depends on the itemID when collides
 	public boolean collisionCR(Items item, ClapperRail clapperRail) {
 		Rectangle cr = clapperRail.bounds();
 		Rectangle i = item.bounds();
 		if (cr.intersects(i)) {
+			screenTime = 0;
 			switch(item.getItemID()) {
 			case Food:
 				statusBar.setStatus(statusBar.getStatus()+15);
@@ -320,6 +321,7 @@ public class Model {
 		return false;
 	}
 	
+	//CR: a function that determin the time the item is on the screen if the bird does not collide with it
 	public void screenTime() {
 		screenTime++;
 		if(screenTime >= 20) {
