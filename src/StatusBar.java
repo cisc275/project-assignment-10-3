@@ -1,24 +1,17 @@
 public class StatusBar {
-	private int x;
-	private int y;
-	private final int width = 300;
-	private final int length = 32;
+	private final int X;
+	private final int Y;
+	public final static int WIDTH = 300;
+	public final static int LENGTH = 32;
 	private int status = 0;
 	
-	
+	// constructor
 	public StatusBar(int x, int y) {
-		this.x = x;
-		this.y = y;
+		this.X = x;
+		this.Y = y;
 	}
 	
-	public int getWidth() {
-		return width;
-	}
-
-	public int getLength() {
-		return length;
-	}
-
+	// getters and setters
 	public int getStatus() {
 		return status;
 	}
@@ -26,9 +19,9 @@ public class StatusBar {
 		this.status = status;
 	}
 	public int getX() {
-		return x;
+		return X;
 	}
 	public int getY() {
-		return y;
+		return Y;
 	}
 }

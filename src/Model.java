@@ -11,6 +11,14 @@ public class Model {
 	private Map mapRN;
 	private StatusBar statusBar;
 	
+	//constants
+	private final int RK_GOOD_VALUE = 20;
+	private final int RK_BAD_VALUE = 1;
+	private final int RK_POWERUP_VALUE = 200;
+	private final int CR_STATUS_CAP = 300;
+	private final int CR_STATUS_INCREMENT = 15;
+	public final static int RK_VELOCITY = 10;
+	
 	private int frameWidth;
     private int frameHeight;
 
@@ -34,6 +42,7 @@ public class Model {
 	ArrayList<Integer> background = new ArrayList<>();
 	Iterator<Integer> itbackground;
     
+	// constructor
 	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, 
 			ArrayList<Items> items, ArrayList<Items> CRitems,
 			ScoreBoard scoreBoard, StatusBar statusBar, Quiz quiz_RN, Quiz quiz_CR,
@@ -56,123 +65,90 @@ public class Model {
 		
 	}
 	
-	
-	
+	// getters and setters
 	public ArrayList<Integer> getBackground() {
 		return background;
 	}
-
-
 
 	public boolean isTutorialFlag() {
 		return tutorialFlag;
 	}
 
-
-
 	public void setTutorialFlag(boolean tutorialFlag) {
 		this.tutorialFlag = tutorialFlag;
 	}
-
-
 
 	public boolean isAnswerRightFlag() {
 		return answerRightFlag;
 	}
 
-
-
 	public void setAnswerRightFlag(boolean answerRightFlag) {
 		this.answerRightFlag = answerRightFlag;
 	}
-
-
 
 	public boolean isAnswerWrongFlag() {
 		return answerWrongFlag;
 	}
 
-
-
 	public void setAnswerWrongFlag(boolean answerWrongFlag) {
 		this.answerWrongFlag = answerWrongFlag;
 	}
-
-
 
 	public Quiz getQuiz_RN() {
 		return quiz_RN;
 	}
 
-
-
 	public Quiz getQuiz_CR() {
 		return quiz_CR;
 	}
-
-
 
 	public ArrayList<Items> getCRitems() {
 		return CRitems;
 	}
 
-
-
 	public StatusBar getStatusBar() {
 		return statusBar;
 	}
-
-
 
 	public ArrayList<Items> getItems() {
 		return items;
 	}
 
-
-
 	public int getScreenTime() {
 		return screenTime;
 	}
-
-
 
 	public void setScreenTime(int screenTime) {
 		this.screenTime = screenTime;
 	}
 
-
-
 	public ScoreBoard getScoreBoard() {
 		return scoreBoard;
 	}
-
-
 
 	public ClapperRail getClapperrail() {
 		return clapperRail;
 	}
 
-
 	public Map getMapRN() {
 		return mapRN;
 	}
-
 
 	public GameStatus getGamestatus() {
 		return gamestatus;
 	}
 
-
 	public void setGamestatus(GameStatus gamestatus) {
 		this.gamestatus = gamestatus;
 	}
-
 
 	public RedKnot getRedKnot() {
 		return redKnot;
 	}
 
-	//Calculate everything here 
+	/**
+	 *  given the state of the game, the locations are all updated
+	 */
 	public void updateLocation() { 
 		if(gamestatus == GameStatus.RN) {
 			if(!tutorialFlag) { // is tutorialFlag is false, the game will start
@@ -195,8 +171,8 @@ public class Model {
 				iterator = items.iterator();
 				while(iterator.hasNext()) {
 					Items tempItem = iterator.next();
-					tempItem.setX(tempItem.getX()+tempItem.getxVel());
-					tempItem.setY(tempItem.getY()+tempItem.getyVel());
+					tempItem.setX(tempItem.getX()+Items.X_VEL);
+					tempItem.setY(tempItem.getY()+Items.Y_VEL);
 					if(!collisionRK(tempItem,redKnot)) {;
 					itemsOutOfBounds(tempItem);
 					}
@@ -234,7 +210,7 @@ public class Model {
 				}				
 			}
 			// if this condition is true, game end; moves to the quiz
-			if(statusBar.getStatus() >= 300) { //300
+			if(statusBar.getStatus() >= CR_STATUS_CAP) { 
 				gamestatus = GameStatus.CRQUIZ;
 				clapperRail.setY(frameHeight/2-100);
 				clapperRail.setX(frameWidth/2-100);
@@ -243,7 +219,10 @@ public class Model {
 		}
 	}
 	
-	//RN: Make sure the bird is always within the screen
+	/**
+	 *  Makes sure the bird is always within the screen
+	 * @param redKnot that it will check
+	 */
 	public void birdOutOfBounds(RedKnot redKnot) {
 		if(redKnot.getX() <= 0) {
 			redKnot.setX(0);
@@ -256,36 +235,48 @@ public class Model {
 		}
 		
 		if(redKnot.getY() >= frameHeight - redKnot.getWidth()) {
-			
 			redKnot.setY(frameHeight - redKnot.getWidth());
 		}
 	}
 
-	//RN: check if the item is out of screen; if true, remove the item from the collection using iterator
+	/**
+	 * check if the item is out of screen; if true, remove the item from the collection using iterator
+	 * @param item 
+	 */
 	public void itemsOutOfBounds(Items item) {
 		if(item.getX() <= 0-item.getLength()) {
 			iterator.remove();
 		}
 	}
 
-	//RN: check if the bird is collided with the item; does action depends on the itemID when collides
+	/**
+	 * check if the bird is collided with the item; does action depends on the itemID when collides
+	 * @param item
+	 * @param redKnot
+	 * @return whether the item and the redKnot collide
+	 */
 	public boolean collisionRK(Items item, RedKnot redKnot) {
 		Rectangle rk = redKnot.bounds();
 		Rectangle i = item.bounds();
 		if (rk.intersects(i)) {
 			
 			switch(item.getItemID()) {
-			case PowerUp:
-				scoreBoard.setScore(scoreBoard.getScore()+200);
-			case Fly:
-			case Snail:
-				scoreBoard.setScore(scoreBoard.getScore()+20);
-				iterator.remove();
-				break;
-			case Plane:
-			case Car:
-				scoreBoard.setScore(scoreBoard.getScore()-1);
-				break;
+				case PowerUp:
+					// powerup adds 200 to score
+					scoreBoard.setScore(scoreBoard.getScore()+RK_POWERUP_VALUE);
+				case Fly:
+				case Snail:
+					// flies and snails add 20 to score
+					scoreBoard.setScore(scoreBoard.getScore()+RK_GOOD_VALUE);
+					iterator.remove();
+					break;
+				case Plane:
+				case Car:
+					// hitting cars and planes subtract 1 from score depending on how long the bird is in contact with them
+					scoreBoard.setScore(scoreBoard.getScore()-RK_BAD_VALUE);
+					break;
+				default:
+					break;
 			}
 			return true;
 	
@@ -293,7 +284,12 @@ public class Model {
 		return false;
 	}
 	
-	//CR: check if the bird is collided with the item; does action depends on the itemID when collides
+	/**
+	 * check if the bird is collided with the item; does action depends on the itemID when collides
+	 * @param item
+	 * @param clapperRail
+	 * @return whether the item and clapperRail collide
+	 */
 	public boolean collisionCR(Items item, ClapperRail clapperRail) {
 		Rectangle cr = clapperRail.bounds();
 		Rectangle i = item.bounds();
@@ -301,18 +297,22 @@ public class Model {
 			screenTime = 0;
 			switch(item.getItemID()) {
 			case Food:
-				statusBar.setStatus(statusBar.getStatus()+15);
-				if(statusBar.getStatus() > 300) {
-					statusBar.setStatus(300);
+				// when CR catches food, increase status bar
+				statusBar.setStatus(statusBar.getStatus()+CR_STATUS_INCREMENT);
+				if(statusBar.getStatus() > CR_STATUS_CAP) {
+					statusBar.setStatus(CR_STATUS_CAP);
 				}
 				iterator.remove();
 				break;
 			case Obstacle:
-				statusBar.setStatus(statusBar.getStatus()-15);
+				// when CR hits obstacle, decrease status bar
+				statusBar.setStatus(statusBar.getStatus()-CR_STATUS_INCREMENT);
 				if(statusBar.getStatus() < 0) {
 					statusBar.setStatus(0);
 				}
 				iterator.remove();
+				break;
+			default:
 				break;
 			}
 			
@@ -321,14 +321,13 @@ public class Model {
 		return false;
 	}
 	
-	//CR: a function that determin the time the item is on the screen if the bird does not collide with it
+	/**
+	 *  determines the time the item is on the screen if the bird does not collide with it
+	 */
 	public void screenTime() {
 		screenTime++;
 		if(screenTime >= 20) {
-			
 			iterator.remove();
-			
-			
 			screenTime = 0;
 		}
 		

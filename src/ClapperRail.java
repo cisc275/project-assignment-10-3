@@ -8,14 +8,13 @@ public class ClapperRail {
 	private int xVel = 0;
 	private int yVel = 0;
 	
-	/*
-	 * Constructor
-	 */
+	//Constructor
 	public ClapperRail(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 
+	// getters and setters
 	public int getX() {
 		return x;
 	}
@@ -55,6 +54,11 @@ public class ClapperRail {
 	public int getWidth() {
 		return width;
 	}
+	
+	/**
+	 * creates rectangle around the bird (hitbox)
+	 * @return hitbox of clapper rail
+	 */
 	public Rectangle bounds() {
 		return (new Rectangle(x,y,215,215));
 	}	

@@ -1,15 +1,17 @@
 
 public class Question {
-	String question;
-	String[] answers;
-	String correctanswer;
+	private String question;
+	private String[] answers;
+	private String correctanswer;
 	
+	// constructor
 	public Question(String question, String[] answer, String correctanwer) {
 		this.question = question;
 		this.answers = answer;
 		this.correctanswer = correctanwer;
 	}
 
+	// getters and setters
 	public String getQuestion() {
 		return question;
 	}

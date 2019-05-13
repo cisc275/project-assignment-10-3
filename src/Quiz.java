@@ -3,25 +3,30 @@ import java.util.*;
 
 public class Quiz {
 	private String filename;
-	ArrayList<Question> questions = new ArrayList<>();
+	private ArrayList<Question> questions = new ArrayList<>();
 	private Scanner std;
 	private int questionIndex;
 	private String selected = "E";
 	
-	
+	// constructor 
 	public Quiz(String filename) {
 		this.filename = filename;
 	}
 	
+	/**
+	 * opens file w/ Scanner
+	 */
 	public void openFile() {
 		try {
 			std = new Scanner(new File(filename));
-			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			System.out.println("could not find file");
 		}
 	}
 	
+	/**
+	 * reads file into question and answer variables
+	 */
 	public void readFile() {
 		while(std.hasNext()) {
 			String question = std.nextLine();
@@ -33,11 +38,14 @@ public class Quiz {
 		}
 	}
 	
+	/**
+	 * closes file
+	 */
 	public void closeFile() {
 		std.close();
 	}
 	
-	
+	// getters and setters
 	public String getSelected() {
 		return selected;
 	}

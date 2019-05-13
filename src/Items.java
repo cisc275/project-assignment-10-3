@@ -7,10 +7,11 @@ public abstract class Items {
 	private int length;
 	private int x;
 	private int y;
-	private int xVel = -8;
-	private int yVel = 0;
+	public static final int X_VEL = -8;
+	public static final int Y_VEL = 0;
 	private ItemsID itemID;
 	
+	//constructor
 	public Items(int x, int y, int width, int length, ItemsID itemID) {
 		this.x = x;
 		this.y = y;
@@ -20,89 +21,51 @@ public abstract class Items {
 	}
 	
 	
-	
+	// getters and setters
 	public ItemsID getItemID() {
 		return itemID;
 	}
-
-
 
 	public int getWidth() {
 		return width;
 	}
 
-
-
 	public void setWidth(int width) {
 		this.width = width;
 	}
-
-
 
 	public int getLength() {
 		return length;
 	}
 
-
-
 	public void setLength(int length) {
 		this.length = length;
 	}
-
-
 
 	public int getX() {
 		return x;
 	}
 
-
-
 	public void setX(int x) {
 		this.x = x;
 	}
-
-
 
 	public int getY() {
 		return y;
 	}
 
-
-
 	public void setY(int y) {
 		this.y = y;
 	}
-
-
-
-	public int getxVel() {
-		return xVel;
-	}
-
-
-
-	public void setxVel(int xVel) {
-		this.xVel = xVel;
-	}
-
-
-
-	public int getyVel() {
-		return yVel;
-	}
-
-
-
-	public void setyVel(int yVel) {
-		this.yVel = yVel;
-	}
 	
+	/**
+	 *  created rectangle around the item (hitbox)
+	 */
 	public Rectangle bounds() {
 		return (new Rectangle(x,y,getLength(),getWidth()));
 	}
 
-
-
+	//abstract methods to be implemented by subclasses
 	public abstract boolean beHit();
 	public abstract void exit();
 }

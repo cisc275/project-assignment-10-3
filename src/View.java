@@ -379,7 +379,8 @@ public class View extends JPanel{
 		    		case Car:
 		    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
 		    			break;
-		    			
+		    		default:
+		    			break;
 		    		}
 		    		
 		    		
@@ -396,13 +397,13 @@ public class View extends JPanel{
 		    	
 		    	//RN: ScoreBoard
 		    	g.setColor(Color.WHITE);
-		    	g.fillRoundRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth(), 5, 5);
+		    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
 		    	g.setColor(Color.BLACK);
-		    	g.drawRoundRect(scoreBoard.getX(), scoreBoard.getY(), scoreBoard.getLength(), scoreBoard.getWidth(), 5, 5);
+		    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
 		    	g.setColor(Color.RED); 
 		    	Font font = new Font("Serif", Font.BOLD, 50);
 		    	g.setFont(font);
-		    	g.drawString("Score: " + scoreBoard.getScore(), scoreBoard.getX()+10, scoreBoard.getY()+50);
+		    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
 
 		    	
 			}
@@ -434,9 +435,9 @@ public class View extends JPanel{
 				g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
 				
 				//CR: Energy Bar
-				g.drawRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getWidth());
+				g.drawRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, StatusBar.WIDTH);
 				g.setColor(Color.PINK);
-				g.fillRect(statusBar.getX(), statusBar.getY(), statusBar.getLength(), statusBar.getStatus());
+				g.fillRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, statusBar.getStatus());
 			}
 			
 			

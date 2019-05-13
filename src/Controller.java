@@ -17,6 +17,7 @@ public class Controller implements ActionListener, KeyListener{
 	final int frameHeight;
 	
 	
+	
 	//Controller Constructor
 	public Controller () {
 		view = new View();
@@ -63,24 +64,24 @@ public class Controller implements ActionListener, KeyListener{
 	}
 	
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyTyped(KeyEvent e) {}
 
+	/**
+	 * depending on the game, arrow keys perform different actions in moving the birds
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		if(model.getGamestatus() == GameStatus.RN) { //Arrow Keys for the Red Knot Game: Set the x or y Velocity to 10 or -10
 			
 			if(keyCode == KeyEvent.VK_UP) {
-				model.getRedKnot().setyVel(-10);
+				model.getRedKnot().setyVel(-Model.RK_VELOCITY);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
-				model.getRedKnot().setxVel(-10);
+				model.getRedKnot().setxVel(-Model.RK_VELOCITY);
 			}else if(keyCode == KeyEvent.VK_DOWN) {
-				model.getRedKnot().setyVel(10);
+				model.getRedKnot().setyVel(Model.RK_VELOCITY);
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
-				model.getRedKnot().setxVel(10);
+				model.getRedKnot().setxVel(Model.RK_VELOCITY);
 			}
 		}else if(model.getGamestatus() == GameStatus.CR) { //Arrow Keys for the Clapper Rail Game: Move the bird to a specific position
 			
@@ -98,6 +99,9 @@ public class Controller implements ActionListener, KeyListener{
 		
 	}
 
+	/**
+	 * depending on the game, arrow keys perform different actions when releasing the buttons
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
@@ -112,15 +116,17 @@ public class Controller implements ActionListener, KeyListener{
 				model.getRedKnot().setxVel(0);
 			}
 		}else if(model.getGamestatus() == GameStatus.CR) { //Arrow Keys for the Clapper Rail Game: Move the bird back to the original position
-
+			final int CR_START_LOC_HEIGHT = frameHeight/2-100;
+			final int CR_START_LOC_WIDTH = frameWidth/2-100;
+			
 			if(keyCode == KeyEvent.VK_UP) {			
-				model.getClapperrail().setY(frameHeight/2-100);
+				model.getClapperrail().setY(CR_START_LOC_HEIGHT);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
-				model.getClapperrail().setX(frameWidth/2-100);
+				model.getClapperrail().setX(CR_START_LOC_WIDTH);
 			}else if(keyCode == KeyEvent.VK_DOWN) {
-				model.getClapperrail().setY(frameHeight/2-100);
+				model.getClapperrail().setY(CR_START_LOC_HEIGHT);
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
-				model.getClapperrail().setX(frameWidth/2-100);
+				model.getClapperrail().setX(CR_START_LOC_WIDTH);
 			}
 		}
 		
@@ -150,7 +156,7 @@ public class Controller implements ActionListener, KeyListener{
 		case "submit":
 			if(model.getGamestatus().equals(GameStatus.RNQUIZ)) {
 				
-				if(model.getQuiz_RN().getSelected().equals(model.getQuiz_RN().getQuestions().get(model.getQuiz_RN().getQuestionIndex()).correctanswer)) {
+				if(model.getQuiz_RN().getSelected().equals(model.getQuiz_RN().getQuestions().get(model.getQuiz_RN().getQuestionIndex()).getCorrectanswer())) {
 					model.setAnswerRightFlag(true);
 					model.setAnswerWrongFlag(false);
 				}else {
@@ -159,7 +165,7 @@ public class Controller implements ActionListener, KeyListener{
 				}
 			}else if (model.getGamestatus().equals(GameStatus.CRQUIZ)){
 				
-				if(model.getQuiz_CR().getSelected().equals(model.getQuiz_CR().getQuestions().get(model.getQuiz_CR().getQuestionIndex()).correctanswer)) {
+				if(model.getQuiz_CR().getSelected().equals(model.getQuiz_CR().getQuestions().get(model.getQuiz_CR().getQuestionIndex()).getCorrectanswer())) {
 					model.setAnswerRightFlag(true);
 					model.setAnswerWrongFlag(false);
 				}else {
