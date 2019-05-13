@@ -273,7 +273,7 @@ public class View extends JPanel{
     	button_redknote.setContentAreaFilled(false);
     	button_redknote.setBorderPainted(false);
     	button_redknote.setActionCommand("redKnot");
-    	button_redknote.setFont(new Font("Arial", Font.PLAIN, 40));
+    	button_redknote.setFont(new Font("Serif", Font.PLAIN, 40));
     	button_redknote.setVisible(true);
     	
     	button_clapperrail = new JButton("Clapper Rail", new ImageIcon(pic_icon_CR));  
@@ -283,12 +283,15 @@ public class View extends JPanel{
     	button_clapperrail.setContentAreaFilled(false);
     	button_clapperrail.setBorderPainted(false);
     	button_clapperrail.setActionCommand("clapperRail");
-    	button_clapperrail.setFont(new Font("Arial", Font.PLAIN, 40));
+    	button_clapperrail.setFont(new Font("Serif", Font.PLAIN, 40));
     	button_clapperrail.setVisible(true);
     	
     	button_menu = new JButton("Menu");
-    	button_menu.setBounds(frameWidth/2-32, 0, 64, 32);
+    	button_menu.setBounds(frameWidth/2-75, 20, 150, 64);
     	button_menu.setBackground(Color.GRAY);
+    	//button_menu.setColor(Color.WHITE);
+    	Font font = new Font("Serif", Font.BOLD, 40);
+    	button_menu.setFont(font);
     	button_menu.setOpaque(false);
     	button_menu.setActionCommand("menu");
     	button_menu.setVisible(false);
