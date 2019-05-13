@@ -31,10 +31,4 @@ public class StatusBar {
 	public int getY() {
 		return y;
 	}
-	/*
-	 * update the status of the bar
-	 */
-//	public void updateStatus() {
-//		
-//	}
 }

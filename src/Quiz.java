@@ -56,10 +56,5 @@ public class Quiz {
 
 	public ArrayList<Question> getQuestions() {
 		return questions;
-	}
-	
-	
-	
-	
-	
+	}	
 }

@@ -247,11 +247,6 @@ public class Model {
 //		}
 	}
 	
-	// when the game is complete, this method is called
-	public void endGame() {
-		
-	}
-	
 	public void birdOutOfBounds(RedKnot redKnot) {
 		if(redKnot.getX() <= 0) {
 			redKnot.setX(0);
@@ -324,10 +319,6 @@ public class Model {
 		}
 		return false;
 	}
-	//this method detects collisions between bird and obstacles
-	public void badCollision() {
-		
-	}
 	
 	public void screenTime() {
 		screenTime++;
@@ -340,10 +331,4 @@ public class Model {
 		}
 		
 	}
-	
-	//this method gives extra points
-	public void powerUp() {
-		
-	}
-	
 }

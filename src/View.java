@@ -111,10 +111,6 @@ public class View extends JPanel{
     final int frameCountFly=4;
     private int picNumFly=0;
     
-   
-   
-   BufferedImage[] pics;
-    
     public View() {
     	System.out.println(frameWidth);
     	System.out.println(frameHeight);
@@ -493,7 +489,7 @@ public class View extends JPanel{
     	this.answerWrongFlag = answerWrongFlag;
     	this.tutorialFlag = tutorialFlag;
     	this.redKnot = redKnot;
-    	this.clapperRail = clapperRail;
+    	this.clapperRail = clapperrail;
     	this.scoreBoard = scoreBoard;
     	this.background = background;
     	
@@ -611,8 +607,8 @@ public class View extends JPanel{
         				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32,32, 32, ItemsID.Obstacle));
         				break;
         			}
+        		}
     		}
-}
     		
     	}else if(this.gameStatus == GameStatus.CRQUIZ) {
     		
