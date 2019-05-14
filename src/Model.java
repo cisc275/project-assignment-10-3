@@ -39,7 +39,6 @@ public class Model implements Serializable{
 	
 	private boolean answerRightFlag; // a flag to indicate if the answer is right
 	private boolean answerWrongFlag; // a flag to indicate if the answer is wrong 
-	private boolean  tutorialFlag;   // a flag to make sure the tutorial is before the game
 	ArrayList<Integer> background = new ArrayList<>();
 	transient Iterator<Integer> itbackground;
 	
@@ -49,7 +48,7 @@ public class Model implements Serializable{
 	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, 
 			ArrayList<Items> items, ArrayList<Items> CRitems,
 			ScoreBoard scoreBoard, StatusBar statusBar, Quiz quiz_RN, Quiz quiz_CR,
-			boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag, ArrayList<Integer> background, int tutorialLevel) {
+			boolean answerRightFlag, boolean answerWrongFlag, ArrayList<Integer> background, int tutorialLevel) {
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
 		this.redKnot = redKnot;
@@ -63,10 +62,8 @@ public class Model implements Serializable{
 		this.quiz_RN = quiz_RN;
 		this.answerRightFlag = answerRightFlag;
 		this.answerWrongFlag = answerWrongFlag;
-		this.tutorialFlag = tutorialFlag;
 		this.background = background;
 		this.tutorialLevel = tutorialLevel;
-		
 	}
 	
 	// getters and setters
@@ -80,14 +77,6 @@ public class Model implements Serializable{
 
 	public ArrayList<Integer> getBackground() {
 		return background;
-	}
-
-	public boolean isTutorialFlag() {
-		return tutorialFlag;
-	}
-
-	public void setTutorialFlag(boolean tutorialFlag) {
-		this.tutorialFlag = tutorialFlag;
 	}
 
 	public boolean isAnswerRightFlag() {
@@ -161,55 +150,54 @@ public class Model implements Serializable{
 	//given the state of the game, the locations are all updated
 	public void updateLocation() {
 		if(gamestatus == GameStatus.RN ) {
-			if(!tutorialFlag) {
-				//Moving Background
-				background.set(0, background.get(0)-1);
-				background.set(1, background.get(1)-1);
-				itbackground = background.iterator();
-				while(itbackground.hasNext()) {
-					int tempInt = itbackground.next();
-					//if the background is out of picture, remove the background
-					if(tempInt <= -frameWidth) {
-						itbackground.remove();
-					}
+			
+			//Moving Background
+			background.set(0, background.get(0)-1);
+			background.set(1, background.get(1)-1);
+			itbackground = background.iterator();
+			while(itbackground.hasNext()) {
+				int tempInt = itbackground.next();
+				//if the background is out of picture, remove the background
+				if(tempInt <= -frameWidth) {
+					itbackground.remove();
 				}
-				// if there is only one background in the arraylist add another one to make sure the screen is smooth
-				if(background.size() <= 1) {
-					background.add(frameWidth);
-				}
-				//Update the location and check for the collision and out of screen of the items in the ArrayList 
-				iterator = items.iterator();
-				while(iterator.hasNext()) {
-					Items tempItem = iterator.next();
-					tempItem.setX(tempItem.getX()+Items.X_VEL);
-					tempItem.setY(tempItem.getY()+Items.Y_VEL);
-					if(!collisionRK(tempItem,redKnot)) {;
-					itemsOutOfBounds(tempItem);
-					}
-					
-				}
-				
-				redKnot.setX(redKnot.getX()+redKnot.getxVel());
-				redKnot.setY(redKnot.getY()+redKnot.getyVel());
-				birdOutOfBounds(redKnot);
-				
-				//Calculate the mini bird location on the mini map
-				processCounterRN++;
-				if(processCounterRN >= 15) { //>= 10
-					processCounterRN = 0;
-					
-					mapRN.setStatus(mapRN.getStatus()+1);
-					mapRN.setStatus_Y((int)(0.625*(mapRN.getStatus()-frameWidth)+ 111.25));
-				}
-				//The RN game end if this condition is true, move to the quiz part
-				if(mapRN.getStatus() >= frameWidth-50) {
-					quiz_RN.setQuestionIndex(r.nextInt(quiz_RN.getQuestions().size()));
-					
-					gamestatus = GameStatus.RNQUIZ;
-					mapRN.setStatus(frameWidth-130);
+			}
+			// if there is only one background in the arraylist add another one to make sure the screen is smooth
+			if(background.size() <= 1) {
+				background.add(frameWidth);
+			}
+			//Update the location and check for the collision and out of screen of the items in the ArrayList 
+			iterator = items.iterator();
+			while(iterator.hasNext()) {
+				Items tempItem = iterator.next();
+				tempItem.setX(tempItem.getX()+Items.X_VEL);
+				tempItem.setY(tempItem.getY()+Items.Y_VEL);
+				if(!collisionRK(tempItem,redKnot)) {;
+				itemsOutOfBounds(tempItem);
 				}
 				
 			}
+			
+			redKnot.setX(redKnot.getX()+redKnot.getxVel());
+			redKnot.setY(redKnot.getY()+redKnot.getyVel());
+			birdOutOfBounds(redKnot);
+			
+			//Calculate the mini bird location on the mini map
+			processCounterRN++;
+			if(processCounterRN >= 15) { //>= 10
+				processCounterRN = 0;
+				
+				mapRN.setStatus(mapRN.getStatus()+1);
+				mapRN.setStatus_Y((int)(0.625*(mapRN.getStatus()-frameWidth)+ 111.25));
+			}
+			//The RN game end if this condition is true, move to the quiz part
+			if(mapRN.getStatus() >= frameWidth-50) {
+				quiz_RN.setQuestionIndex(r.nextInt(quiz_RN.getQuestions().size()));
+				
+				gamestatus = GameStatus.RNQUIZ;
+				mapRN.setStatus(frameWidth-130);
+			}
+	
 		}else if(gamestatus == GameStatus.RNTutorial) {
 			switch(tutorialLevel) {
 			case 7:

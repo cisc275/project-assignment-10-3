@@ -99,11 +99,9 @@ public class View extends JPanel{
     
 //    private boolean answerRightFlag = false; 
 //    private boolean answerWrongFlag = false;
-//    private boolean tutorialFlag = true;
     
     private boolean answerRightFlag; // a flag to indicate if the answer is right
 	private boolean answerWrongFlag; // a flag to indicate if the answer is wrong 
-	private boolean  tutorialFlag;   // a flag to make sure the tutorial is before the game
     
 	final int frameCountFly=4; // RN: 4 frame for the bird
     private int picNumFly=0; // RN: the current frame
@@ -154,6 +152,7 @@ public class View extends JPanel{
     }
     
     //Getters & Setters
+    
     public int getTutorialLevel() {
 		return tutorialLevel;
 	}
@@ -167,14 +166,6 @@ public class View extends JPanel{
 	}  
 	public ArrayList<Integer> getBackGround() {
 		return background;
-	}
-
-	public boolean isTutorialFlag() {
-		return tutorialFlag;
-	}
-
-	public void setTutorialFlag(boolean tutorialFlag) {
-		this.tutorialFlag = tutorialFlag;
 	}
 
 	public boolean isAnswerRightFlag() {
@@ -338,51 +329,49 @@ public class View extends JPanel{
 				g.drawImage(pic_menu, tempInt, 0, this);
 			}
 			
-			if(!tutorialFlag) {
-				
-				iterator = items.iterator();
-				
-		    	while(iterator.hasNext()) {
-		    		
-		    		Items tempItem = iterator.next();
-		    		switch(tempItem.getItemID()) {
-		    		case PowerUp:
-		    			g.drawImage(pic_power, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
-		    			break;
-		    		case Fly:
-		    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-		    			break;
-		    		case Plane:
-		    			g.drawImage(pic_RNPlane, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-		    			break;
-		    		case Snail:
-		    			g.drawImage(pic_RNSnail, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-		    			break;
-		    		case Car:
-		    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-		    			break;
-		    			
-		    		}	
-		    	}
-		    	//RN: Red Knot
-		    	picNumFly=(picNumFly+1)%frameCountFly;
-		    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
-		    	
-		    	//RN: Mini Map
-		    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
-		    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-		    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
-		    
-		    	//RN: ScoreBoard
-		    	g.setColor(Color.WHITE);
-		    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
-		    	g.setColor(Color.BLACK);
-		    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
-		    	g.setColor(Color.RED); 
-		    	Font font = new Font("Serif", Font.BOLD, 50);
-		    	g.setFont(font);
-		    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);	
-			} 	
+			iterator = items.iterator();
+			
+	    	while(iterator.hasNext()) {
+	    		
+	    		Items tempItem = iterator.next();
+	    		switch(tempItem.getItemID()) {
+	    		case PowerUp:
+	    			g.drawImage(pic_power, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
+	    			break;
+	    		case Fly:
+	    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+	    			break;
+	    		case Plane:
+	    			g.drawImage(pic_RNPlane, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+	    			break;
+	    		case Snail:
+	    			g.drawImage(pic_RNSnail, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+	    			break;
+	    		case Car:
+	    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+	    			break;
+	    			
+	    		}	
+	    	}
+	    	//RN: Red Knot
+	    	picNumFly=(picNumFly+1)%frameCountFly;
+	    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
+	    	
+	    	//RN: Mini Map
+	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
+	    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+	    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
+	    
+	    	//RN: ScoreBoard
+	    	g.setColor(Color.WHITE);
+	    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+	    	g.setColor(Color.BLACK);
+	    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+	    	g.setColor(Color.RED); 
+	    	Font font = new Font("Serif", Font.BOLD, 50);
+	    	g.setFont(font);
+	    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
+						 	
 		}else if(this.gameStatus == GameStatus.RNTutorial) {
 			
 			g.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -469,32 +458,30 @@ public class View extends JPanel{
 		else if(this.gameStatus == GameStatus.CR) {
 			// CR: Background
 			g.drawImage(pic_water, 0, 0, this);
-			if(!tutorialFlag) {
-				//CR: Mini Map
-				g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
-				g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-				g.drawImage(pic_clapperRail_mini, frameWidth-100, (int)(0.625*(-50)+ 111.25), this);
 			
-				//CR: draw the item in the arraylist
-				iterator = CRitems.iterator();
-				while(iterator.hasNext()) {
-					Items tempItem = iterator.next();
-					if(tempItem.getItemID() == ItemsID.Food) {
-						g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
-					}else {
-						g.drawImage(pic_snake, tempItem.getX(), tempItem.getY(), 64, 64, this);
-					}
+			//CR: Mini Map
+			g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
+			g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+			g.drawImage(pic_clapperRail_mini, frameWidth-100, (int)(0.625*(-50)+ 111.25), this);
+		
+			//CR: draw the item in the arraylist
+			iterator = CRitems.iterator();
+			while(iterator.hasNext()) {
+				Items tempItem = iterator.next();
+				if(tempItem.getItemID() == ItemsID.Food) {
+					g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
+				}else {
+					g.drawImage(pic_snake, tempItem.getX(), tempItem.getY(), 64, 64, this);
 				}
-				//CR: Clapper Rail
-				g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
-				
-				//CR: Energy Bar
-				g.drawRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, StatusBar.WIDTH);
-				g.setColor(Color.PINK);
-				g.fillRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, statusBar.getStatus());
 			}
+			//CR: Clapper Rail
+			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
 			
-			
+			//CR: Energy Bar
+			g.drawRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, StatusBar.WIDTH);
+			g.setColor(Color.PINK);
+			g.fillRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, statusBar.getStatus());
+		
 		}else if(this.gameStatus == GameStatus.CRQUIZ) {
 			//CRQUIZ: background
 			g.drawImage(pic_water, 0, 0, this);
@@ -546,7 +533,7 @@ public class View extends JPanel{
     public void update(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, 
     		GameStatus gameStatus, ScoreBoard scoreBoard, ArrayList<Items> items,
     		ArrayList<Items> CRitems, Quiz quiz_RN, Quiz quiz_CR, 
-    		boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag, ArrayList<Integer> background, int tutorialLevel ) {
+    		boolean answerRightFlag, boolean answerWrongFlag, ArrayList<Integer> background, int tutorialLevel, StatusBar statusBar) {
     	//Update everything from model to view
     	this.gameStatus = gameStatus;
     	this.items = items;
@@ -556,71 +543,57 @@ public class View extends JPanel{
     	this.quiz_CR = quiz_CR;
     	this.answerRightFlag = answerRightFlag;
     	this.answerWrongFlag = answerWrongFlag;
-    	this.tutorialFlag = tutorialFlag;
     	this.redKnot = redKnot;
     	this.clapperRail = clapperrail;
     	this.scoreBoard = scoreBoard;
     	this.background = background;
     	this.tutorialLevel = tutorialLevel;
+    	this.statusBar = statusBar;
     	
     	if(this.gameStatus == GameStatus.RN) {
     		
-    		if(tutorialFlag) {
-    			//Arrange the button visibility in tutorial mode
-    			button_newgame.setVisible(true);
-    			button_menu.setVisible(true);
-    			button_next.setVisible(false);
-        		button_redknote.setVisible(false);
-    			button_clapperrail.setVisible(false);
-    			button_submit.setEnabled(false);
-    			button_submit.setVisible(false);
-    			button_A.setVisible(false);
-    	    	button_B.setVisible(false);
-    	    	button_C.setVisible(false);
-    	    	button_D.setVisible(false);
-    		}else {
-    			//Arrange the button visibility in game mode
-    			button_newgame.setVisible(false);
-    			button_redknote.setVisible(false);
-    			button_next.setVisible(false);
-    			button_clapperrail.setVisible(false);
-    			button_menu.setVisible(true);
-    			button_submit.setEnabled(false);
-    			button_submit.setVisible(false);
-    			button_A.setVisible(false);
-    	    	button_B.setVisible(false);
-    	    	button_C.setVisible(false);
-    	    	button_D.setVisible(false);
-    	    	
-    	    	//RN: SpawnCounter add new random item to the items ArrayList
-    	    	itemSpawnCounter++;
-            	if(itemSpawnCounter >= 40) {
-            		itemSpawnCounter = 0;
-            		
-            		switch(random.nextInt(4)) {
-            		case 0:
-            			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, ItemsID.Plane));
-            			break;
-            		case 1:
-            			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, ItemsID.Snail));
-            			break;
-            		case 2:
-            			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, ItemsID.Fly));
-            			break;
-            		case 3:
-            			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
-            			break; 			
-            		}
-	
-            	}
-            	
-            	//RN: Power up Counter, add to the Arraylist 
-            	powerupSpawnCounter++;
-            	if(powerupSpawnCounter==500) {
-            		powerupSpawnCounter=0;
-            		this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),32,32,ItemsID.PowerUp));
-            	}
-    		}	
+    		//Arrange the button visibility in game mode
+			button_newgame.setVisible(false);
+			button_redknote.setVisible(false);
+			button_next.setVisible(false);
+			button_clapperrail.setVisible(false);
+			button_menu.setVisible(true);
+			button_submit.setEnabled(false);
+			button_submit.setVisible(false);
+			button_A.setVisible(false);
+	    	button_B.setVisible(false);
+	    	button_C.setVisible(false);
+	    	button_D.setVisible(false);
+	    	
+	    	//RN: SpawnCounter add new random item to the items ArrayList
+	    	itemSpawnCounter++;
+        	if(itemSpawnCounter >= 40) {
+        		itemSpawnCounter = 0;
+        		
+        		switch(random.nextInt(4)) {
+        		case 0:
+        			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, ItemsID.Plane));
+        			break;
+        		case 1:
+        			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, ItemsID.Snail));
+        			break;
+        		case 2:
+        			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, ItemsID.Fly));
+        			break;
+        		case 3:
+        			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
+        			break; 			
+        		}
+
+        	}
+        	
+        	//RN: Power up Counter, add to the Arraylist 
+        	powerupSpawnCounter++;
+        	if(powerupSpawnCounter==500) {
+        		powerupSpawnCounter=0;
+        		this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),32,32,ItemsID.PowerUp));
+        	}	
+    			
     	}else if(this.gameStatus == GameStatus.RNTutorial) {
     		switch(this.tutorialLevel) {
     		case 6:
@@ -648,65 +621,50 @@ public class View extends JPanel{
 	    	
 	    	
     	}else if(this.gameStatus == GameStatus.CR) {
-    		
-    		if(tutorialFlag) {
-
-    			button_newgame.setVisible(true);
-    			button_menu.setVisible(true);
-    			button_next.setVisible(false);
-        		button_redknote.setVisible(false);
-    			button_clapperrail.setVisible(false);
-    			button_submit.setEnabled(false);
-    			button_submit.setVisible(false);
-    			button_A.setVisible(false);
-    	    	button_B.setVisible(false);
-    	    	button_C.setVisible(false);
-    	    	button_D.setVisible(false);
-    		}else {
-    			//Arrange the button visibility in game mode
-        		button_newgame.setVisible(false);
-        		button_redknote.setVisible(false);
-    			button_clapperrail.setVisible(false);
-    			button_next.setVisible(false);
-    			button_menu.setVisible(true);
-    			
-    			button_submit.setEnabled(false);
-    			button_submit.setVisible(false);
-    			button_A.setVisible(false);
-    	    	button_B.setVisible(false);
-    	    	button_C.setVisible(false);
-    	    	button_D.setVisible(false);
-    	    	
-    	    	//CR: add one random item to the array list if it is empty
-        		if(this.CRitems.size() == 0) {
-        			switch(random.nextInt(8)) {
-        			case 0:
-        				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , ItemsID.Food));
-        				break;
-        			case 1:
-        				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , ItemsID.Food));
-        				break;
-        			case 2:
-        				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 , ItemsID.Food));
-        				break;
-        			case 3:
-        				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , ItemsID.Food));
-        				break;
-        			case 4:
-        				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, 32, 32, ItemsID.Obstacle));
-        				break;
-        			case 5:
-        				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200,32, 32, ItemsID.Obstacle));
-        				break;
-        			case 6:
-        				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32,32, 32, ItemsID.Obstacle));
-        				break;
-        			case 7:
-        				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32,32, 32, ItemsID.Obstacle));
-        				break;
-        			}
-        		}
+    		//Arrange the button visibility in game mode
+    		button_newgame.setVisible(false);
+    		button_redknote.setVisible(false);
+			button_clapperrail.setVisible(false);
+			button_next.setVisible(false);
+			button_menu.setVisible(true);
+			
+			button_submit.setEnabled(false);
+			button_submit.setVisible(false);
+			button_A.setVisible(false);
+	    	button_B.setVisible(false);
+	    	button_C.setVisible(false);
+	    	button_D.setVisible(false);
+	    	
+	    	//CR: add one random item to the array list if it is empty
+    		if(this.CRitems.size() == 0) {
+    			switch(random.nextInt(8)) {
+    			case 0:
+    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , ItemsID.Food));
+    				break;
+    			case 1:
+    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , ItemsID.Food));
+    				break;
+    			case 2:
+    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 , ItemsID.Food));
+    				break;
+    			case 3:
+    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , ItemsID.Food));
+    				break;
+    			case 4:
+    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, 32, 32, ItemsID.Obstacle));
+    				break;
+    			case 5:
+    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200,32, 32, ItemsID.Obstacle));
+    				break;
+    			case 6:
+    				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32,32, 32, ItemsID.Obstacle));
+    				break;
+    			case 7:
+    				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32,32, 32, ItemsID.Obstacle));
+    				break;
+    			}
     		}
+    			
     		
     	}else if(this.gameStatus == GameStatus.CRQUIZ) {
     		// Arrane the button in quiz mode

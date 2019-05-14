@@ -31,7 +31,7 @@ public class Controller implements ActionListener, KeyListener{
 		view = new View();
 		model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getRedKnot(), view.getClapperRail(), view.getMapRN(), 
 				view.getItems(), view.getCRitems(), view.getScoreBoard(), view.getStatusBar(), view.getQuiz_RN(), view.getQuiz_CR(),
-				view.isAnswerRightFlag(), view.isAnswerWrongFlag(), view.isTutorialFlag(), view.getBackGround(), view.getTutorialLevel());
+				view.isAnswerRightFlag(), view.isAnswerWrongFlag(), view.getBackGround(), view.getTutorialLevel());
 		
 		//Initialize the NewGame State
 		fos = new FileOutputStream(NewGame);
@@ -67,7 +67,7 @@ public class Controller implements ActionListener, KeyListener{
 				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(),
 						model.getGamestatus(), model.getScoreBoard(), model.getItems(), 
 						model.getCRitems(), model.getQuiz_RN(), model.getQuiz_CR(),
-						model.isAnswerRightFlag(), model.isAnswerWrongFlag(), model.isTutorialFlag(), model.getBackground(), model.getTutorialLevel());
+						model.isAnswerRightFlag(), model.isAnswerWrongFlag(), model.getBackground(), model.getTutorialLevel(), model.getStatusBar());
 			}
 		};
 		
@@ -200,7 +200,6 @@ public class Controller implements ActionListener, KeyListener{
 				this.model = (Model) ois.readObject();
 				ois.close();
 				fis.close();
-				model.setGamestatus(GameStatus.RN);
 			}catch(Exception e2) {
 				e2.printStackTrace();
 			}
@@ -209,10 +208,7 @@ public class Controller implements ActionListener, KeyListener{
 			model.setAnswerRightFlag(false);
 			model.setAnswerWrongFlag(false);
 			model.setGamestatus(GameStatus.Menu);
-			model.setTutorialLevel(1);
-			model.setTutorialFlag(true);
-			
-			
+			model.setTutorialLevel(1);		
 			break;
 		case "submit":
 			if(model.getGamestatus().equals(GameStatus.RNQUIZ)) {
@@ -235,8 +231,7 @@ public class Controller implements ActionListener, KeyListener{
 				}
 			}
 			break;
-		case "newgame":
-			model.setTutorialFlag(false);
+		case "newgame"://    DELETE THIS
 			break;
 		case "A":
 			view.button_submit.setEnabled(true);
