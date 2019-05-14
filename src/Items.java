@@ -1,8 +1,9 @@
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
-public abstract class Items {
+public abstract class Items implements Serializable{
 	private int width;
 	private int length;
 	private int x;
@@ -11,7 +12,7 @@ public abstract class Items {
 	public static final int Y_VEL = 0;
 	private ItemsID itemID;
 	
-	//constructor
+	//Constructor
 	public Items(int x, int y, int width, int length, ItemsID itemID) {
 		this.x = x;
 		this.y = y;
@@ -21,7 +22,7 @@ public abstract class Items {
 	}
 	
 	
-	// getters and setters
+	//getters and setters
 	public ItemsID getItemID() {
 		return itemID;
 	}
@@ -57,7 +58,7 @@ public abstract class Items {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 	/**
 	 *  created rectangle around the item (hitbox)
 	 */

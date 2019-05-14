@@ -76,9 +76,7 @@ public class View extends JPanel{
     BufferedImage pic_icon_RN;                                            //BufferedImage for RN image on main menu
     BufferedImage pic_icon_CR;                                            //BufferedImage for CR image on main menu
     Image pic_water;                                                      //BufferedImage for water image
-    
-    
-    
+      
     Quiz quiz_RN = new Quiz("quiz/RNQuiz.txt");
     Quiz quiz_CR = new Quiz("quiz/CRQuiz.txt");
     
@@ -88,7 +86,8 @@ public class View extends JPanel{
     JButton button_redknote;
     JButton button_menu;
     JButton button_submit;
-    JButton button_start;
+    JButton button_newgame;
+    JButton button_next;
     
     JRadioButton button_A;
     JRadioButton button_B;
@@ -96,24 +95,24 @@ public class View extends JPanel{
     JRadioButton button_D;
     ButtonGroup group = new ButtonGroup(); // Button group that has 4 JRadioButton for the quiz
     
-    JPanel rkSide;
-    JPanel crSide;
-    
-    private JTextArea rkTextArea;
-    private JTextArea crTextArea;
-    
     GameStatus gameStatus = GameStatus.Menu;
+    
+//    private boolean answerRightFlag = false; 
+//    private boolean answerWrongFlag = false;
+//    private boolean tutorialFlag = true;
     
     private boolean answerRightFlag; // a flag to indicate if the answer is right
 	private boolean answerWrongFlag; // a flag to indicate if the answer is wrong 
 	private boolean  tutorialFlag;   // a flag to make sure the tutorial is before the game
     
-    final int frameCountFly=4; // RN: 4 frame for the bird
+	final int frameCountFly=4; // RN: 4 frame for the bird
     private int picNumFly=0; // RN: the current frame
     
+    private int tutorialLevel = 1; // LevelConuter in Tutorial
+    
     public View() {
-    	System.out.println(frameWidth);
-    	System.out.println(frameHeight);
+//    	System.out.println(frameWidth);
+//    	System.out.println(frameHeight);
     	background.add(0);
     	background.add(frameWidth);
     	this.setLayout(new FlowLayout());
@@ -124,8 +123,6 @@ public class View extends JPanel{
     	//Buttons
     	makeButtons();
 
-    	//make text areas for instructions for games
-    	makeTextAreas();
     	random = new Random();
     	
     	//Create Birds
@@ -156,9 +153,15 @@ public class View extends JPanel{
     	frame.setVisible(true);
     }
     
-    
     //Getters & Setters
-    
+    public int getTutorialLevel() {
+		return tutorialLevel;
+	}
+
+	public void setTutorialLevel(int tutorialLevel) {
+		this.tutorialLevel = tutorialLevel;
+	}
+	
     public int getFrameWidth() {
 		return frameWidth;
 	}  
@@ -166,98 +169,68 @@ public class View extends JPanel{
 		return background;
 	}
 
-
 	public boolean isTutorialFlag() {
 		return tutorialFlag;
 	}
-
 
 	public void setTutorialFlag(boolean tutorialFlag) {
 		this.tutorialFlag = tutorialFlag;
 	}
 
-
 	public boolean isAnswerRightFlag() {
 		return answerRightFlag;
 	}
-
 
 	public void setAnswerRightFlag(boolean anserRightFlag) {
 		this.answerRightFlag = anserRightFlag;
 	}
 
-
 	public boolean isAnswerWrongFlag() {
 		return answerWrongFlag;
 	}
-
 
 	public void setAnswerWrongFlag(boolean answerWrongFlag) {
 		this.answerWrongFlag = answerWrongFlag;
 	}
 
-
 	public Quiz getQuiz_RN() {
 		return quiz_RN;
 	}
+	
 	public Quiz getQuiz_CR() {
 		return quiz_CR;
 	}
+	
 	public int getFrameHeight() {
 		return frameHeight;
 	}
+	
 	public ScoreBoard getScoreBoard() {
 		return scoreBoard;
 	}
+	
     public ArrayList<Items> getCRitems() {
 		return CRitems;
 	}
+    
 	public RedKnot getRedKnot() {
 		return redKnot;
 	}
+	
 	public ClapperRail getClapperRail() {
 		return clapperRail;
 	}
+	
 	public ArrayList<Items> getItems() {
 		return items;
 	}
+	
 	public Map getMapRN() {
 		return mapRN;
 	}
+	
 	public StatusBar getStatusBar() {
 		return statusBar;
-	}
-	
-
-	
-	/**
-	 * makes, writes, and places both text boxes into menu 
-	 */
-	private void makeTextAreas() {
-		final int textAreaWidth = 530;
-		final int textAreaHeight = 500;
-		// init textareas
-		rkTextArea = new JTextArea();
-		crTextArea = new JTextArea();
-					
-				
-		rkTextArea.setEditable(false);
-		rkTextArea.setFont(new Font("Arial", Font.PLAIN, 20));
-		rkTextArea.setVisible(false);
-		rkTextArea.setOpaque(false);
-		rkTextArea.setBounds(frameWidth/2-250,100,textAreaWidth,textAreaHeight);
-		rkTextArea.setLineWrap(true);
-				
-		crTextArea.setEditable(false);
-		crTextArea.setFont(new Font("Arial", Font.PLAIN, 20));
-		crTextArea.setVisible(false);
-		crTextArea.setOpaque(false);
-		crTextArea.setBounds(frameWidth/2-250,100, textAreaWidth,textAreaHeight);
-		crTextArea.setLineWrap(true);
-				
-		this.add(rkTextArea);
-		this.add(crTextArea);
-				
 	}
 	
 	
@@ -273,7 +246,7 @@ public class View extends JPanel{
     	button_redknote.setContentAreaFilled(false);
     	button_redknote.setBorderPainted(false);
     	button_redknote.setActionCommand("redKnot");
-    	button_redknote.setFont(new Font("Serif", Font.PLAIN, 40));
+    	button_redknote.setFont(new Font("Arial", Font.PLAIN, 40));
     	button_redknote.setVisible(true);
     	
     	button_clapperrail = new JButton("Clapper Rail", new ImageIcon(pic_icon_CR));  
@@ -283,15 +256,12 @@ public class View extends JPanel{
     	button_clapperrail.setContentAreaFilled(false);
     	button_clapperrail.setBorderPainted(false);
     	button_clapperrail.setActionCommand("clapperRail");
-    	button_clapperrail.setFont(new Font("Serif", Font.PLAIN, 40));
+    	button_clapperrail.setFont(new Font("Arial", Font.PLAIN, 40));
     	button_clapperrail.setVisible(true);
     	
     	button_menu = new JButton("Menu");
-    	button_menu.setBounds(frameWidth/2-75, 20, 150, 64);
+    	button_menu.setBounds(frameWidth/2-32, 0, 64, 32);
     	button_menu.setBackground(Color.GRAY);
-    	//button_menu.setColor(Color.WHITE);
-    	Font font = new Font("Serif", Font.BOLD, 40);
-    	button_menu.setFont(font);
     	button_menu.setOpaque(false);
     	button_menu.setActionCommand("menu");
     	button_menu.setVisible(false);
@@ -304,12 +274,19 @@ public class View extends JPanel{
     	button_submit.setEnabled(false);
     	button_submit.setVisible(false);
     	
-    	button_start = new JButton("Start");
-    	button_start.setBounds(frameWidth/2-64, frameHeight/2-32, 128, 64); //64 , 32
-    	button_start.setBackground(Color.GRAY);
-    	button_start.setOpaque(false);
-    	button_start.setActionCommand("start");
-    	button_start.setVisible(false);
+    	button_newgame = new JButton("New Game");
+    	button_newgame.setBounds(frameWidth/2-64, frameHeight/2-32, 128, 64); //64 , 32
+    	button_newgame.setBackground(Color.GRAY);
+    	button_newgame.setOpaque(false);
+    	button_newgame.setActionCommand("newgame");
+    	button_newgame.setVisible(false);
+    	
+    	button_next = new JButton("Next");
+    	button_next.setBounds(frameWidth/2+64, 0, 64, 32); //64 , 32
+    	button_next.setBackground(Color.GRAY);
+    	button_next.setOpaque(false);
+    	button_next.setActionCommand("next");
+    	button_next.setVisible(false);
     	
     	button_A = new JRadioButton();
     	button_B = new JRadioButton();
@@ -321,6 +298,7 @@ public class View extends JPanel{
     	button_C.setBounds(frameWidth/2-200, frameHeight/2, 512, 32);
     	button_D.setBounds(frameWidth/2-200, frameHeight/2+64, 512, 32);
     	
+//    	ButtonGroup group = new ButtonGroup();
 		group.add(button_A);
 		group.add(button_B);
 		group.add(button_C);
@@ -340,7 +318,8 @@ public class View extends JPanel{
     	this.add(button_menu);
     	this.add(button_clapperrail);
     	this.add(button_submit);
-    	this.add(button_start);
+    	this.add(button_newgame);
+    	this.add(button_next);
     	
     	this.add(button_A);
 		this.add(button_B);
@@ -349,7 +328,7 @@ public class View extends JPanel{
 	}
 	
 	
-	public void paintComponent(Graphics g) { 
+	public void paintComponent(Graphics g) {
 		
 		if(this.gameStatus == GameStatus.RN) {
 			//Draw the background with the x location in the arraylist 
@@ -382,12 +361,8 @@ public class View extends JPanel{
 		    		case Car:
 		    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
 		    			break;
-		    		default:
-		    			break;
-		    		}
-		    		
-		    		
-		    		
+		    			
+		    		}	
 		    	}
 		    	//RN: Red Knot
 		    	picNumFly=(picNumFly+1)%frameCountFly;
@@ -395,9 +370,9 @@ public class View extends JPanel{
 		    	
 		    	//RN: Mini Map
 		    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
-		    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
 		    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-		    	
+		    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
+		    
 		    	//RN: ScoreBoard
 		    	g.setColor(Color.WHITE);
 		    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
@@ -406,15 +381,92 @@ public class View extends JPanel{
 		    	g.setColor(Color.RED); 
 		    	Font font = new Font("Serif", Font.BOLD, 50);
 		    	g.setFont(font);
-		    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
-
-		    	
-			}
+		    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);	
+			} 	
+		}else if(this.gameStatus == GameStatus.RNTutorial) {
 			
-
-	    	
-	    	
-		}else if(this.gameStatus == GameStatus.CR) {
+			g.setFont(new Font("Serif", Font.PLAIN, 30));
+			itbackground = background.iterator();
+			while(itbackground.hasNext()) {
+				int tempInt = itbackground.next();
+				g.drawImage(pic_menu, tempInt, 0, this);
+			}
+			switch(tutorialLevel) {
+			case 7:
+				g.setColor(Color.RED);
+				g.drawString("Good Job!", frameWidth/2-50, 100);
+				g.drawString("Here are the Items that will show up in the game", frameWidth/2-300, 150);
+				g.drawString("Avoid Airplanes and Cars, and Catch Snails and Flys", frameWidth/2-300, 250);
+				g.drawString("You are all set! Click The [Next] button on the top", frameWidth/2-300, 500);
+				g.drawImage(pic_RNPlane, frameWidth/2-400, 300, 180, 100, this);
+				g.drawImage(pic_RNCar, frameWidth/2-150, 300, 200, 128, this);
+				g.drawImage(pic_RNFly, frameWidth/2+100, 300, 64, 64, this);
+				g.drawImage(pic_RNSnail, frameWidth/2+350, 300, 64, 64, this);
+			case 6:
+				if(tutorialLevel == 6) {
+					iterator = items.iterator();
+					g.setColor(Color.RED);
+					g.drawString("Go Catch that fly!", frameWidth/2-100, 100);
+			    	while(iterator.hasNext()) {
+			    		Items tempItem = iterator.next();
+			    		g.drawImage(pic_RNFly, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
+			    	}
+				}
+				
+			case 5:
+				g.setColor(Color.WHITE);
+		    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+		    	g.setColor(Color.BLACK);
+		    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+		    	g.setColor(Color.RED); 
+		    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
+		    	if(tutorialLevel == 5) {
+		    		g.drawOval(ScoreBoard.X-48, ScoreBoard.Y-16, ScoreBoard.LENGTH+100, ScoreBoard.WIDTH+32);
+			    	g.drawString("The Score Board shows your grade", ScoreBoard.X + ScoreBoard.LENGTH+60, ScoreBoard.Y + 32);
+		    	}
+			case 4:
+				g.setColor(Color.BLACK);
+				g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
+		    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+		    	g.drawImage(pic_redKnot_mini, 1390, 80, this);
+		    	g.setColor(Color.RED);
+		    	if(tutorialLevel == 4) {
+		    		g.fillRect(frameWidth-140, 85, 80, 4); 
+					g.drawString("Red Knot stops at Delaware Bay", frameWidth-540, 90);
+		    	}
+				
+			case 3: 
+				
+				if(tutorialLevel == 3) {
+					g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
+			    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+			    	g.drawImage(pic_redKnot_mini, 1310, 30, this);
+			    	g.setColor(Color.RED);
+					g.fillRect(frameWidth-220, 35, 80, 4); //1220
+					g.drawString("Red Knot migrates from Canada", frameWidth-620, 50); 
+				}
+			case 2:
+				
+		    	if(tutorialLevel == 2) {
+		    		g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
+			    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+			    	g.setColor(Color.RED);
+		    		g.drawOval(mapRN.getX()-32, mapRN.getY()-32, 192 , 192);
+		    		g.drawString("Here is a Mini Map shows the migration.", mapRN.getX()-550, mapRN.getY()+80 );
+		    	}
+			case 1:
+				g.setColor(Color.RED);
+				picNumFly=(picNumFly+1)%frameCountFly;
+		    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
+		    	if(tutorialLevel == 1) {
+		    		g.drawOval(redKnot.getX(), redKnot.getY(), 200, 200);
+		    		g.drawString("Try using the Arrow Keys to controll the bird. Click [Next] on the top to continue", redKnot.getX()+200, redKnot.getY()+100);
+		    	}
+		    	break;
+			}
+		}
+		
+		else if(this.gameStatus == GameStatus.CR) {
 			// CR: Background
 			g.drawImage(pic_water, 0, 0, this);
 			if(!tutorialFlag) {
@@ -432,7 +484,6 @@ public class View extends JPanel{
 					}else {
 						g.drawImage(pic_snake, tempItem.getX(), tempItem.getY(), 64, 64, this);
 					}
-					
 				}
 				//CR: Clapper Rail
 				g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
@@ -485,18 +536,17 @@ public class View extends JPanel{
 				button_submit.setEnabled(false);
 			}
 			
-		}else if(this.gameStatus == GameStatus.Menu){
+		}else if(this.gameStatus == GameStatus.Menu){	
 			//Menu: Background
-				g.drawImage(pic_menu, 0, 0, this);		
+			g.drawImage(pic_menu, 0, 0, this);		
 		}
     }
-    
-    //repaint();
+
     //update birds location, items location, and score(status)
     public void update(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, 
     		GameStatus gameStatus, ScoreBoard scoreBoard, ArrayList<Items> items,
     		ArrayList<Items> CRitems, Quiz quiz_RN, Quiz quiz_CR, 
-    		boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag, ArrayList<Integer> background ) {
+    		boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag, ArrayList<Integer> background, int tutorialLevel ) {
     	//Update everything from model to view
     	this.gameStatus = gameStatus;
     	this.items = items;
@@ -511,15 +561,15 @@ public class View extends JPanel{
     	this.clapperRail = clapperrail;
     	this.scoreBoard = scoreBoard;
     	this.background = background;
+    	this.tutorialLevel = tutorialLevel;
     	
     	if(this.gameStatus == GameStatus.RN) {
     		
     		if(tutorialFlag) {
     			//Arrange the button visibility in tutorial mode
-    			rkTextArea.setVisible(true); 
-    			button_start.setVisible(true);
+    			button_newgame.setVisible(true);
     			button_menu.setVisible(true);
-        		crTextArea.setVisible(false);
+    			button_next.setVisible(false);
         		button_redknote.setVisible(false);
     			button_clapperrail.setVisible(false);
     			button_submit.setEnabled(false);
@@ -530,10 +580,9 @@ public class View extends JPanel{
     	    	button_D.setVisible(false);
     		}else {
     			//Arrange the button visibility in game mode
-    			rkTextArea.setVisible(false);
-    			crTextArea.setVisible(false);
-    			button_start.setVisible(false);
+    			button_newgame.setVisible(false);
     			button_redknote.setVisible(false);
+    			button_next.setVisible(false);
     			button_clapperrail.setVisible(false);
     			button_menu.setVisible(true);
     			button_submit.setEnabled(false);
@@ -560,13 +609,11 @@ public class View extends JPanel{
             			break;
             		case 3:
             			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
-            			break;
-
-            			
+            			break; 			
             		}
-
-            		
+	
             	}
+            	
             	//RN: Power up Counter, add to the Arraylist 
             	powerupSpawnCounter++;
             	if(powerupSpawnCounter==500) {
@@ -574,14 +621,39 @@ public class View extends JPanel{
             		this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),32,32,ItemsID.PowerUp));
             	}
     		}	
+    	}else if(this.gameStatus == GameStatus.RNTutorial) {
+    		switch(this.tutorialLevel) {
+    		case 6:
+    			button_next.setEnabled(false);
+    			if(this.items.size() <= 0) {
+    				this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, ItemsID.Fly));
+    			}
+    			break;
+    		default:
+    			button_next.setEnabled(true);
+    			break;
+    		}
+    		
+    		button_next.setVisible(true);
+    		button_newgame.setVisible(false);
+			button_redknote.setVisible(false);
+			button_clapperrail.setVisible(false);
+			button_menu.setVisible(true);
+			button_submit.setEnabled(false);
+			button_submit.setVisible(false);
+			button_A.setVisible(false);
+	    	button_B.setVisible(false);
+	    	button_C.setVisible(false);
+	    	button_D.setVisible(false);
+	    	
+	    	
     	}else if(this.gameStatus == GameStatus.CR) {
     		
     		if(tutorialFlag) {
-    			//Arrange the button visibility in tutorial mode
-    			crTextArea.setVisible(true);
-    			button_start.setVisible(true);
+
+    			button_newgame.setVisible(true);
     			button_menu.setVisible(true);
-        		rkTextArea.setVisible(false);
+    			button_next.setVisible(false);
         		button_redknote.setVisible(false);
     			button_clapperrail.setVisible(false);
     			button_submit.setEnabled(false);
@@ -592,11 +664,10 @@ public class View extends JPanel{
     	    	button_D.setVisible(false);
     		}else {
     			//Arrange the button visibility in game mode
-        		rkTextArea.setVisible(false);
-        		crTextArea.setVisible(false);
-        		button_start.setVisible(false);
+        		button_newgame.setVisible(false);
         		button_redknote.setVisible(false);
     			button_clapperrail.setVisible(false);
+    			button_next.setVisible(false);
     			button_menu.setVisible(true);
     			
     			button_submit.setEnabled(false);
@@ -654,6 +725,7 @@ public class View extends JPanel{
 			button_menu.setVisible(true);
 			
 			button_submit.setVisible(true);
+			button_next.setVisible(false);
 			button_A.setVisible(true);
 	    	button_B.setVisible(true);
 	    	button_C.setVisible(true);
@@ -674,24 +746,21 @@ public class View extends JPanel{
 			button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);
 			button_menu.setVisible(true);
+			button_next.setVisible(false);
 			
 			button_submit.setVisible(true);
 			button_A.setVisible(true);
 	    	button_B.setVisible(true);
 	    	button_C.setVisible(true);
 	    	button_D.setVisible(true);
-			
-			
-			
+
 		}else if(this.gameStatus == GameStatus.Menu) {
 			//Arrange the button in menu mode
-
-			rkTextArea.setVisible(false);
-    		crTextArea.setVisible(false);
 			button_menu.setVisible(false);
 			button_redknote.setVisible(true);
 			button_clapperrail.setVisible(true);
-			button_start.setVisible(false);
+			button_newgame.setVisible(false);
+			button_next.setVisible(false);
 			
 			button_submit.setEnabled(false);
 			button_submit.setVisible(false);
@@ -699,11 +768,8 @@ public class View extends JPanel{
 	    	button_B.setVisible(false);
 	    	button_C.setVisible(false);
 	    	button_D.setVisible(false);
-	    	
 		}
-    	
-    	
-    	frame.repaint(); // call the painComponent();
+    	frame.repaint();	// call the painComponent();
 		try {
 			Thread.sleep(20);
 		} catch (InterruptedException e) {
@@ -711,11 +777,7 @@ public class View extends JPanel{
 		}
     }
     
-    
-    //
     //Create Images 
-    //
-    
     public void createImages() {
     	BufferedImage bufferedImage;
     	try {

@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.*;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -17,26 +18,41 @@ public class Controller implements ActionListener, KeyListener{
 	final int frameHeight;
 	
 	
+	//Serializable
+	String NewGame = "Serialization/NewGame.txt";
+	String Continue = "Serialization/Continue.txt";
+	FileOutputStream fos;
+	ObjectOutputStream oos;
+	FileInputStream fis;
+	ObjectInputStream ois;
 	
 	//Controller Constructor
-	public Controller () {
+	public Controller () throws Exception {
 		view = new View();
 		model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getRedKnot(), view.getClapperRail(), view.getMapRN(), 
 				view.getItems(), view.getCRitems(), view.getScoreBoard(), view.getStatusBar(), view.getQuiz_RN(), view.getQuiz_CR(),
-				view.isAnswerRightFlag(), view.isAnswerWrongFlag(), view.isTutorialFlag(), view.getBackGround());
+				view.isAnswerRightFlag(), view.isAnswerWrongFlag(), view.isTutorialFlag(), view.getBackGround(), view.getTutorialLevel());
+		
+		//Initialize the NewGame State
+		fos = new FileOutputStream(NewGame);
+		oos = new ObjectOutputStream(fos);
+		oos.writeObject(model);
+		oos.close();
+		fos.close();
 		
 		// add ActionListener to Jbuttons and JRadioButtons
 		view.button_redknote.addActionListener(this);
 		view.button_clapperrail.addActionListener(this);
 		view.button_menu.addActionListener(this);
 		view.button_submit.addActionListener(this);
-		view.button_start.addActionListener(this);
+		view.button_newgame.addActionListener(this);
+		view.button_next.addActionListener(this);
 		view.button_A.addActionListener(this);
 		view.button_B.addActionListener(this);
 		view.button_C.addActionListener(this);
 		view.button_D.addActionListener(this);
 		
-		//add KeyListener;
+		//view.button_submit;
 		view.addKeyListener(this);
 		this.frameWidth = view.getFrameWidth();
 		this.frameHeight = view.getFrameHeight();
@@ -47,16 +63,16 @@ public class Controller implements ActionListener, KeyListener{
 	public void start() {
 		drawAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				model.updateLocation();  // update everything with model
-				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(), // update data in View with the data from Model
+				model.updateLocation();	 // update everything with model
+				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(),
 						model.getGamestatus(), model.getScoreBoard(), model.getItems(), 
 						model.getCRitems(), model.getQuiz_RN(), model.getQuiz_CR(),
-						model.isAnswerRightFlag(), model.isAnswerWrongFlag(), model.isTutorialFlag(), model.getBackground());
+						model.isAnswerRightFlag(), model.isAnswerWrongFlag(), model.isTutorialFlag(), model.getBackground(), model.getTutorialLevel());
 			}
 		};
 		
 		EventQueue.invokeLater(new Runnable(){
-			public void run(){ 
+			public void run(){
 				Timer t = new Timer(drawDelay, drawAction);
 				t.start();
 			}
@@ -64,16 +80,14 @@ public class Controller implements ActionListener, KeyListener{
 	}
 	
 	@Override
-	public void keyTyped(KeyEvent e) {}
+	public void keyTyped(KeyEvent e) {} //Not Used
 
-	/**
-	 * depending on the game, arrow keys perform different actions in moving the birds
-	 */
+	//depending on the game, arrow keys perform different actions in moving the birds
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if(model.getGamestatus() == GameStatus.RN) { //Arrow Keys for the Red Knot Game: Set the x or y Velocity to 10 or -10
-			
+		if(model.getGamestatus() == GameStatus.RN || model.getGamestatus() == GameStatus.RNTutorial) {
+			//Arrow Keys for the Red Knot Game: Set the x or y Velocity to 10 or -10
 			if(keyCode == KeyEvent.VK_UP) {
 				model.getRedKnot().setyVel(-Model.RK_VELOCITY);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
@@ -82,9 +96,32 @@ public class Controller implements ActionListener, KeyListener{
 				model.getRedKnot().setyVel(Model.RK_VELOCITY);
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
 				model.getRedKnot().setxVel(Model.RK_VELOCITY);
+			}else if(keyCode == KeyEvent.VK_1) {  						///////////////New Game /////////////
+				try {
+					fos = new FileOutputStream(Continue);
+					oos = new ObjectOutputStream(fos);
+					oos.writeObject(model);
+					oos.close();
+					fos.close();
+					
+					
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			}else if(keyCode == KeyEvent.VK_2) {  	
+				try {
+					fis = new FileInputStream(Continue);
+					ois = new ObjectInputStream(fis);
+					this.model = (Model) ois.readObject();
+					ois.close();
+					fis.close();
+				}catch(Exception e2) {
+					e2.printStackTrace();
+				}
 			}
-		}else if(model.getGamestatus() == GameStatus.CR) { //Arrow Keys for the Clapper Rail Game: Move the bird to a specific position
-			
+		}else if(model.getGamestatus() == GameStatus.CR) {
+			//Arrow Keys for the Clapper Rail Game: Move the bird to a specific position
 			if(keyCode == KeyEvent.VK_UP) {
 				model.getClapperrail().setY(frameHeight/2-200-100);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
@@ -98,14 +135,12 @@ public class Controller implements ActionListener, KeyListener{
 		
 		
 	}
-
-	/**
-	 * depending on the game, arrow keys perform different actions when releasing the buttons
-	 */
+	//depending on the game, arrow keys perform different actions when releasing the buttons
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if(model.getGamestatus() == GameStatus.RN) { //Arrow Keys for the Red Knot Game: Set the x or y Velocity to 0
+		if(model.getGamestatus() == GameStatus.RN || model.getGamestatus() == GameStatus.RNTutorial) {
+			//Arrow Keys for the Red Knot Game: Set the x or y Velocity to 0
 			if(keyCode == KeyEvent.VK_UP) {
 				model.getRedKnot().setyVel(0);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
@@ -115,10 +150,10 @@ public class Controller implements ActionListener, KeyListener{
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
 				model.getRedKnot().setxVel(0);
 			}
-		}else if(model.getGamestatus() == GameStatus.CR) { //Arrow Keys for the Clapper Rail Game: Move the bird back to the original position
+		}else if(model.getGamestatus() == GameStatus.CR) {
+			//Arrow Keys for the Clapper Rail Game: Move the bird back to the original position
 			final int CR_START_LOC_HEIGHT = frameHeight/2-100;
 			final int CR_START_LOC_WIDTH = frameWidth/2-100;
-			
 			if(keyCode == KeyEvent.VK_UP) {			
 				model.getClapperrail().setY(CR_START_LOC_HEIGHT);
 			}else if(keyCode == KeyEvent.VK_LEFT) {
@@ -128,35 +163,61 @@ public class Controller implements ActionListener, KeyListener{
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
 				model.getClapperrail().setX(CR_START_LOC_WIDTH);
 			}
-		}
-		
-		
+		}	
 	}
-
 	@Override
 	//implementation with different action command to make action when click the button
-	public void actionPerformed(ActionEvent e) { 
+	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "redKnot": 
-			model.setGamestatus(GameStatus.RN);
+		case "redKnot":
+			model.setGamestatus(GameStatus.RNTutorial);
+			model.setTutorialLevel(1);
 			break;
-			
+		case "next":
+			model.setTutorialLevel(model.getTutorialLevel()+1);
+			if(model.getTutorialLevel() >= 8) {
+				try {
+					fis = new FileInputStream(NewGame);
+					ois = new ObjectInputStream(fis);
+					this.model = (Model) ois.readObject();
+					ois.close();
+					fis.close();
+					model.setGamestatus(GameStatus.RN);
+				}catch(Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			break;
 		case "clapperRail":
+			model.setTutorialLevel(1);
 			model.setGamestatus(GameStatus.CR);
 			break;
 			
 		case "menu":
+			try {
+				fis = new FileInputStream(NewGame);
+				ois = new ObjectInputStream(fis);
+				this.model = (Model) ois.readObject();
+				ois.close();
+				fis.close();
+				model.setGamestatus(GameStatus.RN);
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+			
 			view.group.clearSelection();
 			model.setAnswerRightFlag(false);
 			model.setAnswerWrongFlag(false);
 			model.setGamestatus(GameStatus.Menu);
+			model.setTutorialLevel(1);
 			model.setTutorialFlag(true);
+			
 			
 			break;
 		case "submit":
 			if(model.getGamestatus().equals(GameStatus.RNQUIZ)) {
 				
-				if(model.getQuiz_RN().getSelected().equals(model.getQuiz_RN().getQuestions().get(model.getQuiz_RN().getQuestionIndex()).getCorrectanswer())) {
+				if(model.getQuiz_RN().getSelected().equals(model.getQuiz_RN().getQuestions().get(model.getQuiz_RN().getQuestionIndex()).correctanswer)) {
 					model.setAnswerRightFlag(true);
 					model.setAnswerWrongFlag(false);
 				}else {
@@ -165,7 +226,7 @@ public class Controller implements ActionListener, KeyListener{
 				}
 			}else if (model.getGamestatus().equals(GameStatus.CRQUIZ)){
 				
-				if(model.getQuiz_CR().getSelected().equals(model.getQuiz_CR().getQuestions().get(model.getQuiz_CR().getQuestionIndex()).getCorrectanswer())) {
+				if(model.getQuiz_CR().getSelected().equals(model.getQuiz_CR().getQuestions().get(model.getQuiz_CR().getQuestionIndex()).correctanswer)) {
 					model.setAnswerRightFlag(true);
 					model.setAnswerWrongFlag(false);
 				}else {
@@ -174,7 +235,7 @@ public class Controller implements ActionListener, KeyListener{
 				}
 			}
 			break;
-		case "start":
+		case "newgame":
 			model.setTutorialFlag(false);
 			break;
 		case "A":
@@ -211,9 +272,7 @@ public class Controller implements ActionListener, KeyListener{
 			};
 			break;
 		}
-		
 		view.requestFocusInWindow();
-		
 	}
 
 }

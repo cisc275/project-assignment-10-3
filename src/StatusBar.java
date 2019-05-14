@@ -1,17 +1,18 @@
-public class StatusBar {
+import java.io.Serializable;
+
+public class StatusBar implements Serializable{
 	private final int X;
 	private final int Y;
 	public final static int WIDTH = 300;
 	public final static int LENGTH = 32;
 	private int status = 0;
 	
-	// constructor
 	public StatusBar(int x, int y) {
 		this.X = x;
 		this.Y = y;
 	}
-	
-	// getters and setters
+
+	//getters & setters
 	public int getStatus() {
 		return status;
 	}

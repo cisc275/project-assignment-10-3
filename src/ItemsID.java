@@ -1,5 +1,6 @@
-// identifies the item
-public enum ItemsID {
+import java.io.Serializable;
+//identifies the item
+public enum ItemsID implements Serializable{
 	Fly(),
 	Snail(),
 	Car(),

@@ -12,12 +12,10 @@ public class PowerUp extends Items{
 		return false;
 	}
 
-	/**
-	 * makes the food disappear on the screen
+	/*
+	 * Description: makes the food disappear on the screen
 	 */
 	@Override
-	public void exit() {
-		
-	}
+	public void exit() {}
 
 }

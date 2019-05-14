@@ -1,6 +1,7 @@
 import java.awt.Rectangle;
+import java.io.Serializable;
 
-public class ClapperRail {
+public class ClapperRail implements Serializable{
 	private int x;
 	private int y;
 	private final int length = 32;

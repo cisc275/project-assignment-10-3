@@ -1,17 +1,18 @@
+import java.io.Serializable;
 
-public class Question {
-	private String question;
-	private String[] answers;
-	private String correctanswer;
+public class Question implements Serializable {
+	String question;
+	String[] answers;
+	String correctanswer;
 	
-	// constructor
+	//Constructor
 	public Question(String question, String[] answer, String correctanwer) {
 		this.question = question;
 		this.answers = answer;
 		this.correctanswer = correctanwer;
 	}
 
-	// getters and setters
+	//getters & setters 
 	public String getQuestion() {
 		return question;
 	}

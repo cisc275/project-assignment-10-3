@@ -1,19 +1,20 @@
-public class Map {
-	
-	//private final int WIDTH = 64;
-	//private final int LENGTH = 64;
+import java.io.Serializable;
+
+public class Map implements Serializable{
+//	private final int width = 64;
+//	private final int length = 64;
 	private int x;//for current location on map 
 	private final int y = 20;
 	private int status;
 	private int status_Y = 30;
 	
-	// constructor
+	//Conctructor
 	public Map(int x, int status) {
 		this.x = x;
 		this.status = status;
 	}
 	
-	// getters and setters
+	//getters and setters
 	public int getStatus() {
 		return status;
 	}

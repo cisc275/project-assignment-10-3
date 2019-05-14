@@ -1,9 +1,10 @@
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-public class Model {
+public class Model implements Serializable{
 	
 	private ClapperRail clapperRail;
 	private RedKnot redKnot;
@@ -18,13 +19,13 @@ public class Model {
 	private final int CR_STATUS_CAP = 300;
 	private final int CR_STATUS_INCREMENT = 15;
 	public final static int RK_VELOCITY = 10;
-	
+		
 	private int frameWidth;
     private int frameHeight;
 
     ArrayList<Items> items;
     ArrayList<Items> CRitems;
-    Iterator<Items> iterator;
+    transient Iterator<Items> iterator;
     
     Quiz quiz_RN;
     Quiz quiz_CR;
@@ -40,13 +41,15 @@ public class Model {
 	private boolean answerWrongFlag; // a flag to indicate if the answer is wrong 
 	private boolean  tutorialFlag;   // a flag to make sure the tutorial is before the game
 	ArrayList<Integer> background = new ArrayList<>();
-	Iterator<Integer> itbackground;
+	transient Iterator<Integer> itbackground;
+	
+	private int tutorialLevel = 1; // LevelConuter in Tutorial
     
 	// constructor
 	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, 
 			ArrayList<Items> items, ArrayList<Items> CRitems,
 			ScoreBoard scoreBoard, StatusBar statusBar, Quiz quiz_RN, Quiz quiz_CR,
-			boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag, ArrayList<Integer> background) {
+			boolean answerRightFlag, boolean answerWrongFlag, boolean tutorialFlag, ArrayList<Integer> background, int tutorialLevel) {
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
 		this.redKnot = redKnot;
@@ -62,10 +65,19 @@ public class Model {
 		this.answerWrongFlag = answerWrongFlag;
 		this.tutorialFlag = tutorialFlag;
 		this.background = background;
+		this.tutorialLevel = tutorialLevel;
 		
 	}
 	
 	// getters and setters
+	public int getTutorialLevel() {
+		return tutorialLevel;
+	}
+
+	public void setTutorialLevel(int tutorialLevel) {
+		this.tutorialLevel = tutorialLevel;
+	}
+
 	public ArrayList<Integer> getBackground() {
 		return background;
 	}
@@ -129,7 +141,7 @@ public class Model {
 	public ClapperRail getClapperrail() {
 		return clapperRail;
 	}
-
+	
 	public Map getMapRN() {
 		return mapRN;
 	}
@@ -146,13 +158,11 @@ public class Model {
 		return redKnot;
 	}
 
-	/**
-	 *  given the state of the game, the locations are all updated
-	 */
-	public void updateLocation() { 
-		if(gamestatus == GameStatus.RN) {
-			if(!tutorialFlag) { // is tutorialFlag is false, the game will start
-				//Make Sure the background is moving
+	//given the state of the game, the locations are all updated
+	public void updateLocation() {
+		if(gamestatus == GameStatus.RN ) {
+			if(!tutorialFlag) {
+				//Moving Background
 				background.set(0, background.get(0)-1);
 				background.set(1, background.get(1)-1);
 				itbackground = background.iterator();
@@ -178,6 +188,7 @@ public class Model {
 					}
 					
 				}
+				
 				redKnot.setX(redKnot.getX()+redKnot.getxVel());
 				redKnot.setY(redKnot.getY()+redKnot.getyVel());
 				birdOutOfBounds(redKnot);
@@ -196,11 +207,59 @@ public class Model {
 					
 					gamestatus = GameStatus.RNQUIZ;
 					mapRN.setStatus(frameWidth-130);
-					//Need Reset Everything?		
-			}
+				}
 				
 			}
-		}else if(gamestatus == GameStatus.CR) {
+		}else if(gamestatus == GameStatus.RNTutorial) {
+			switch(tutorialLevel) {
+			case 7:
+				
+			case 6:
+				if(tutorialLevel == 6) {
+				iterator = items.iterator();
+				while(iterator.hasNext()) {
+					Items tempItem = iterator.next();
+					tempItem.setX(tempItem.getX() + Items.X_VEL);
+					tempItem.setY(tempItem.getY() + Items.Y_VEL);
+					if(!collisionRK(tempItem,redKnot)) {;
+					itemsOutOfBounds(tempItem);
+					}
+				}
+				
+					if(this.scoreBoard.getScore() >= 10) {
+						tutorialLevel = 7;
+					}
+				}
+			
+			case 5:
+			case 4:	
+			case 3:
+			case 2:	
+			case 1:
+				background.set(0, background.get(0)-1);
+				background.set(1, background.get(1)-1);
+				itbackground = background.iterator();
+				while(itbackground.hasNext()) {
+					int tempInt = itbackground.next();
+					if(tempInt <= -frameWidth) {
+						itbackground.remove();
+					}
+				}
+				if(background.size() <= 1) {
+					background.add(frameWidth);
+				}
+				redKnot.setX(redKnot.getX()+redKnot.getxVel());
+				redKnot.setY(redKnot.getY()+redKnot.getyVel());
+				birdOutOfBounds(redKnot);
+				break;
+			default:
+				tutorialLevel = 1;
+				gamestatus = GameStatus.RN;
+				
+			}
+		}
+		
+		else if(gamestatus == GameStatus.CR) {
 			//Check for the collision and pops item on screen one at a time
 			iterator = CRitems.iterator();
 			while(iterator.hasNext()) {
@@ -210,15 +269,16 @@ public class Model {
 				}				
 			}
 			// if this condition is true, game end; moves to the quiz
-			if(statusBar.getStatus() >= CR_STATUS_CAP) { 
+			if(statusBar.getStatus() >= CR_STATUS_CAP) {
 				gamestatus = GameStatus.CRQUIZ;
 				clapperRail.setY(frameHeight/2-100);
 				clapperRail.setX(frameWidth/2-100);
 				statusBar.setStatus(0);
-			}
+			}		
 		}
 	}
 	
+
 	/**
 	 *  Makes sure the bird is always within the screen
 	 * @param redKnot that it will check
@@ -235,6 +295,7 @@ public class Model {
 		}
 		
 		if(redKnot.getY() >= frameHeight - redKnot.getWidth()) {
+			
 			redKnot.setY(frameHeight - redKnot.getWidth());
 		}
 	}
@@ -261,22 +322,20 @@ public class Model {
 		if (rk.intersects(i)) {
 			
 			switch(item.getItemID()) {
-				case PowerUp:
-					// powerup adds 200 to score
-					scoreBoard.setScore(scoreBoard.getScore()+RK_POWERUP_VALUE);
-				case Fly:
-				case Snail:
-					// flies and snails add 20 to score
-					scoreBoard.setScore(scoreBoard.getScore()+RK_GOOD_VALUE);
-					iterator.remove();
-					break;
-				case Plane:
-				case Car:
-					// hitting cars and planes subtract 1 from score depending on how long the bird is in contact with them
-					scoreBoard.setScore(scoreBoard.getScore()-RK_BAD_VALUE);
-					break;
-				default:
-					break;
+			case PowerUp:
+				// powerup adds 200 to score
+				scoreBoard.setScore(scoreBoard.getScore()+RK_POWERUP_VALUE);
+			case Fly:
+			case Snail:
+				// flies and snails add 20 to score
+				scoreBoard.setScore(scoreBoard.getScore()+RK_GOOD_VALUE);
+				iterator.remove();
+				break;
+			case Plane:
+			case Car:
+				// hitting cars and planes subtract 1 from score depending on how long the bird is in contact with them
+				scoreBoard.setScore(scoreBoard.getScore()-RK_BAD_VALUE);
+				break;
 			}
 			return true;
 	
@@ -312,10 +371,9 @@ public class Model {
 				}
 				iterator.remove();
 				break;
-			default:
+			default: 
 				break;
 			}
-			
 			return true;
 		}
 		return false;
@@ -324,12 +382,13 @@ public class Model {
 	/**
 	 *  determines the time the item is on the screen if the bird does not collide with it
 	 */
+	
 	public void screenTime() {
 		screenTime++;
 		if(screenTime >= 20) {
 			iterator.remove();
 			screenTime = 0;
-		}
-		
+		}	
 	}
+	
 }

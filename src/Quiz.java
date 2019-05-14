@@ -1,14 +1,15 @@
 import java.io.File;
+import java.io.Serializable;
 import java.util.*;
 
-public class Quiz {
+public class Quiz implements Serializable{
 	private String filename;
-	private ArrayList<Question> questions = new ArrayList<>();
-	private Scanner std;
+	ArrayList<Question> questions = new ArrayList<>();
+	private transient Scanner std;
 	private int questionIndex;
 	private String selected = "E";
 	
-	// constructor 
+	//Constructor
 	public Quiz(String filename) {
 		this.filename = filename;
 	}
@@ -19,7 +20,8 @@ public class Quiz {
 	public void openFile() {
 		try {
 			std = new Scanner(new File(filename));
-		} catch(Exception e) {
+			
+		}catch(Exception e) {
 			System.out.println("could not find file");
 		}
 	}
@@ -45,7 +47,7 @@ public class Quiz {
 		std.close();
 	}
 	
-	// getters and setters
+	
 	public String getSelected() {
 		return selected;
 	}

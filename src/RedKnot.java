@@ -1,6 +1,7 @@
 import java.awt.Rectangle;
+import java.io.Serializable;
 
-public class RedKnot{
+public class RedKnot implements Serializable{
 	private int x = 0;
 	private int y;
 	private int length = 10;
@@ -8,9 +9,9 @@ public class RedKnot{
 	private int xVel = 0;
 	private int yVel = 0;
 	
-	// constructor 
+	
+	//Constructor 
 	public RedKnot(int y) {
-		
 		this.y = y;
 	}
 
@@ -51,7 +52,6 @@ public class RedKnot{
 		return xVel;
 	}
 
-	
 	public void setxVel(int xVel) {
 		this.xVel = xVel;
 	}
