@@ -45,12 +45,14 @@ public class Controller implements ActionListener, KeyListener{
 		view.button_clapperrail.addActionListener(this);
 		view.button_menu.addActionListener(this);
 		view.button_submit.addActionListener(this);
-		view.button_newgame.addActionListener(this);
+		view.button_saveNquit.addActionListener(this);
 		view.button_next.addActionListener(this);
+		view.button_continue.addActionListener(this);
 		view.button_A.addActionListener(this);
 		view.button_B.addActionListener(this);
 		view.button_C.addActionListener(this);
 		view.button_D.addActionListener(this);
+		
 		
 		//view.button_submit;
 		view.addKeyListener(this);
@@ -96,29 +98,6 @@ public class Controller implements ActionListener, KeyListener{
 				model.getRedKnot().setyVel(Model.RK_VELOCITY);
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
 				model.getRedKnot().setxVel(Model.RK_VELOCITY);
-			}else if(keyCode == KeyEvent.VK_1) {  						///////////////New Game /////////////
-				try {
-					fos = new FileOutputStream(Continue);
-					oos = new ObjectOutputStream(fos);
-					oos.writeObject(model);
-					oos.close();
-					fos.close();
-					
-					
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				
-			}else if(keyCode == KeyEvent.VK_2) {  	
-				try {
-					fis = new FileInputStream(Continue);
-					ois = new ObjectInputStream(fis);
-					this.model = (Model) ois.readObject();
-					ois.close();
-					fis.close();
-				}catch(Exception e2) {
-					e2.printStackTrace();
-				}
 			}
 		}else if(model.getGamestatus() == GameStatus.CR) {
 			//Arrow Keys for the Clapper Rail Game: Move the bird to a specific position
@@ -192,7 +171,17 @@ public class Controller implements ActionListener, KeyListener{
 			model.setTutorialLevel(1);
 			model.setGamestatus(GameStatus.CR);
 			break;
-			
+		case "continue":
+			try {
+				fis = new FileInputStream(Continue);
+				ois = new ObjectInputStream(fis);
+				this.model = (Model) ois.readObject();
+				ois.close();
+				fis.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+			break;
 		case "menu":
 			try {
 				fis = new FileInputStream(NewGame);
@@ -231,7 +220,27 @@ public class Controller implements ActionListener, KeyListener{
 				}
 			}
 			break;
-		case "newgame"://    DELETE THIS
+		case "savequit":
+			try {
+				fos = new FileOutputStream(Continue);
+				oos = new ObjectOutputStream(fos);
+				oos.writeObject(model);
+				oos.close();
+				fos.close();	
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			try {
+				fis = new FileInputStream(NewGame);
+				ois = new ObjectInputStream(fis);
+				this.model = (Model) ois.readObject();
+				ois.close();
+				fis.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+			
 			break;
 		case "A":
 			view.button_submit.setEnabled(true);

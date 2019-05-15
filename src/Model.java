@@ -173,7 +173,7 @@ public class Model implements Serializable{
 				tempItem.setX(tempItem.getX()+Items.X_VEL);
 				tempItem.setY(tempItem.getY()+Items.Y_VEL);
 				if(!collisionRK(tempItem,redKnot)) {
-					itemsOutOfBounds(tempItem);
+				itemsOutOfBounds(tempItem);
 				}
 				
 			}
@@ -184,7 +184,7 @@ public class Model implements Serializable{
 			
 			//Calculate the mini bird location on the mini map
 			processCounterRN++;
-			if(processCounterRN >= 10) { //>= 10
+			if(processCounterRN >= 15) { //>= 10
 				processCounterRN = 0;
 				
 				mapRN.setStatus(mapRN.getStatus()+1);
@@ -293,8 +293,8 @@ public class Model implements Serializable{
 	 * @param item 
 	 */
 	public void itemsOutOfBounds(Items item) {
-		if(item.getX() <= 0- 2*item.getLength()) {
-			iterator.remove();
+		if(item.getX() <= 0-2*item.getLength()) {
+			iterator.remove();	
 		}
 	}
 

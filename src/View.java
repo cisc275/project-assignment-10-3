@@ -86,8 +86,9 @@ public class View extends JPanel{
     JButton button_redknote;
     JButton button_menu;
     JButton button_submit;
-    JButton button_newgame;
+    JButton button_saveNquit;
     JButton button_next;
+    JButton button_continue;
     
     JRadioButton button_A;
     JRadioButton button_B;
@@ -105,7 +106,6 @@ public class View extends JPanel{
     
 	final int frameCountFly=4; // RN: 4 frame for the bird
     private int picNumFly=0; // RN: the current frame
-    
     private int tutorialLevel = 1; // LevelConuter in Tutorial
     
     // constants
@@ -261,26 +261,33 @@ public class View extends JPanel{
     	button_menu.setVisible(false);
     	
     	button_submit = new JButton("Submit");
-    	button_submit.setBounds(frameWidth/2-32, frameHeight-250, 96, 32);
+    	button_submit.setBounds(frameWidth/2+200, frameHeight-300, 96, 32);
     	button_submit.setBackground(Color.GRAY);
     	button_submit.setOpaque(false);
     	button_submit.setActionCommand("submit");
     	button_submit.setEnabled(false);
     	button_submit.setVisible(false);
     	
-    	button_newgame = new JButton("New Game");
-    	button_newgame.setBounds(frameWidth/2-64, frameHeight/2-32, 128, 64); //64 , 32
-    	button_newgame.setBackground(Color.GRAY);
-    	button_newgame.setOpaque(false);
-    	button_newgame.setActionCommand("newgame");
-    	button_newgame.setVisible(false);
+    	button_saveNquit = new JButton("Save and Quit");
+    	button_saveNquit.setBounds(frameWidth/2+64, 0, 128, 32); //64 , 32
+    	button_saveNquit.setBackground(Color.GRAY);
+    	button_saveNquit.setOpaque(false);
+    	button_saveNquit.setActionCommand("savequit");
+    	button_saveNquit.setVisible(false);
     	
     	button_next = new JButton("Next");
-    	button_next.setBounds(frameWidth/2+64, 0, 64, 32); //64 , 32
+    	button_next.setBounds(frameWidth/2+64, 0, 64, 32);
     	button_next.setBackground(Color.GRAY);
     	button_next.setOpaque(false);
     	button_next.setActionCommand("next");
     	button_next.setVisible(false);
+    	
+    	button_continue = new JButton("Continue"); /////////////////////////
+    	button_continue.setBounds(100, frameHeight - 100, 96, 32);
+    	button_continue.setBackground(Color.GRAY);
+    	button_continue.setOpaque(false);
+    	button_continue.setActionCommand("continue");
+    	button_continue.setVisible(true);
     	
     	button_A = new JRadioButton();
     	button_B = new JRadioButton();
@@ -312,8 +319,9 @@ public class View extends JPanel{
     	this.add(button_menu);
     	this.add(button_clapperrail);
     	this.add(button_submit);
-    	this.add(button_newgame);
+    	this.add(button_saveNquit);
     	this.add(button_next);
+    	this.add(button_continue);
     	
     	this.add(button_A);
 		this.add(button_B);
@@ -338,23 +346,22 @@ public class View extends JPanel{
 	    		
 	    		Items tempItem = iterator.next();
 	    		switch(tempItem.getItemID()) {
-		    		case PowerUp:
-		    			g.drawImage(pic_power, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
-		    			break;
-		    		case Fly:
-		    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-		    			break;
-		    		case Plane:
-		    			g.drawImage(pic_RNPlane, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-		    			break;
-		    		case Snail:
-		    			g.drawImage(pic_RNSnail, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-		    			break;
-		    		case Car:
-		    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-		    			break;
-		    		default: 
-		    			break;
+	    		case PowerUp:
+	    			g.drawImage(pic_power, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
+	    			break;
+	    		case Fly:
+	    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+	    			break;
+	    		case Plane:
+	    			g.drawImage(pic_RNPlane, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+	    			break;
+	    		case Snail:
+	    			g.drawImage(pic_RNSnail, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+	    			break;
+	    		case Car:
+	    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+	    			break;
+	    			
 	    		}	
 	    	}
 	    	//RN: Red Knot
@@ -557,7 +564,8 @@ public class View extends JPanel{
     	if(this.gameStatus == GameStatus.RN) {
     		
     		//Arrange the button visibility in game mode
-			button_newgame.setVisible(false);
+    		button_continue.setVisible(false);
+			button_saveNquit.setVisible(true);
 			button_redknote.setVisible(false);
 			button_next.setVisible(false);
 			button_clapperrail.setVisible(false);
@@ -575,18 +583,18 @@ public class View extends JPanel{
         		itemSpawnCounter = 0;
         		
         		switch(random.nextInt(4)) {
-	        		case 0:
-	        			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, ItemsID.Plane));
-	        			break;
-	        		case 1:
-	        			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, ItemsID.Snail));
-	        			break;
-	        		case 2:
-	        			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, ItemsID.Fly));
-	        			break;
-	        		case 3:
-	        			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
-	        			break; 			
+        		case 0:
+        			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, ItemsID.Plane));
+        			break;
+        		case 1:
+        			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, ItemsID.Snail));
+        			break;
+        		case 2:
+        			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, ItemsID.Fly));
+        			break;
+        		case 3:
+        			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
+        			break; 			
         		}
 
         	}
@@ -612,7 +620,8 @@ public class View extends JPanel{
     		}
     		
     		button_next.setVisible(true);
-    		button_newgame.setVisible(false);
+    		button_continue.setVisible(false);
+    		button_saveNquit.setVisible(false);
 			button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);
 			button_menu.setVisible(true);
@@ -626,11 +635,12 @@ public class View extends JPanel{
 	    	
     	}else if(this.gameStatus == GameStatus.CR) {
     		//Arrange the button visibility in game mode
-    		button_newgame.setVisible(false);
+    		button_saveNquit.setVisible(true);
     		button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);
 			button_next.setVisible(false);
 			button_menu.setVisible(true);
+			button_continue.setVisible(false);
 			
 			button_submit.setEnabled(false);
 			button_submit.setVisible(false);
@@ -686,6 +696,7 @@ public class View extends JPanel{
 			button_clapperrail.setVisible(false);
 			button_menu.setVisible(true);
 			
+			button_continue.setVisible(false);
 			button_submit.setVisible(true);
 			button_next.setVisible(false);
 			button_A.setVisible(true);
@@ -705,6 +716,7 @@ public class View extends JPanel{
 			button_C.setFont(new Font("Arial", Font.PLAIN, 30));
 			button_D.setFont(new Font("Arial", Font.PLAIN, 30));
 			
+			button_continue.setVisible(false);
 			button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);
 			button_menu.setVisible(true);
@@ -718,10 +730,11 @@ public class View extends JPanel{
 
 		}else if(this.gameStatus == GameStatus.Menu) {
 			//Arrange the button in menu mode
+			button_continue.setVisible(true);
 			button_menu.setVisible(false);
 			button_redknote.setVisible(true);
 			button_clapperrail.setVisible(true);
-			button_newgame.setVisible(false);
+			button_saveNquit.setVisible(false);
 			button_next.setVisible(false);
 			
 			button_submit.setEnabled(false);
