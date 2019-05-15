@@ -76,6 +76,8 @@ public class View extends JPanel{
     BufferedImage pic_icon_RN;                                            //BufferedImage for RN image on main menu
     BufferedImage pic_icon_CR;                                            //BufferedImage for CR image on main menu
     Image pic_water;                                                      //BufferedImage for water image
+    BufferedImage redCircle;
+    BufferedImage greenCircle;
       
     Quiz quiz_RN = new Quiz("quiz/RNQuiz.txt");
     Quiz quiz_CR = new Quiz("quiz/CRQuiz.txt");
@@ -395,13 +397,14 @@ public class View extends JPanel{
 			case 7:
 				g.setColor(Color.RED);
 				g.drawString("Good Job!", frameWidth/2-50, 100);
-				g.drawString("Here are the Items that will show up in the game", frameWidth/2-300, 150);
-				g.drawString("Avoid Airplanes and Cars, and Catch Snails and Flys", frameWidth/2-300, 250);
-				g.drawString("You are all set! Click The [Next] button on the top", frameWidth/2-300, 500);
-				g.drawImage(pic_RNPlane, frameWidth/2-400, 300, 180, 100, this);
-				g.drawImage(pic_RNCar, frameWidth/2-150, 300, 200, 128, this);
-				g.drawImage(pic_RNFly, frameWidth/2+100, 300, 64, 64, this);
-				g.drawImage(pic_RNSnail, frameWidth/2+350, 300, 64, 64, this);
+				g.drawString("You are all set! Click The [Next] button on the top", frameWidth/2-300, 550);
+				g.drawImage(pic_RNPlane, frameWidth/2-500, 300, 180, 100, this);
+				g.drawImage(pic_RNCar, frameWidth/2-250, 300, 180, 108, this);
+				g.drawImage(pic_RNFly, frameWidth/2+100, 350, 64, 64, this);
+				g.drawImage(pic_RNSnail, frameWidth/2+250, 350, 64, 64, this);
+				g.drawImage(pic_power, frameWidth/2+400, 350, 64, 64,this);
+				g.drawImage(greenCircle,frameWidth/2+25,275, 500, 200, this);
+				g.drawImage(redCircle,frameWidth/2-600,250, 625, 225, this);
 			case 6:
 				if(tutorialLevel == 6) {
 					iterator = items.iterator();
@@ -770,6 +773,8 @@ public class View extends JPanel{
     		pic_RNFly = ImageIO.read(new File("images/projectile/Fly.png"));
     		pic_RNPlane = ImageIO.read(new File("images/projectile/Plane.png"));
     		pic_RNSnail = ImageIO.read(new File("images/projectile/Snail.png"));
+    		greenCircle=ImageIO.read(new File("images/components/Green Circle.png"));
+    		redCircle=ImageIO.read(new File("images/components/Red Circle.png"));
     		
     		pic_icon_RN = ImageIO.read(new File("images/birds/icon_RN.png"));
     		pic_icon_CR = ImageIO.read(new File("images/birds/icon_CR.png"));
