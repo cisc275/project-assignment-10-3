@@ -38,7 +38,7 @@ public class View extends JPanel{
     private Map mapRN = new Map(frameWidth-148, frameWidth-130);            //Creating a map to show migration
     //
     //
-    private StatusBar statusBar= new StatusBar(100,frameHeight/2-150);      //Status bar for CR game
+    private StatusBar statusBar= new StatusBar(100,30);      //Status bar for CR game
     //
     //
     private ScoreBoard scoreBoard = new ScoreBoard();                       // Scoreboard for RK game
@@ -76,9 +76,9 @@ public class View extends JPanel{
     BufferedImage pic_icon_RN;                                            //BufferedImage for RN image on main menu
     BufferedImage pic_icon_CR;                                            //BufferedImage for CR image on main menu
     Image pic_water;                                                      //BufferedImage for water image
-    BufferedImage redCircle;
-    BufferedImage greenCircle;
-      
+    BufferedImage redCircle;											  //BufferedImage of a Sign
+    BufferedImage greenCircle;											  //BufferedImage of a Sign
+    
     Quiz quiz_RN = new Quiz("quiz/RNQuiz.txt");
     Quiz quiz_CR = new Quiz("quiz/CRQuiz.txt");
     
@@ -491,10 +491,10 @@ public class View extends JPanel{
 			//CR: Clapper Rail
 			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
 			
-			//CR: Energy Bar
-			g.drawRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, StatusBar.WIDTH);
-			g.setColor(Color.PINK);
-			g.fillRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, statusBar.getStatus());
+			//CR: Status Bar
+			for(int i = 0; i < statusBar.getStatus(); i++) {
+				g.drawImage(pic_food, StatusBar.x, (StatusBar.y+i*StatusBar.length), StatusBar.length, StatusBar.length, this);
+			}
 		
 		}else if(this.gameStatus == GameStatus.CRQUIZ) {
 			//CRQUIZ: background

@@ -16,8 +16,8 @@ public class Model implements Serializable{
 	private final int RK_GOOD_VALUE = 20;
 	private final int RK_BAD_VALUE = 1;
 	private final int RK_POWERUP_VALUE = 200;
-	private final int CR_STATUS_CAP = 300;
-	private final int CR_STATUS_INCREMENT = 15;
+	private final int CR_STATUS_CAP = 0;
+	private final int CR_STATUS_INCREMENT = 1;
 	public final static int RK_VELOCITY = 10;
 		
 	private int frameWidth;
@@ -257,7 +257,7 @@ public class Model implements Serializable{
 				}				
 			}
 			// if this condition is true, game end; moves to the quiz
-			if(statusBar.getStatus() >= CR_STATUS_CAP) {
+			if(statusBar.getStatus() <= CR_STATUS_CAP) {
 				gamestatus = GameStatus.CRQUIZ;
 				clapperRail.setY(frameHeight/2-100);
 				clapperRail.setX(frameWidth/2-100);
@@ -345,17 +345,17 @@ public class Model implements Serializable{
 			switch(item.getItemID()) {
 			case Food:
 				// when CR catches food, increase status bar
-				statusBar.setStatus(statusBar.getStatus()+CR_STATUS_INCREMENT);
-				if(statusBar.getStatus() > CR_STATUS_CAP) {
+				statusBar.setStatus(statusBar.getStatus()-CR_STATUS_INCREMENT);
+				if(statusBar.getStatus() < CR_STATUS_CAP) {
 					statusBar.setStatus(CR_STATUS_CAP);
 				}
 				iterator.remove();
 				break;
 			case Obstacle:
 				// when CR hits obstacle, decrease status bar
-				statusBar.setStatus(statusBar.getStatus()-CR_STATUS_INCREMENT);
-				if(statusBar.getStatus() < 0) {
-					statusBar.setStatus(0);
+				statusBar.setStatus(statusBar.getStatus()+CR_STATUS_INCREMENT);
+				if(statusBar.getStatus() >= 10) {
+					statusBar.setStatus(10);
 				}
 				iterator.remove();
 				break;
