@@ -77,7 +77,8 @@ public class View extends JPanel{
     BufferedImage pic_icon_CR;                                            //BufferedImage for CR image on main menu
     Image pic_water;                                                      //BufferedImage for water image
     BufferedImage redCircle;											  //BufferedImage of a Sign
-    BufferedImage greenCircle;											  //BufferedImage of a Sign
+    BufferedImage greenCircle;		                                      //BufferedImage of a Sign
+    BufferedImage arrows;
     
     Quiz quiz_RN = new Quiz("quiz/RNQuiz.txt");
     Quiz quiz_CR = new Quiz("quiz/CRQuiz.txt");
@@ -462,8 +463,7 @@ public class View extends JPanel{
 				picNumFly=(picNumFly+1)%frameCountFly;
 		    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
 		    	if(tutorialLevel == 1) {
-		    		g.drawOval(redKnot.getX(), redKnot.getY(), 200, 200);
-		    		g.drawString("Try using the Arrow Keys to controll the bird. Click [Next] on the top to continue", redKnot.getX()+200, redKnot.getY()+100);
+		    		g.drawImage(arrows, redKnot.getX(), redKnot.getY()+25, 200, 200, this);
 		    	}
 		    	break;
 			}
@@ -775,6 +775,7 @@ public class View extends JPanel{
     		pic_RNSnail = ImageIO.read(new File("images/projectile/Snail.png"));
     		greenCircle=ImageIO.read(new File("images/components/Green Circle.png"));
     		redCircle=ImageIO.read(new File("images/components/Red Circle.png"));
+    		arrows=ImageIO.read(new File("images/components/Arrows.png"));
     		
     		pic_icon_RN = ImageIO.read(new File("images/birds/icon_RN.png"));
     		pic_icon_CR = ImageIO.read(new File("images/birds/icon_CR.png"));
