@@ -6,7 +6,7 @@ D) United States.
 A
 Question: What did the Red Knot enjoy eating, causing the score to increase?
 A) Pizza.
-B) Flies.
+B) Flys.
 C) Snails.
 D) Both B and C.
 D
@@ -22,5 +22,11 @@ B) Cars.
 C) Planes.
 D) Both B and C.
 D
+Question: What gave the Red Knot a BIG score increase?
+A) Golden Eggs (Horseshoe Crab Eggs).
+B) Pizza.
+C) Cars.
+D) Planes.
+A
 
 
