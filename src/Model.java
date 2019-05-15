@@ -172,8 +172,8 @@ public class Model implements Serializable{
 				Items tempItem = iterator.next();
 				tempItem.setX(tempItem.getX()+Items.X_VEL);
 				tempItem.setY(tempItem.getY()+Items.Y_VEL);
-				if(!collisionRK(tempItem,redKnot)) {;
-				itemsOutOfBounds(tempItem);
+				if(!collisionRK(tempItem,redKnot)) {
+					itemsOutOfBounds(tempItem);
 				}
 				
 			}
@@ -293,7 +293,7 @@ public class Model implements Serializable{
 	 * @param item 
 	 */
 	public void itemsOutOfBounds(Items item) {
-		if(item.getX() <= 0-item.getLength()) {
+		if(item.getX() <= 0- 2*item.getLength()) {
 			iterator.remove();
 		}
 	}
