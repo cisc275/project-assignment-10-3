@@ -108,6 +108,9 @@ public class View extends JPanel{
     
     private int tutorialLevel = 1; // LevelConuter in Tutorial
     
+    // constants
+    private final int RK_SPAWN_SPEED = 40;
+    
     public View() {
 //    	System.out.println(frameWidth);
 //    	System.out.println(frameHeight);
@@ -335,22 +338,23 @@ public class View extends JPanel{
 	    		
 	    		Items tempItem = iterator.next();
 	    		switch(tempItem.getItemID()) {
-	    		case PowerUp:
-	    			g.drawImage(pic_power, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
-	    			break;
-	    		case Fly:
-	    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-	    			break;
-	    		case Plane:
-	    			g.drawImage(pic_RNPlane, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-	    			break;
-	    		case Snail:
-	    			g.drawImage(pic_RNSnail, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-	    			break;
-	    		case Car:
-	    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-	    			break;
-	    			
+		    		case PowerUp:
+		    			g.drawImage(pic_power, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
+		    			break;
+		    		case Fly:
+		    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+		    			break;
+		    		case Plane:
+		    			g.drawImage(pic_RNPlane, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+		    			break;
+		    		case Snail:
+		    			g.drawImage(pic_RNSnail, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+		    			break;
+		    		case Car:
+		    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+		    			break;
+		    		default: 
+		    			break;
 	    		}	
 	    	}
 	    	//RN: Red Knot
@@ -567,22 +571,22 @@ public class View extends JPanel{
 	    	
 	    	//RN: SpawnCounter add new random item to the items ArrayList
 	    	itemSpawnCounter++;
-        	if(itemSpawnCounter >= 40) {
+        	if(itemSpawnCounter >= RK_SPAWN_SPEED) {
         		itemSpawnCounter = 0;
         		
         		switch(random.nextInt(4)) {
-        		case 0:
-        			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, ItemsID.Plane));
-        			break;
-        		case 1:
-        			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, ItemsID.Snail));
-        			break;
-        		case 2:
-        			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, ItemsID.Fly));
-        			break;
-        		case 3:
-        			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
-        			break; 			
+	        		case 0:
+	        			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, ItemsID.Plane));
+	        			break;
+	        		case 1:
+	        			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, ItemsID.Snail));
+	        			break;
+	        		case 2:
+	        			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, ItemsID.Fly));
+	        			break;
+	        		case 3:
+	        			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
+	        			break; 			
         		}
 
         	}
