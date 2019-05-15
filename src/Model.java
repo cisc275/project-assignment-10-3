@@ -184,7 +184,7 @@ public class Model implements Serializable{
 			
 			//Calculate the mini bird location on the mini map
 			processCounterRN++;
-			if(processCounterRN >= 15) { //>= 10
+			if(processCounterRN >= 10) { //>= 10
 				processCounterRN = 0;
 				
 				mapRN.setStatus(mapRN.getStatus()+1);
