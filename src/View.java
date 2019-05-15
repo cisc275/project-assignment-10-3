@@ -375,7 +375,11 @@ public class View extends JPanel{
 	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 	    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
 	    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
-	    
+	    	g.setColor(Color.RED);
+	    	g.drawLine(frameWidth-130, 35, mapRN.getStatus(), mapRN.getStatus_Y());
+	    	
+	    	
+	    	
 	    	//RN: ScoreBoard
 	    	g.setColor(Color.WHITE);
 	    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
@@ -432,7 +436,7 @@ public class View extends JPanel{
 				g.setColor(Color.BLACK);
 				g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 		    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-		    	g.drawImage(pic_redKnot_mini, 1390, 80, this);
+		    	g.drawImage(pic_redKnot_mini, mapRN.getX()+90, 80, this);
 		    	g.setColor(Color.RED);
 		    	if(tutorialLevel == 4) {
 		    		g.fillRect(frameWidth-140, 85, 80, 4); 
@@ -444,7 +448,7 @@ public class View extends JPanel{
 				if(tutorialLevel == 3) {
 					g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 			    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-			    	g.drawImage(pic_redKnot_mini, 1310, 30, this);
+			    	g.drawImage(pic_redKnot_mini, mapRN.getX()+15, 30, this);
 			    	g.setColor(Color.RED);
 					g.fillRect(frameWidth-220, 35, 80, 4); //1220
 					g.drawString("Red Knot migrates from Canada", frameWidth-620, 50); 
