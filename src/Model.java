@@ -43,12 +43,14 @@ public class Model implements Serializable{
 	transient Iterator<Integer> itbackground;
 	
 	private int tutorialLevel = 1; // LevelConuter in Tutorial
+	private Boolean[] tutorialHitFlag;
     
 	// constructor
 	public Model(int frameWidth, int frameHeight, RedKnot redKnot, ClapperRail clapperRail, Map mapRN, 
 			ArrayList<Items> items, ArrayList<Items> CRitems,
 			ScoreBoard scoreBoard, StatusBar statusBar, Quiz quiz_RN, Quiz quiz_CR,
-			boolean answerRightFlag, boolean answerWrongFlag, ArrayList<Integer> background, int tutorialLevel) {
+			boolean answerRightFlag, boolean answerWrongFlag, ArrayList<Integer> background,
+			int tutorialLevel, Boolean[] tutorialHitFlag) {
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
 		this.redKnot = redKnot;
@@ -64,11 +66,22 @@ public class Model implements Serializable{
 		this.answerWrongFlag = answerWrongFlag;
 		this.background = background;
 		this.tutorialLevel = tutorialLevel;
+		this.tutorialHitFlag = tutorialHitFlag;
 	}
 	
 	// getters and setters
+	
+	
 	public int getTutorialLevel() {
 		return tutorialLevel;
+	}
+
+	public Boolean[] getTutorialHitFlag() {
+		return tutorialHitFlag;
+	}
+
+	public void setTutorialHitFlag(Boolean[] tutorialHitFlag) {
+		this.tutorialHitFlag = tutorialHitFlag;
 	}
 
 	public void setTutorialLevel(int tutorialLevel) {
@@ -201,7 +214,6 @@ public class Model implements Serializable{
 		}else if(gamestatus == GameStatus.RNTutorial) {
 			switch(tutorialLevel) {
 			case 7:
-				
 			case 6:
 				if(tutorialLevel == 6) {
 				iterator = items.iterator();
@@ -215,7 +227,7 @@ public class Model implements Serializable{
 				}
 				
 					if(this.scoreBoard.getScore() >= 10) {
-						tutorialLevel = 7;
+						tutorialLevel++;
 					}
 				}
 			
@@ -242,7 +254,7 @@ public class Model implements Serializable{
 				break;
 			default:
 				tutorialLevel = 1;
-				gamestatus = GameStatus.RN;
+				//gamestatus = GameStatus.RN;
 				
 			}
 		}
@@ -263,6 +275,58 @@ public class Model implements Serializable{
 				clapperRail.setX(frameWidth/2-100);
 				statusBar.setStatus(0);
 			}		
+		}else if(gamestatus == GameStatus.CRTutorial) {
+			switch(tutorialLevel) {
+			case 5:
+			case 4:
+				if(tutorialLevel == 4) {
+					iterator = CRitems.iterator();
+					while(iterator.hasNext()) {
+						Items tempItem = iterator.next();
+						if(!collisionCR(tempItem, clapperRail)) {;
+							screenTime();
+						}				
+					}
+					if(statusBar.getStatus() <= 9) {
+						tutorialLevel++;
+					}
+				}
+				
+			case 3:
+			case 2:
+			case 1:
+				if(this.clapperRail.getY() == (frameHeight/2-200-100)) { //Up
+					this.tutorialHitFlag[0] = true;
+				}
+				if(this.clapperRail.getY() == (frameHeight/2-50+100)) { //Down
+					this.tutorialHitFlag[1] = true;
+				}
+				if(this.clapperRail.getX() == (frameWidth/2-50+100)) { //Right
+					this.tutorialHitFlag[2] = true;
+				}
+				if(this.clapperRail.getX() == (frameWidth/2-200-100)) { //Left
+					this.tutorialHitFlag[3] = true;
+				}
+				if(tutorialLevel == 1) {
+					boolean tempFlag = true; //a flag that indicate if all the Boolean value in the tutorialFlag is true.
+					for(boolean x: tutorialHitFlag) {
+						if(!x) {
+							tempFlag = false;
+						}
+					}
+					if(tempFlag) {
+						tutorialLevel++;
+					}else {
+						tempFlag = true;
+					}
+				}
+				
+				break;
+			default:
+					tutorialLevel = 1;
+					//gamestatus = GameStatus.CR;
+				break;
+			}
 		}
 	}
 	

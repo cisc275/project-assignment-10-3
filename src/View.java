@@ -1,22 +1,16 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Scanner;
-
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -38,7 +32,7 @@ public class View extends JPanel{
     private Map mapRN = new Map(frameWidth-148, frameWidth-130);            //Creating a map to show migration
     //
     //
-    private StatusBar statusBar= new StatusBar(100,30);      //Status bar for CR game
+    private StatusBar statusBar= new StatusBar(100,frameHeight-200);      //Status bar for CR game
     //
     //
     private ScoreBoard scoreBoard = new ScoreBoard();                       // Scoreboard for RK game
@@ -63,7 +57,6 @@ public class View extends JPanel{
     BufferedImage pic_food;                                               //BufferedImage for CR food image
     BufferedImage pic_map;												  //BufferedImage for minimap image
     BufferedImage pic_delaware;
-    BufferedImage pic_obstacle;                                           //BufferedImage for obstacle images
     BufferedImage pic_snake;                                              //BufferedImage for CR snake image
     BufferedImage pic_RNFood;                                             //BufferedImage for RN food image
     BufferedImage pic_RNCar;                                              //BufferedImage for RN car image
@@ -77,8 +70,8 @@ public class View extends JPanel{
     BufferedImage pic_icon_CR;                                            //BufferedImage for CR image on main menu
     Image pic_water;                                                      //BufferedImage for water image
     BufferedImage redCircle;											  //BufferedImage of a Sign
-    BufferedImage greenCircle;		                                      //BufferedImage of a Sign
-    BufferedImage arrows;
+    BufferedImage greenCircle;											  //BufferedImage of a Sign
+    BufferedImage arrows;												  //BufferedImage of Arrows
     
     Quiz quiz_RN = new Quiz("quiz/RNQuiz.txt");
     Quiz quiz_CR = new Quiz("quiz/CRQuiz.txt");
@@ -97,12 +90,10 @@ public class View extends JPanel{
     JRadioButton button_B;
     JRadioButton button_C;
     JRadioButton button_D;
+
     ButtonGroup group = new ButtonGroup(); // Button group that has 4 JRadioButton for the quiz
     
     GameStatus gameStatus = GameStatus.Menu;
-    
-//    private boolean answerRightFlag = false; 
-//    private boolean answerWrongFlag = false;
     
     private boolean answerRightFlag; // a flag to indicate if the answer is right
 	private boolean answerWrongFlag; // a flag to indicate if the answer is wrong 
@@ -110,6 +101,8 @@ public class View extends JPanel{
 	final int frameCountFly=4; // RN: 4 frame for the bird
     private int picNumFly=0; // RN: the current frame
     private int tutorialLevel = 1; // LevelConuter in Tutorial
+    
+    private Boolean[] tutorialHitFlag = {false, false, false, false};
     
     // constants
     private final int RK_SPAWN_SPEED = 40;
@@ -161,6 +154,14 @@ public class View extends JPanel{
     
     public int getTutorialLevel() {
 		return tutorialLevel;
+	}
+
+	public Boolean[] getTutorialHitFlag() {
+		return tutorialHitFlag;
+	}
+
+	public void setTutorialHitFlag(Boolean[] tutorialHitFlag) {
+		this.tutorialHitFlag = tutorialHitFlag;
 	}
 
 	public void setTutorialLevel(int tutorialLevel) {
@@ -375,7 +376,9 @@ public class View extends JPanel{
 	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 	    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
 	    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
-	    
+	    	g.setColor(Color.RED);
+	    	g.drawLine(frameWidth-130, 35, mapRN.getStatus(), mapRN.getStatus_Y());
+	    	
 	    	//RN: ScoreBoard
 	    	g.setColor(Color.WHITE);
 	    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
@@ -398,7 +401,7 @@ public class View extends JPanel{
 			case 7:
 				g.setColor(Color.RED);
 				g.drawString("Good Job!", frameWidth/2-50, 100);
-				g.drawString("You are all set! Click The [Next] button on the top", frameWidth/2-300, 550);
+				g.drawString("You are all set! Click The [Next] on the top to Start the Game", frameWidth/2-400, 550);
 				g.drawImage(pic_RNPlane, frameWidth/2-500, 300, 180, 100, this);
 				g.drawImage(pic_RNCar, frameWidth/2-250, 300, 180, 108, this);
 				g.drawImage(pic_RNFly, frameWidth/2+100, 350, 64, 64, this);
@@ -427,16 +430,18 @@ public class View extends JPanel{
 		    	if(tutorialLevel == 5) {
 		    		g.drawOval(ScoreBoard.X-48, ScoreBoard.Y-16, ScoreBoard.LENGTH+100, ScoreBoard.WIDTH+32);
 			    	g.drawString("The Score Board shows your grade", ScoreBoard.X + ScoreBoard.LENGTH+60, ScoreBoard.Y + 32);
+			    	g.drawString("Click [Next] on the top to continue", ScoreBoard.X + ScoreBoard.LENGTH+60, 85);
 		    	}
 			case 4:
 				g.setColor(Color.BLACK);
 				g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 		    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-		    	g.drawImage(pic_redKnot_mini, 1390, 80, this);
+		    	g.drawImage(pic_redKnot_mini, mapRN.getX()+90, 80, this);
 		    	g.setColor(Color.RED);
 		    	if(tutorialLevel == 4) {
 		    		g.fillRect(frameWidth-140, 85, 80, 4); 
 					g.drawString("Red Knot stops at Delaware Bay", frameWidth-540, 90);
+					g.drawString("Click [Next] on the top to continue", frameWidth-570, 135);
 		    	}
 				
 			case 3: 
@@ -444,10 +449,11 @@ public class View extends JPanel{
 				if(tutorialLevel == 3) {
 					g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 			    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-			    	g.drawImage(pic_redKnot_mini, 1310, 30, this);
+			    	g.drawImage(pic_redKnot_mini, mapRN.getX()+15, 30, this);
 			    	g.setColor(Color.RED);
 					g.fillRect(frameWidth-220, 35, 80, 4); //1220
 					g.drawString("Red Knot migrates from Canada", frameWidth-620, 50); 
+					g.drawString("Click [Next] on the top to continue", frameWidth-620, 95);
 				}
 			case 2:
 				
@@ -457,6 +463,7 @@ public class View extends JPanel{
 			    	g.setColor(Color.RED);
 		    		g.drawOval(mapRN.getX()-32, mapRN.getY()-32, 192 , 192);
 		    		g.drawString("Here is a Mini Map shows the migration.", mapRN.getX()-550, mapRN.getY()+80 );
+		    		g.drawString("Click [Next] on the top to continue", mapRN.getX()-550, mapRN.getY()+125);
 		    	}
 			case 1:
 				g.setColor(Color.RED);
@@ -493,10 +500,77 @@ public class View extends JPanel{
 			
 			//CR: Status Bar
 			for(int i = 0; i < statusBar.getStatus(); i++) {
-				g.drawImage(pic_food, StatusBar.x, (StatusBar.y+i*StatusBar.length), StatusBar.length, StatusBar.length, this);
+				g.drawImage(pic_food, StatusBar.x, (StatusBar.y-i*StatusBar.length), StatusBar.length, StatusBar.length, this);
 			}
 		
-		}else if(this.gameStatus == GameStatus.CRQUIZ) {
+		}else if(this.gameStatus == GameStatus.CRTutorial) {
+			
+			g.setFont(new Font("Serif", Font.PLAIN, 30));
+			// CR: Background
+			g.drawImage(pic_water, 0, 0, this);
+			
+			switch(tutorialLevel) {
+			case 5:
+				g.setColor(Color.RED);
+				g.drawImage(pic_food, frameWidth/2-300, frameHeight/2-300, 100, 100, this);
+				g.drawImage(pic_snake, frameWidth/2+200, frameHeight/2-300, 100, 100, this);
+				g.drawImage(greenCircle,frameWidth/2-300, frameHeight/2-300, 100, 100, this);
+				g.drawImage(redCircle,frameWidth/2+200, frameHeight/2-300, 100, 100, this);
+				g.drawString("Tip: Catch Crabs and Avoid Snakes", frameWidth/2-190, 100);
+				g.drawString("Clicl [Next] on the top to Start the game", frameWidth/2-250, frameHeight/2-300);
+				g.drawString("Good job!", frameWidth/2-50, frameHeight/2-200);
+			case 4:
+				if(tutorialLevel == 4) {
+					g.drawString("Now catch that Crab!", frameWidth/2 - 100, 100);
+				}
+				iterator = CRitems.iterator();
+				while(iterator.hasNext()) {
+					Items tempItem = iterator.next();
+					g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
+				}
+			case 3:
+				if(tutorialLevel == 3) {
+					g.setColor(Color.RED);
+					g.drawRect(StatusBar.x, StatusBar.y-9*StatusBar.length, StatusBar.length, StatusBar.y-StatusBar.length);
+					g.drawString("You need to catch 10 crabs to win this game",StatusBar.x +StatusBar.length , StatusBar.y-9*StatusBar.length);
+				}
+				for(int i = 0; i < statusBar.getStatus(); i++) {
+					g.drawImage(pic_food, StatusBar.x, (StatusBar.y-i*StatusBar.length), StatusBar.length, StatusBar.length, this);
+				}
+				
+				
+			case 2:
+				g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
+				g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+				g.drawImage(pic_clapperRail_mini, frameWidth-100, 80, this);
+				if(tutorialLevel == 2) {
+					g.setColor(Color.RED);
+					g.fillRect(frameWidth-190, 85, 80, 4);
+					g.drawString("Clapper Rail is non-migratory bird", frameWidth - 625, 100);
+				}
+			case 1:
+				g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
+				g.setColor(Color.RED);
+				if(tutorialLevel == 1) {
+					g.drawString("Hit the circle using the Arrow Keys",frameWidth/2-200 , 150);
+					if(!tutorialHitFlag[0]) {
+						g.fillOval(frameWidth/2-32, frameHeight/2-32-200, 64, 64); //Up
+					}
+					if(!tutorialHitFlag[1]) {
+						g.fillOval(frameWidth/2-32, frameHeight/2-32+200, 64, 64); //Down
+					}
+					if(!tutorialHitFlag[2]) {
+						g.fillOval(frameWidth/2-32+200, frameHeight/2-32, 64, 64); //Right
+					}
+					if(!tutorialHitFlag[3]) {
+						g.fillOval(frameWidth/2-32-200, frameHeight/2-32, 64, 64); //Left
+					}
+				}
+			break;
+			}
+		}
+		
+		else if(this.gameStatus == GameStatus.CRQUIZ) {
 			//CRQUIZ: background
 			g.drawImage(pic_water, 0, 0, this);
 			
@@ -547,7 +621,7 @@ public class View extends JPanel{
     public void update(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, 
     		GameStatus gameStatus, ScoreBoard scoreBoard, ArrayList<Items> items,
     		ArrayList<Items> CRitems, Quiz quiz_RN, Quiz quiz_CR, 
-    		boolean answerRightFlag, boolean answerWrongFlag, ArrayList<Integer> background, int tutorialLevel, StatusBar statusBar) {
+    		boolean answerRightFlag, boolean answerWrongFlag, ArrayList<Integer> background, int tutorialLevel, StatusBar statusBar, Boolean[] tutorialHitFlag) {
     	//Update everything from model to view
     	this.gameStatus = gameStatus;
     	this.items = items;
@@ -563,6 +637,7 @@ public class View extends JPanel{
     	this.background = background;
     	this.tutorialLevel = tutorialLevel;
     	this.statusBar = statusBar;
+    	this.tutorialHitFlag = tutorialHitFlag;
     	
     	if(this.gameStatus == GameStatus.RN) {
     		
@@ -683,7 +758,48 @@ public class View extends JPanel{
     		}
     			
     		
-    	}else if(this.gameStatus == GameStatus.CRQUIZ) {
+    	}else if(this.gameStatus == GameStatus.CRTutorial) {
+    		
+    		button_next.setVisible(true);
+    		button_continue.setVisible(false);
+    		button_saveNquit.setVisible(false);
+			button_redknote.setVisible(false);
+			button_clapperrail.setVisible(false);
+			button_menu.setVisible(true);
+			button_submit.setEnabled(false);
+			button_submit.setVisible(false);
+			button_A.setVisible(false);
+	    	button_B.setVisible(false);
+	    	button_C.setVisible(false);
+	    	button_D.setVisible(false);
+	    	switch(tutorialLevel) {
+	    	case 4:
+//	    		button_next.setEnabled(false);
+	    		if(this.CRitems.size() == 0) {
+	    			switch(random.nextInt(8)) {
+	    			case 0:
+	    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , ItemsID.Food));
+	    				break;
+	    			case 1:
+	    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , ItemsID.Food));
+	    				break;
+	    			case 2:
+	    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 , ItemsID.Food));
+	    				break;
+	    			case 3:
+	    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , ItemsID.Food));
+	    				break;
+	    			}
+	    		}
+	    	case 1:
+	    		button_next.setEnabled(false);
+	    		break;
+	    	default:
+	    		button_next.setEnabled(true);
+	    	}
+    	}
+    	
+    	else if(this.gameStatus == GameStatus.CRQUIZ) {
     		// Arrane the button in quiz mode
     		button_A.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[0]);
     		button_B.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[1]);
@@ -698,7 +814,7 @@ public class View extends JPanel{
     		button_redknote.setVisible(false);
 			button_clapperrail.setVisible(false);
 			button_menu.setVisible(true);
-			
+			button_saveNquit.setVisible(false);
 			button_continue.setVisible(false);
 			button_submit.setVisible(true);
 			button_next.setVisible(false);
@@ -739,7 +855,7 @@ public class View extends JPanel{
 			button_clapperrail.setVisible(true);
 			button_saveNquit.setVisible(false);
 			button_next.setVisible(false);
-			
+			button_saveNquit.setVisible(false);
 			button_submit.setEnabled(false);
 			button_submit.setVisible(false);
 	    	button_A.setVisible(false);
@@ -763,7 +879,6 @@ public class View extends JPanel{
     		pic_food = ImageIO.read(new File("images/projectile/Food.png"));
     		pic_RNFood = ImageIO.read(new File("images/projectile/RN_Food.png"));
     		pic_snake = ImageIO.read(new File("images/projectile/Snake.png"));
-    		pic_obstacle = ImageIO.read(new File("images/projectile/Obstacles.png"));
     		pic_map = ImageIO.read(new File("images/Components/Map.png"));
     		pic_delaware=ImageIO.read(new File("images/Components/delaware.png"));
     		pic_menu = ImageIO.read(new File("images/background/menu_BG.png")).getScaledInstance(this.frameWidth,this.frameHeight,Image.SCALE_SMOOTH);

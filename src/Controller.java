@@ -31,7 +31,7 @@ public class Controller implements ActionListener, KeyListener{
 		view = new View();
 		model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getRedKnot(), view.getClapperRail(), view.getMapRN(), 
 				view.getItems(), view.getCRitems(), view.getScoreBoard(), view.getStatusBar(), view.getQuiz_RN(), view.getQuiz_CR(),
-				view.isAnswerRightFlag(), view.isAnswerWrongFlag(), view.getBackGround(), view.getTutorialLevel());
+				view.isAnswerRightFlag(), view.isAnswerWrongFlag(), view.getBackGround(), view.getTutorialLevel(), view.getTutorialHitFlag());
 		
 		//Initialize the NewGame State
 		fos = new FileOutputStream(NewGame);
@@ -69,7 +69,8 @@ public class Controller implements ActionListener, KeyListener{
 				view.update(model.getRedKnot(), model.getClapperrail(), model.getMapRN(),
 						model.getGamestatus(), model.getScoreBoard(), model.getItems(), 
 						model.getCRitems(), model.getQuiz_RN(), model.getQuiz_CR(),
-						model.isAnswerRightFlag(), model.isAnswerWrongFlag(), model.getBackground(), model.getTutorialLevel(), model.getStatusBar());
+						model.isAnswerRightFlag(), model.isAnswerWrongFlag(), 
+						model.getBackground(), model.getTutorialLevel(), model.getStatusBar(), model.getTutorialHitFlag());
 			}
 		};
 		
@@ -99,7 +100,7 @@ public class Controller implements ActionListener, KeyListener{
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
 				model.getRedKnot().setxVel(Model.RK_VELOCITY);
 			}
-		}else if(model.getGamestatus() == GameStatus.CR) {
+		}else if(model.getGamestatus() == GameStatus.CR|| model.getGamestatus() == GameStatus.CRTutorial) {
 			//Arrow Keys for the Clapper Rail Game: Move the bird to a specific position
 			if(keyCode == KeyEvent.VK_UP) {
 				model.getClapperrail().setY(frameHeight/2-200-100);
@@ -129,7 +130,7 @@ public class Controller implements ActionListener, KeyListener{
 			}else if(keyCode == KeyEvent.VK_RIGHT) {
 				model.getRedKnot().setxVel(0);
 			}
-		}else if(model.getGamestatus() == GameStatus.CR) {
+		}else if(model.getGamestatus() == GameStatus.CR || model.getGamestatus() == GameStatus.CRTutorial) {
 			//Arrow Keys for the Clapper Rail Game: Move the bird back to the original position
 			final int CR_START_LOC_HEIGHT = frameHeight/2-100;
 			final int CR_START_LOC_WIDTH = frameWidth/2-100;
@@ -154,22 +155,40 @@ public class Controller implements ActionListener, KeyListener{
 			break;
 		case "next":
 			model.setTutorialLevel(model.getTutorialLevel()+1);
-			if(model.getTutorialLevel() >= 8) {
-				try {
-					fis = new FileInputStream(NewGame);
-					ois = new ObjectInputStream(fis);
-					this.model = (Model) ois.readObject();
-					ois.close();
-					fis.close();
-					model.setGamestatus(GameStatus.RN);
-				}catch(Exception e2) {
-					e2.printStackTrace();
+			switch(model.getGamestatus()) {
+			case RNTutorial:
+				if(model.getTutorialLevel() >= 8) {
+					try {
+						fis = new FileInputStream(NewGame);
+						ois = new ObjectInputStream(fis);
+						this.model = (Model) ois.readObject();
+						ois.close();
+						fis.close();
+						model.setGamestatus(GameStatus.RN);
+					}catch(Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				break;
+			case CRTutorial:
+				if(model.getTutorialLevel() >= 6) {
+					try {
+						fis = new FileInputStream(NewGame);
+						ois = new ObjectInputStream(fis);
+						this.model = (Model) ois.readObject();
+						ois.close();
+						fis.close();
+						model.setGamestatus(GameStatus.CR);
+					}catch(Exception e2) {
+						e2.printStackTrace();
+					}
 				}
 			}
+			
 			break;
 		case "clapperRail":
 			model.setTutorialLevel(1);
-			model.setGamestatus(GameStatus.CR);
+			model.setGamestatus(GameStatus.CRTutorial);
 			break;
 		case "continue":
 			try {
