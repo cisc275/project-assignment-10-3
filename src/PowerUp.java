@@ -1,7 +1,7 @@
 public class PowerUp extends Items{
 	
-	public PowerUp(int x, int y, int width, int length, ItemsID itemID) {
-		super(x, y, width, length, itemID);
+	public PowerUp(int x, int y, int width, int length, int x_vel, ItemsID itemID) {
+		super(x, y, width, length, x_vel, itemID);
 	}
 	
 	/**

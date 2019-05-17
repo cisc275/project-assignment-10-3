@@ -1,7 +1,7 @@
 public class Food extends Items{
 	
-	public Food(int x, int y, int width, int length, ItemsID itemID) {
-		super(x, y, width, length, itemID);
+	public Food(int x, int y, int width, int length, int x_vel, ItemsID itemID) {
+		super(x, y, width, length, x_vel, itemID);
 
 	}
 	

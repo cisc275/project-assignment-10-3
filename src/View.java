@@ -112,7 +112,7 @@ public class View extends JPanel{
     private Boolean[] tutorialHitFlag = {false, false, false, false};
     
     // constants
-    private final int RK_SPAWN_SPEED = 40;
+    private final int RK_SPAWN_SPEED = 30;
     
     public View() {
 //    	System.out.println(frameWidth);
@@ -670,16 +670,16 @@ public class View extends JPanel{
         		
         		switch(random.nextInt(4)) {
         		case 0:
-        			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, ItemsID.Plane));
+        			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, Items.plane_Xvel+Items.dynamic_Xvel, ItemsID.Plane));
         			break;
         		case 1:
-        			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, ItemsID.Snail));
+        			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, Items.snail_Xvel+Items.dynamic_Xvel, ItemsID.Snail));
         			break;
         		case 2:
-        			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, ItemsID.Fly));
+        			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64,Items.fly_Xvel+Items.dynamic_Xvel, ItemsID.Fly));
         			break;
         		case 3:
-        			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128, ItemsID.Car));
+        			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128,Items.car_Xvel+Items.dynamic_Xvel, ItemsID.Car));
         			break; 			
         		}
 
@@ -689,7 +689,7 @@ public class View extends JPanel{
         	powerupSpawnCounter++;
         	if(powerupSpawnCounter==500) {
         		powerupSpawnCounter=0;
-        		this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),32,32,ItemsID.PowerUp));
+        		this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),32,32, -8, ItemsID.PowerUp));
         	}	
     			
     	}else if(this.gameStatus == GameStatus.RNTutorial) {
@@ -697,7 +697,7 @@ public class View extends JPanel{
     		case 6:
     			button_next.setEnabled(false);
     			if(this.items.size() <= 0) {
-    				this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, ItemsID.Fly));
+    				this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, Items.fly_Xvel, ItemsID.Fly));
     			}
     			break;
     		default:
@@ -739,28 +739,28 @@ public class View extends JPanel{
     		if(this.CRitems.size() == 0) {
     			switch(random.nextInt(8)) {
     			case 0:
-    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , 0, ItemsID.Food));
     				break;
     			case 1:
-    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , 0, ItemsID.Food));
     				break;
     			case 2:
-    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 , ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
     				break;
     			case 3:
-    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
     				break;
     			case 4:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, 32, 32, ItemsID.Obstacle));
+    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, 32, 32, 0, ItemsID.Obstacle));
     				break;
     			case 5:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200,32, 32, ItemsID.Obstacle));
+    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200,32, 32, 0, ItemsID.Obstacle));
     				break;
     			case 6:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32,32, 32, ItemsID.Obstacle));
+    				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32,32, 32, 0, ItemsID.Obstacle));
     				break;
     			case 7:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32,32, 32, ItemsID.Obstacle));
+    				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32,32, 32, 0, ItemsID.Obstacle));
     				break;
     			}
     		}
@@ -786,16 +786,16 @@ public class View extends JPanel{
 	    		if(this.CRitems.size() == 0) {
 	    			switch(random.nextInt(8)) {
 	    			case 0:
-	    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , ItemsID.Food));
+	    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , 0, ItemsID.Food));
 	    				break;
 	    			case 1:
-	    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , ItemsID.Food));
+	    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , 0, ItemsID.Food));
 	    				break;
 	    			case 2:
-	    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 , ItemsID.Food));
+	    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 ,0,  ItemsID.Food));
 	    				break;
 	    			case 3:
-	    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , ItemsID.Food));
+	    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
 	    				break;
 	    			}
 	    		}
@@ -848,7 +848,7 @@ public class View extends JPanel{
 			button_clapperrail.setVisible(false);
 			button_menu.setVisible(true);
 			button_next.setVisible(false);
-			
+			button_saveNquit.setVisible(false);
 			button_submit.setVisible(true);
 			button_A.setVisible(true);
 	    	button_B.setVisible(true);

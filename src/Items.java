@@ -8,24 +8,41 @@ public abstract class Items implements Serializable{
 	private int length;
 	private int x;
 	private int y;
-	public static final int X_VEL = -8;
+	private int x_vel = -8;
 	public static final int Y_VEL = 0;
+	public static int plane_Xvel = -10;
+	public static int car_Xvel = -9;
+	public static int fly_Xvel = -8;
+	public static int snail_Xvel = -6;
+	public static int dynamic_Xvel = 0;
 	private ItemsID itemID;
 	
 	//Constructor
-	public Items(int x, int y, int width, int length, ItemsID itemID) {
+	public Items(int x, int y, int width, int length, int x_vel, ItemsID itemID) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.length = length;
+		this.x_vel = x_vel;
 		this.itemID = itemID;
 	}
 	
 	
 	//getters and setters
+	
 	public ItemsID getItemID() {
 		return itemID;
 	}
+
+	public int getX_vel() {
+		return x_vel;
+	}
+
+
+	public void setX_vel(int x_vel) {
+		this.x_vel = x_vel;
+	}
+
 
 	public int getWidth() {
 		return width;
