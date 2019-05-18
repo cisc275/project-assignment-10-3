@@ -21,6 +21,7 @@ public class Model implements Serializable{
 	public final static int RK_VELOCITY = 13;
 	private final int RK_MAX_DYNAMIC = -12;
 	private final int RK_MIN_DYNAMIC = -3;
+	private int cr_dynamic_screentime_cap = 45;
 		
 	private int frameWidth;
     private int frameHeight;
@@ -430,6 +431,10 @@ public class Model implements Serializable{
 					statusBar.setStatus(CR_STATUS_CAP);
 				}
 				iterator.remove();
+				cr_dynamic_screentime_cap -=5;
+				if(cr_dynamic_screentime_cap <= 10) {
+					cr_dynamic_screentime_cap = 10;
+				}
 				break;
 			case Obstacle:
 				// when CR hits obstacle, decrease status bar
@@ -438,6 +443,10 @@ public class Model implements Serializable{
 					statusBar.setStatus(10);
 				}
 				iterator.remove();
+				cr_dynamic_screentime_cap +=5;
+				if(cr_dynamic_screentime_cap >= 55) {
+					cr_dynamic_screentime_cap = 55;
+				}
 				break;
 			default: 
 				break;
@@ -453,7 +462,8 @@ public class Model implements Serializable{
 	
 	public void screenTime() {
 		screenTime++;
-		if(screenTime >= 20) {
+		System.out.println(cr_dynamic_screentime_cap);
+		if(screenTime >= cr_dynamic_screentime_cap) {
 			iterator.remove();
 			screenTime = 0;
 		}	
