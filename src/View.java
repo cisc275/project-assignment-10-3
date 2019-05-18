@@ -157,7 +157,7 @@ public class View extends JPanel{
     	frame.setVisible(true);
     }
     
-    //Getters & Setters
+    //Getters & Setters --------------------------------------------------------------
     
     public int getTutorialLevel() {
 		return tutorialLevel;
@@ -237,13 +237,15 @@ public class View extends JPanel{
 	public StatusBar getStatusBar() {
 		return statusBar;
 	}
-	
+	//  ----------------------------------------------------------------------------------------------------------------------------
 	
 	/**
-	 * makes buttons and styles for menu
+	 * makes buttons and styles for program
 	 */
 	private void makeButtons() {
 		this.setLayout(null);
+		
+		// make Red Knot button
 		button_redknote = new JButton("Red Knot", new ImageIcon(pic_icon_RN));  
 		button_redknote.setBounds(frameWidth/2-650, 200, 512, 256);
     	button_redknote.setBackground(Color.BLUE);
@@ -254,6 +256,7 @@ public class View extends JPanel{
     	button_redknote.setFont(new Font("Arial", Font.PLAIN, 40));
     	button_redknote.setVisible(true);
     	
+    	// make Clapper Rail button
     	button_clapperrail = new JButton("Clapper Rail", new ImageIcon(pic_icon_CR));  
     	button_clapperrail.setBounds(frameWidth/2-100, 200, 512, 256);
     	button_clapperrail.setBackground(Color.BLUE);
@@ -264,6 +267,7 @@ public class View extends JPanel{
     	button_clapperrail.setFont(new Font("Arial", Font.PLAIN, 40));
     	button_clapperrail.setVisible(true);
     	
+    	// make Menu button
     	button_menu = new JButton("Menu");
     	button_menu.setBounds(frameWidth/2-32, 0, 64, 32);
     	button_menu.setBackground(Color.GRAY);
@@ -271,6 +275,7 @@ public class View extends JPanel{
     	button_menu.setActionCommand("menu");
     	button_menu.setVisible(false);
     	
+    	// make Submit button
     	button_submit = new JButton("Submit");
     	button_submit.setBounds(frameWidth/2+200, frameHeight-300, 96, 32);
     	button_submit.setBackground(Color.GRAY);
@@ -279,6 +284,7 @@ public class View extends JPanel{
     	button_submit.setEnabled(false);
     	button_submit.setVisible(false);
     	
+    	// make Save and Quit button
     	button_saveNquit = new JButton("Save and Quit");
     	button_saveNquit.setBounds(frameWidth/2+64, 0, 128, 32); //64 , 32
     	button_saveNquit.setBackground(Color.GRAY);
@@ -286,6 +292,7 @@ public class View extends JPanel{
     	button_saveNquit.setActionCommand("savequit");
     	button_saveNquit.setVisible(false);
     	
+    	// make Next button
     	button_next = new JButton("Next");
     	button_next.setBounds(frameWidth/2+64, 0, 64, 32);
     	button_next.setBackground(Color.GRAY);
@@ -293,6 +300,7 @@ public class View extends JPanel{
     	button_next.setActionCommand("next");
     	button_next.setVisible(false);
     	
+    	// make Continue button
     	button_continue = new JButton("Continue"); /////////////////////////
     	button_continue.setBounds(100, frameHeight - 100, 96, 32);
     	button_continue.setBackground(Color.GRAY);
@@ -300,17 +308,20 @@ public class View extends JPanel{
     	button_continue.setActionCommand("continue");
     	button_continue.setVisible(true);
     	
+    	// make quiz RadioButtons
     	button_A = new JRadioButton();
     	button_B = new JRadioButton();
     	button_C = new JRadioButton();
     	button_D = new JRadioButton();
     	
+    	// set position and size of quiz buttons
     	button_A.setBounds(frameWidth/2-200, frameHeight/2-128, 512, 32);
     	button_B.setBounds(frameWidth/2-200, frameHeight/2-64, 512, 32);
     	button_C.setBounds(frameWidth/2-200, frameHeight/2, 512, 32);
     	button_D.setBounds(frameWidth/2-200, frameHeight/2+64, 512, 32);
     	
 //    	ButtonGroup group = new ButtonGroup();
+    	// make button group of quiz buttons
 		group.add(button_A);
 		group.add(button_B);
 		group.add(button_C);
@@ -326,6 +337,7 @@ public class View extends JPanel{
     	button_C.setVisible(false);
     	button_D.setVisible(false);
 
+    	// add ALL buttons to this JPanel
     	this.add(button_redknote);
     	this.add(button_menu);
     	this.add(button_clapperrail);
@@ -340,292 +352,606 @@ public class View extends JPanel{
 		this.add(button_D);
 	}
 	
-	
-	public void paintComponent(Graphics g) {
+	/**
+	 * paint the Red Knot frame
+	 * @param g
+	 */
+	private void paintRK(Graphics g) {
+		//Draw the background with the x location in the arraylist 
+		itbackground = background.iterator();
+		while(itbackground.hasNext()) {
+			int tempInt = itbackground.next();
+			g.drawImage(pic_menu, tempInt, 0, this);
+		}
 		
-		if(this.gameStatus == GameStatus.RN) {
-			//Draw the background with the x location in the arraylist 
-			itbackground = background.iterator();
-			while(itbackground.hasNext()) {
-				int tempInt = itbackground.next();
-				g.drawImage(pic_menu, tempInt, 0, this);
+		iterator = items.iterator();
+		
+    	while(iterator.hasNext()) {
+    		
+    		Items tempItem = iterator.next();
+    		switch(tempItem.getItemID()) {
+    		case PowerUp:
+    			g.drawImage(pic_power, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
+    			break;
+    		case Fly:
+    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+    			break;
+    		case Plane:
+    			g.drawImage(pic_RNPlane, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+    			break;
+    		case Snail:
+    			g.drawImage(pic_RNSnail, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+    			break;
+    		case Car:
+    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
+    			break;
+    			
+    		}	
+    	}
+    	//RN: Red Knot
+    	picNumFly=(picNumFly+1)%frameCountFly;
+    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
+    	
+    	//RN: Mini Map
+    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
+    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
+    	g.setColor(Color.RED);
+    	g.drawLine(frameWidth-130, 35, mapRN.getStatus()+5, mapRN.getStatus_Y()+5);
+    	g.drawImage(x, frameWidth-50, (int)(0.625*(-50)+ 111.25),16,16, this);
+    	
+    	//RN: ScoreBoard
+    	g.setColor(Color.WHITE);
+    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.setColor(Color.BLACK);
+    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.setColor(Color.RED); 
+    	Font font = new Font("Serif", Font.BOLD, 50);
+    	g.setFont(font);
+    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
+	}
+	
+	/**
+	 * paint the Red Knot tutorial frame 
+	 * @param g
+	 */
+	private void paintRKTutorial(Graphics g) {
+		g.setFont(new Font("Serif", Font.PLAIN, 30));
+		itbackground = background.iterator();
+		while(itbackground.hasNext()) {
+			int tempInt = itbackground.next();
+			g.drawImage(pic_menu, tempInt, 0, this);
+		}
+		switch(tutorialLevel) {
+		case 7:
+			g.setColor(Color.RED);
+			g.drawString("Good Job!", frameWidth/2-50, 100);
+			g.drawString("You are all set! Click The [Next] on the top to Start the Game", frameWidth/2-400, 550);
+			g.drawImage(pic_RNPlane, frameWidth/2-500, 300, 180, 100, this);
+			g.drawImage(pic_RNCar, frameWidth/2-250, 300, 180, 108, this);
+			g.drawImage(pic_RNFly, frameWidth/2+100, 350, 64, 64, this);
+			g.drawImage(pic_RNSnail, frameWidth/2+250, 350, 64, 64, this);
+			g.drawImage(pic_power, frameWidth/2+400, 350, 64, 64,this);
+			g.drawImage(greenCircle,frameWidth/2+25,275, 500, 200, this);
+			g.drawImage(redCircle,frameWidth/2-600,250, 625, 225, this);
+		case 6:
+			if(tutorialLevel == 6) {
+				iterator = items.iterator();
+				g.setColor(Color.RED);
+				g.drawString("Go Catch that fly!", frameWidth/2-100, 100);
+		    	while(iterator.hasNext()) {
+		    		Items tempItem = iterator.next();
+		    		g.drawImage(pic_RNFly, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
+		    	}
 			}
 			
-			iterator = items.iterator();
-			
-	    	while(iterator.hasNext()) {
-	    		
-	    		Items tempItem = iterator.next();
-	    		switch(tempItem.getItemID()) {
-	    		case PowerUp:
-	    			g.drawImage(pic_power, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
-	    			break;
-	    		case Fly:
-	    			g.drawImage(pic_RNFly, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-	    			break;
-	    		case Plane:
-	    			g.drawImage(pic_RNPlane, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-	    			break;
-	    		case Snail:
-	    			g.drawImage(pic_RNSnail, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-	    			break;
-	    		case Car:
-	    			g.drawImage(pic_RNCar, tempItem.getX(), tempItem.getY(), tempItem.getWidth(), tempItem.getLength(), this);
-	    			break;
-	    			
-	    		}	
-	    	}
-	    	//RN: Red Knot
-	    	picNumFly=(picNumFly+1)%frameCountFly;
-	    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
-	    	
-	    	//RN: Mini Map
-	    	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
-	    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-	    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
-	    	g.setColor(Color.RED);
-	    	g.drawLine(frameWidth-130, 35, mapRN.getStatus()+5, mapRN.getStatus_Y()+5);
-	    	g.drawImage(x, frameWidth-50, (int)(0.625*(-50)+ 111.25),16,16, this);
-	    	
-	    	//RN: ScoreBoard
-	    	g.setColor(Color.WHITE);
+		case 5:
+			g.setColor(Color.WHITE);
 	    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
 	    	g.setColor(Color.BLACK);
 	    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
 	    	g.setColor(Color.RED); 
-	    	Font font = new Font("Serif", Font.BOLD, 50);
-	    	g.setFont(font);
 	    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
-						 	
-		}else if(this.gameStatus == GameStatus.RNTutorial) {
+	    	if(tutorialLevel == 5) {
+	    		g.drawOval(ScoreBoard.X-48, ScoreBoard.Y-16, ScoreBoard.LENGTH+100, ScoreBoard.WIDTH+32);
+		    	g.drawString("The Score Board shows your grade", ScoreBoard.X + ScoreBoard.LENGTH+60, ScoreBoard.Y + 32);
+		    	g.drawString("Click [Next] on the top to continue", ScoreBoard.X + ScoreBoard.LENGTH+60, 85);
+	    	}
+		case 4:
+			g.setColor(Color.BLACK);
+			g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
+	    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+	    	g.drawImage(pic_redKnot_mini, mapRN.getX()+90, 80, this);
+	    	g.setColor(Color.RED);
+	    	if(tutorialLevel == 4) {
+	    		g.fillRect(frameWidth-140, 85, 80, 4); 
+				g.drawString("Red Knot stops at Delaware Bay", frameWidth-540, 90);
+				g.drawString("Click [Next] on the top to continue", frameWidth-570, 135);
+	    	}
 			
-			g.setFont(new Font("Serif", Font.PLAIN, 30));
-			itbackground = background.iterator();
-			while(itbackground.hasNext()) {
-				int tempInt = itbackground.next();
-				g.drawImage(pic_menu, tempInt, 0, this);
-			}
-			switch(tutorialLevel) {
-			case 7:
-				g.setColor(Color.RED);
-				g.drawString("Good Job!", frameWidth/2-50, 100);
-				g.drawString("You are all set! Click The [Next] on the top to Start the Game", frameWidth/2-400, 550);
-				g.drawImage(pic_RNPlane, frameWidth/2-500, 300, 180, 100, this);
-				g.drawImage(pic_RNCar, frameWidth/2-250, 300, 180, 108, this);
-				g.drawImage(pic_RNFly, frameWidth/2+100, 350, 64, 64, this);
-				g.drawImage(pic_RNSnail, frameWidth/2+250, 350, 64, 64, this);
-				g.drawImage(pic_power, frameWidth/2+400, 350, 64, 64,this);
-				g.drawImage(greenCircle,frameWidth/2+25,275, 500, 200, this);
-				g.drawImage(redCircle,frameWidth/2-600,250, 625, 225, this);
-			case 6:
-				if(tutorialLevel == 6) {
-					iterator = items.iterator();
-					g.setColor(Color.RED);
-					g.drawString("Go Catch that fly!", frameWidth/2-100, 100);
-			    	while(iterator.hasNext()) {
-			    		Items tempItem = iterator.next();
-			    		g.drawImage(pic_RNFly, tempItem.getX(),tempItem.getY(),tempItem.getWidth(),tempItem.getLength(),this);
-			    	}
-				}
-				
-			case 5:
-				g.setColor(Color.WHITE);
-		    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
-		    	g.setColor(Color.BLACK);
-		    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
-		    	g.setColor(Color.RED); 
-		    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
-		    	if(tutorialLevel == 5) {
-		    		g.drawOval(ScoreBoard.X-48, ScoreBoard.Y-16, ScoreBoard.LENGTH+100, ScoreBoard.WIDTH+32);
-			    	g.drawString("The Score Board shows your grade", ScoreBoard.X + ScoreBoard.LENGTH+60, ScoreBoard.Y + 32);
-			    	g.drawString("Click [Next] on the top to continue", ScoreBoard.X + ScoreBoard.LENGTH+60, 85);
-		    	}
-			case 4:
-				g.setColor(Color.BLACK);
+		case 3: 
+			
+			if(tutorialLevel == 3) {
 				g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 		    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-		    	g.drawImage(pic_redKnot_mini, mapRN.getX()+90, 80, this);
+		    	g.drawImage(pic_redKnot_mini, mapRN.getX()+15, 30, this);
 		    	g.setColor(Color.RED);
-		    	if(tutorialLevel == 4) {
-		    		g.fillRect(frameWidth-140, 85, 80, 4); 
-					g.drawString("Red Knot stops at Delaware Bay", frameWidth-540, 90);
-					g.drawString("Click [Next] on the top to continue", frameWidth-570, 135);
-		    	}
-				
-			case 3: 
-				
-				if(tutorialLevel == 3) {
-					g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
-			    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-			    	g.drawImage(pic_redKnot_mini, mapRN.getX()+15, 30, this);
-			    	g.setColor(Color.RED);
-					g.fillRect(frameWidth-220, 35, 80, 4); //1220
-					g.drawString("Red Knot migrates from Canada", frameWidth-620, 50); 
-					g.drawString("Click [Next] on the top to continue", frameWidth-620, 95);
-				}
-			case 2:
-				
-		    	if(tutorialLevel == 2) {
-		    		g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
-			    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-			    	g.setColor(Color.RED);
-		    		g.drawOval(mapRN.getX()-32, mapRN.getY()-32, 192 , 192);
-		    		g.drawString("Here is a Mini Map shows the migration.", mapRN.getX()-550, mapRN.getY()+80 );
-		    		g.drawString("Click [Next] on the top to continue", mapRN.getX()-550, mapRN.getY()+125);
-		    	}
-			case 1:
-				g.setColor(Color.RED);
-				picNumFly=(picNumFly+1)%frameCountFly;
-		    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
-		    	if(tutorialLevel == 1) {
-		    		g.drawImage(arrows, redKnot.getX(), redKnot.getY()+25, 200, 200, this);
-		    	}
-		    	break;
+				g.fillRect(frameWidth-220, 35, 80, 4); //1220
+				g.drawString("Red Knot migrates from Canada", frameWidth-620, 50); 
+				g.drawString("Click [Next] on the top to continue", frameWidth-620, 95);
 			}
-		}
-		
-		else if(this.gameStatus == GameStatus.CR) {
-			// CR: Background
-			g.drawImage(pic_water, 0, 0, this);
+		case 2:
 			
-			//CR: Mini Map
-			g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
-			g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-			g.drawImage(pic_clapperRail_mini, frameWidth-100, (int)(0.625*(-50)+ 111.25), this);
+	    	if(tutorialLevel == 2) {
+	    		g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
+		    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+		    	g.setColor(Color.RED);
+	    		g.drawOval(mapRN.getX()-32, mapRN.getY()-32, 192 , 192);
+	    		g.drawString("Here is a Mini Map shows the migration.", mapRN.getX()-550, mapRN.getY()+80 );
+	    		g.drawString("Click [Next] on the top to continue", mapRN.getX()-550, mapRN.getY()+125);
+	    	}
+		case 1:
+			g.setColor(Color.RED);
+			picNumFly=(picNumFly+1)%frameCountFly;
+	    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
+	    	if(tutorialLevel == 1) {
+	    		g.drawImage(arrows, redKnot.getX(), redKnot.getY()+25, 200, 200, this);
+	    	}
+	    	break;
+		}
+	}
+	
+	/**
+	 * paint the Clapper Rail frame
+	 * @param g
+	 */
+	private void paintCR(Graphics g ) {
+		// CR: Background
+					g.drawImage(pic_water, 0, 0, this);
+					
+					//CR: Mini Map
+					g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
+					g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+					g.drawImage(pic_clapperRail_mini, frameWidth-100, (int)(0.625*(-50)+ 111.25), this);
+				
+					//CR: draw the item in the arraylist
+					iterator = CRitems.iterator();
+					while(iterator.hasNext()) {
+						Items tempItem = iterator.next();
+						if(tempItem.getItemID() == ItemsID.Food) {
+							g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
+						}else {
+							g.drawImage(pic_snake, tempItem.getX(), tempItem.getY(), 64, 64, this);
+						}
+					}
+					//CR: Clapper Rail
+					g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
+					
+					//CR: Status Bar
+					for(int i = 0; i < statusBar.getStatus(); i++) {
+						g.drawImage(pic_food, StatusBar.x, (StatusBar.y-i*StatusBar.length), StatusBar.length, StatusBar.length, this);
+					}
+	}
+	
+	/**
+	 * paint the Clapper Rail tutorial frame
+	 * @param g
+	 */
+	private void paintCRTutorial(Graphics g) {
+		g.setFont(new Font("Serif", Font.PLAIN, 30));
+		// CR: Background
+		g.drawImage(pic_water, 0, 0, this);
 		
-			//CR: draw the item in the arraylist
+		switch(tutorialLevel) {
+		case 5:
+			g.setColor(Color.RED);
+			g.drawImage(pic_food, frameWidth/2-300, frameHeight/2-300, 100, 100, this);
+			g.drawImage(pic_snake, frameWidth/2+200, frameHeight/2-300, 100, 100, this);
+			g.drawImage(greenCircle,frameWidth/2-300, frameHeight/2-300, 100, 100, this);
+			g.drawImage(redCircle,frameWidth/2+200, frameHeight/2-300, 100, 100, this);
+			g.drawString("Tip: Catch Crabs and Avoid Snakes", frameWidth/2-190, 100);
+			g.drawString("Clicl [Next] on the top to Start the game", frameWidth/2-250, frameHeight/2-300);
+			g.drawString("Good job!", frameWidth/2-50, frameHeight/2-200);
+		case 4:
+			if(tutorialLevel == 4) {
+				g.drawString("Now catch that Crab!", frameWidth/2 - 100, 100);
+			}
 			iterator = CRitems.iterator();
 			while(iterator.hasNext()) {
 				Items tempItem = iterator.next();
-				if(tempItem.getItemID() == ItemsID.Food) {
-					g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
-				}else {
-					g.drawImage(pic_snake, tempItem.getX(), tempItem.getY(), 64, 64, this);
-				}
+				g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
 			}
-			//CR: Clapper Rail
-			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
-			
-			//CR: Status Bar
+		case 3:
+			if(tutorialLevel == 3) {
+				g.setColor(Color.RED);
+				g.drawRect(StatusBar.x, StatusBar.y-9*StatusBar.length, StatusBar.length, StatusBar.y-StatusBar.length);
+				g.drawString("You need to catch 10 crabs to win this game",StatusBar.x +StatusBar.length , StatusBar.y-9*StatusBar.length);
+			}
 			for(int i = 0; i < statusBar.getStatus(); i++) {
 				g.drawImage(pic_food, StatusBar.x, (StatusBar.y-i*StatusBar.length), StatusBar.length, StatusBar.length, this);
 			}
-		
-		}else if(this.gameStatus == GameStatus.CRTutorial) {
 			
-			g.setFont(new Font("Serif", Font.PLAIN, 30));
-			// CR: Background
-			g.drawImage(pic_water, 0, 0, this);
 			
-			switch(tutorialLevel) {
-			case 5:
+		case 2:
+			g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
+			g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+			g.drawImage(pic_clapperRail_mini, frameWidth-100, 80, this);
+			if(tutorialLevel == 2) {
 				g.setColor(Color.RED);
-				g.drawImage(pic_food, frameWidth/2-300, frameHeight/2-300, 100, 100, this);
-				g.drawImage(pic_snake, frameWidth/2+200, frameHeight/2-300, 100, 100, this);
-				g.drawImage(greenCircle,frameWidth/2-300, frameHeight/2-300, 100, 100, this);
-				g.drawImage(redCircle,frameWidth/2+200, frameHeight/2-300, 100, 100, this);
-				g.drawString("Tip: Catch Crabs and Avoid Snakes", frameWidth/2-190, 100);
-				g.drawString("Clicl [Next] on the top to Start the game", frameWidth/2-250, frameHeight/2-300);
-				g.drawString("Good job!", frameWidth/2-50, frameHeight/2-200);
-			case 4:
-				if(tutorialLevel == 4) {
-					g.drawString("Now catch that Crab!", frameWidth/2 - 100, 100);
-				}
-				iterator = CRitems.iterator();
-				while(iterator.hasNext()) {
-					Items tempItem = iterator.next();
-					g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
-				}
-			case 3:
-				if(tutorialLevel == 3) {
-					g.setColor(Color.RED);
-					g.drawRect(StatusBar.x, StatusBar.y-9*StatusBar.length, StatusBar.length, StatusBar.y-StatusBar.length);
-					g.drawString("You need to catch 10 crabs to win this game",StatusBar.x +StatusBar.length , StatusBar.y-9*StatusBar.length);
-				}
-				for(int i = 0; i < statusBar.getStatus(); i++) {
-					g.drawImage(pic_food, StatusBar.x, (StatusBar.y-i*StatusBar.length), StatusBar.length, StatusBar.length, this);
-				}
-				
-				
-			case 2:
-				g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
-				g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-				g.drawImage(pic_clapperRail_mini, frameWidth-100, 80, this);
-				if(tutorialLevel == 2) {
-					g.setColor(Color.RED);
-					g.fillRect(frameWidth-190, 85, 80, 4);
-					g.drawString("Clapper Rail is non-migratory bird", frameWidth - 625, 100);
-				}
-			case 1:
-				g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
-				g.setColor(Color.RED);
-				if(tutorialLevel == 1) {
-					g.drawString("Hit the circle using the Arrow Keys",frameWidth/2-200 , 150);
-					if(!tutorialHitFlag[0]) {
-						g.fillOval(frameWidth/2-32, frameHeight/2-32-200, 64, 64); //Up
-					}
-					if(!tutorialHitFlag[1]) {
-						g.fillOval(frameWidth/2-32, frameHeight/2-32+200, 64, 64); //Down
-					}
-					if(!tutorialHitFlag[2]) {
-						g.fillOval(frameWidth/2-32+200, frameHeight/2-32, 64, 64); //Right
-					}
-					if(!tutorialHitFlag[3]) {
-						g.fillOval(frameWidth/2-32-200, frameHeight/2-32, 64, 64); //Left
-					}
-				}
-			break;
+				g.fillRect(frameWidth-190, 85, 80, 4);
+				g.drawString("Clapper Rail is non-migratory bird", frameWidth - 625, 100);
 			}
+		case 1:
+			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
+			g.setColor(Color.RED);
+			if(tutorialLevel == 1) {
+				g.drawString("Hit the circle using the Arrow Keys",frameWidth/2-200 , 150);
+				if(!tutorialHitFlag[0]) {
+					g.fillOval(frameWidth/2-32, frameHeight/2-32-200, 64, 64); //Up
+				}
+				if(!tutorialHitFlag[1]) {
+					g.fillOval(frameWidth/2-32, frameHeight/2-32+200, 64, 64); //Down
+				}
+				if(!tutorialHitFlag[2]) {
+					g.fillOval(frameWidth/2-32+200, frameHeight/2-32, 64, 64); //Right
+				}
+				if(!tutorialHitFlag[3]) {
+					g.fillOval(frameWidth/2-32-200, frameHeight/2-32, 64, 64); //Left
+				}
+			}
+		break;
 		}
+	}
+	
+	/** 
+	 * paint the Red Knot quiz frame
+	 * @param g
+	 */
+	private void paintRKQuiz(Graphics g) {
+		//RNQUIZ: background
+		g.drawImage(pic_menu, 0, 0, this);
 		
-		else if(this.gameStatus == GameStatus.CRQUIZ) {
-			//CRQUIZ: background
-			g.drawImage(pic_water, 0, 0, this);
-			
-			//CRQUIZ: Question
+		//RNQUIZ: Question
+		g.setFont(new Font("Serif", Font.PLAIN, 30));
+		g.drawString(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getQuestion(), 200, 200);
+		
+		//RNQUIZ: Check the answer and give the result
+		if(answerRightFlag) {
 			g.setFont(new Font("Serif", Font.PLAIN, 30));
-			g.drawString(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getQuestion(), 200, 200);
-			
-			//CRQUIZ: Check the answer and give the result
-			if(answerRightFlag) {
-				g.setFont(new Font("Serif", Font.PLAIN, 30));
-				g.drawString("Your Answer is Correct! " , frameWidth/2-300, frameHeight/2+250);
-				button_submit.setEnabled(false);
-			}else if(answerWrongFlag) {
-				g.setFont(new Font("Serif", Font.PLAIN, 30));
-				g.drawString("Unfortunately The right answer is " + 
-			quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getCorrectanswer(), frameWidth/2-500, frameHeight/2+250);
-				button_submit.setEnabled(false);
-			}
-			
-		}else if(this.gameStatus == GameStatus.RNQUIZ) {
-			//RNQUIZ: background
-			g.drawImage(pic_menu, 0, 0, this);
-			
-			//RNQUIZ: Question
+			g.drawString("Good Job! Your Final Score is " + (scoreBoard.getScore()+10), frameWidth/2-300, frameHeight/2+250);
+			button_submit.setEnabled(false);
+		}else if(answerWrongFlag) {
 			g.setFont(new Font("Serif", Font.PLAIN, 30));
-			g.drawString(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getQuestion(), 200, 200);
-			
-			//RNQUIZ: Check the answer and give the result
-			if(answerRightFlag) {
-				g.setFont(new Font("Serif", Font.PLAIN, 30));
-				g.drawString("Good Job! Your Final Score is " + (scoreBoard.getScore()+10), frameWidth/2-300, frameHeight/2+250);
-				button_submit.setEnabled(false);
-			}else if(answerWrongFlag) {
-				g.setFont(new Font("Serif", Font.PLAIN, 30));
-				g.drawString("Unfortunately The right answer is " + 
-			quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getCorrectanswer()
-			 + " Your Final Score is " + scoreBoard.getScore(), frameWidth/2-500, frameHeight/2+250);
-				button_submit.setEnabled(false);
-			}
-			
-		}else if(this.gameStatus == GameStatus.Menu){	
-			//Menu: Background
-			g.drawImage(pic_menu, 0, 0, this);		
+			g.drawString("Unfortunately The right answer is " + 
+		quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getCorrectanswer()
+		 + " Your Final Score is " + scoreBoard.getScore(), frameWidth/2-500, frameHeight/2+250);
+			button_submit.setEnabled(false);
+		}
+	}
+	
+	/** 
+	 * paint the Clapper Rail quiz frame
+	 * @param g
+	 */
+	private void paintCRQuiz(Graphics g) {
+		//CRQUIZ: background
+		g.drawImage(pic_water, 0, 0, this);
+		
+		//CRQUIZ: Question
+		g.setFont(new Font("Serif", Font.PLAIN, 30));
+		g.drawString(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getQuestion(), 200, 200);
+		
+		//CRQUIZ: Check the answer and give the result
+		if(answerRightFlag) {
+			g.setFont(new Font("Serif", Font.PLAIN, 30));
+			g.drawString("Your Answer is Correct! " , frameWidth/2-300, frameHeight/2+250);
+			button_submit.setEnabled(false);
+		}else if(answerWrongFlag) {
+			g.setFont(new Font("Serif", Font.PLAIN, 30));
+			g.drawString("Unfortunately The right answer is " + 
+		quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getCorrectanswer(), frameWidth/2-500, frameHeight/2+250);
+			button_submit.setEnabled(false);
+		}
+	}
+	
+	/**
+	 * paint frame depending on current game status
+	 */
+	public void paintComponent(Graphics g) {
+		
+		switch(this.gameStatus) {
+			case RN :
+				paintRK(g);
+				break;				 	
+			case RNTutorial:
+				paintRKTutorial(g);
+				break;
+			case CR:
+				paintCR(g);
+				break;
+			case CRTutorial:
+				paintCRTutorial(g);
+				break;
+			case CRQUIZ:
+				paintCRQuiz(g);
+				break;
+			case RNQUIZ:
+				paintRKQuiz(g);
+				break;
+			case Menu:
+				//Menu: Background
+				g.drawImage(pic_menu, 0, 0, this);		
+				break;
 		}
     }
 
-    //update birds location, items location, and score(status)
+	/**
+	 * updates view for Red Knot game
+	 */
+	private void updateRK() {
+		//Arrange the button visibility in game mode
+		button_continue.setVisible(false);
+		button_saveNquit.setVisible(true);
+		button_redknote.setVisible(false);
+		button_next.setVisible(false);
+		button_clapperrail.setVisible(false);
+		button_menu.setVisible(true);
+		button_submit.setEnabled(false);
+		button_submit.setVisible(false);
+		button_A.setVisible(false);
+    	button_B.setVisible(false);
+    	button_C.setVisible(false);
+    	button_D.setVisible(false);
+    	
+    	//RN: SpawnCounter add new random item to the items ArrayList
+    	itemSpawnCounter++;
+    	if(itemSpawnCounter >= RK_SPAWN_SPEED) {
+    		itemSpawnCounter = 0;
+    		
+    		switch(random.nextInt(4)) {
+    		case 0:
+    			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, Items.plane_Xvel+Items.dynamic_Xvel, ItemsID.Plane));
+    			break;
+    		case 1:
+    			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, Items.snail_Xvel+Items.dynamic_Xvel, ItemsID.Snail));
+    			break;
+    		case 2:
+    			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64,Items.fly_Xvel+Items.dynamic_Xvel, ItemsID.Fly));
+    			break;
+    		case 3:
+    			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128,Items.car_Xvel+Items.dynamic_Xvel, ItemsID.Car));
+    			break; 			
+    		}
+
+    	}
+    	
+    	//RN: Power up Counter, add to the Arraylist 
+    	powerupSpawnCounter++;
+    	if(powerupSpawnCounter==500) {
+    		powerupSpawnCounter=0;
+    		this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),32,32, -8, ItemsID.PowerUp));
+    	}	
+	}
+
+	/**
+	 * updates view for Clapper Rail game
+	 */
+	private void updateCR() {
+		//Arrange the button visibility in game mode
+		button_saveNquit.setVisible(true);
+		button_redknote.setVisible(false);
+		button_clapperrail.setVisible(false);
+		button_next.setVisible(false);
+		button_menu.setVisible(true);
+		button_continue.setVisible(false);
+		
+		button_submit.setEnabled(false);
+		button_submit.setVisible(false);
+		button_A.setVisible(false);
+    	button_B.setVisible(false);
+    	button_C.setVisible(false);
+    	button_D.setVisible(false);
+    	
+    	//CR: add one random item to the array list if it is empty
+		if(this.CRitems.size() == 0) {
+			switch(random.nextInt(8)) {
+			case 0:
+				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , 0, ItemsID.Food));
+				break;
+			case 1:
+				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , 0, ItemsID.Food));
+				break;
+			case 2:
+				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
+				break;
+			case 3:
+				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
+				break;
+			case 4:
+				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, 32, 32, 0, ItemsID.Obstacle));
+				break;
+			case 5:
+				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200,32, 32, 0, ItemsID.Obstacle));
+				break;
+			case 6:
+				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32,32, 32, 0, ItemsID.Obstacle));
+				break;
+			case 7:
+				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32,32, 32, 0, ItemsID.Obstacle));
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * updates view for Red Knot tutorial
+	 */
+	private void updateRKTutorial() {
+		switch(this.tutorialLevel) {
+		case 6:
+			button_next.setEnabled(false);
+			if(this.items.size() <= 0) {
+				this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, Items.fly_Xvel, ItemsID.Fly));
+			}
+			break;
+		default:
+			button_next.setEnabled(true);
+			break;
+		}
+		
+		button_next.setVisible(true);
+		button_continue.setVisible(false);
+		button_saveNquit.setVisible(false);
+		button_redknote.setVisible(false);
+		button_clapperrail.setVisible(false);
+		button_menu.setVisible(true);
+		button_submit.setEnabled(false);
+		button_submit.setVisible(false);
+		button_A.setVisible(false);
+    	button_B.setVisible(false);
+    	button_C.setVisible(false);
+    	button_D.setVisible(false);
+	}
+	
+	/**
+	 * updates view for Clapper Rail tutorial
+	 */
+	private void updateCRTutorial() {
+		button_next.setVisible(true);
+		button_continue.setVisible(false);
+		button_saveNquit.setVisible(false);
+		button_redknote.setVisible(false);
+		button_clapperrail.setVisible(false);
+		button_menu.setVisible(true);
+		button_submit.setEnabled(false);
+		button_submit.setVisible(false);
+		button_A.setVisible(false);
+    	button_B.setVisible(false);
+    	button_C.setVisible(false);
+    	button_D.setVisible(false);
+    	switch(tutorialLevel) {
+    	case 4:
+//    		button_next.setEnabled(false);
+    		if(this.CRitems.size() == 0) {
+    			switch(random.nextInt(8)) {
+    			case 0:
+    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , 0, ItemsID.Food));
+    				break;
+    			case 1:
+    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , 0, ItemsID.Food));
+    				break;
+    			case 2:
+    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 ,0,  ItemsID.Food));
+    				break;
+    			case 3:
+    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
+    				break;
+    			}
+    		}
+    	case 1:
+    		button_next.setEnabled(false);
+    		break;
+    	default:
+    		button_next.setEnabled(true);
+    	}
+    	
+	}
+	
+	/**
+	 * updates view for Red Knot quiz
+	 */
+	private void updateRKQuiz() {
+		// Arrane the button in quiz mode
+					button_A.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[0]);
+					button_B.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[1]);
+					button_C.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[2]);
+					button_D.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[3]);
+					
+					button_A.setFont(new Font("Arial", Font.PLAIN, 30));
+					button_B.setFont(new Font("Arial", Font.PLAIN, 30));
+					button_C.setFont(new Font("Arial", Font.PLAIN, 30));
+					button_D.setFont(new Font("Arial", Font.PLAIN, 30));
+					
+					button_continue.setVisible(false);
+					button_redknote.setVisible(false);
+					button_clapperrail.setVisible(false);
+					button_menu.setVisible(true);
+					button_next.setVisible(false);
+					button_saveNquit.setVisible(false);
+					button_submit.setVisible(true);
+					button_A.setVisible(true);
+			    	button_B.setVisible(true);
+			    	button_C.setVisible(true);
+			    	button_D.setVisible(true);
+	}
+	
+	/**
+	 * updates view for Clapper Rail quiz
+	 */
+	private void updateCRQuiz() {
+		// Arrane the button in quiz mode
+		button_A.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[0]);
+		button_B.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[1]);
+		button_C.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[2]);
+		button_D.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[3]);
+		
+		button_A.setFont(new Font("Arial", Font.PLAIN, 30));
+		button_B.setFont(new Font("Arial", Font.PLAIN, 30));
+		button_C.setFont(new Font("Arial", Font.PLAIN, 30));
+		button_D.setFont(new Font("Arial", Font.PLAIN, 30));
+		
+		button_redknote.setVisible(false);
+		button_clapperrail.setVisible(false);
+		button_menu.setVisible(true);
+		button_saveNquit.setVisible(false);
+		button_continue.setVisible(false);
+		button_submit.setVisible(true);
+		button_next.setVisible(false);
+		button_A.setVisible(true);
+    	button_B.setVisible(true);
+    	button_C.setVisible(true);
+    	button_D.setVisible(true);
+    	
+	}
+	
+	/**
+	 * updates view for menu
+	 */
+	private void updateMenu() {
+		//Arrange the button in menu mode
+		button_continue.setVisible(true);
+		button_menu.setVisible(false);
+		button_redknote.setVisible(true);
+		button_clapperrail.setVisible(true);
+		button_saveNquit.setVisible(false);
+		button_next.setVisible(false);
+		button_saveNquit.setVisible(false);
+		button_submit.setEnabled(false);
+		button_submit.setVisible(false);
+    	button_A.setVisible(false);
+    	button_B.setVisible(false);
+    	button_C.setVisible(false);
+    	button_D.setVisible(false);
+	}
+ 	
+    /**
+     * update birds location, items location, and score(status)
+     * @param redKnot
+     * @param clapperrail
+     * @param mapRN
+     * @param gameStatus
+     * @param scoreBoard
+     * @param items
+     * @param CRitems
+     * @param quiz_RN
+     * @param quiz_CR
+     * @param answerRightFlag
+     * @param answerWrongFlag
+     * @param background
+     * @param tutorialLevel
+     * @param statusBar
+     * @param tutorialHitFlag
+     */
     public void update(RedKnot redKnot, ClapperRail clapperrail, Map mapRN, 
     		GameStatus gameStatus, ScoreBoard scoreBoard, ArrayList<Items> items,
     		ArrayList<Items> CRitems, Quiz quiz_RN, Quiz quiz_CR, 
@@ -647,229 +973,28 @@ public class View extends JPanel{
     	this.statusBar = statusBar;
     	this.tutorialHitFlag = tutorialHitFlag;
     	
-    	if(this.gameStatus == GameStatus.RN) {
-    		
-    		//Arrange the button visibility in game mode
-    		button_continue.setVisible(false);
-			button_saveNquit.setVisible(true);
-			button_redknote.setVisible(false);
-			button_next.setVisible(false);
-			button_clapperrail.setVisible(false);
-			button_menu.setVisible(true);
-			button_submit.setEnabled(false);
-			button_submit.setVisible(false);
-			button_A.setVisible(false);
-	    	button_B.setVisible(false);
-	    	button_C.setVisible(false);
-	    	button_D.setVisible(false);
-	    	
-	    	//RN: SpawnCounter add new random item to the items ArrayList
-	    	itemSpawnCounter++;
-        	if(itemSpawnCounter >= RK_SPAWN_SPEED) {
-        		itemSpawnCounter = 0;
-        		
-        		switch(random.nextInt(4)) {
-        		case 0:
-        			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, Items.plane_Xvel+Items.dynamic_Xvel, ItemsID.Plane));
-        			break;
-        		case 1:
-        			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, Items.snail_Xvel+Items.dynamic_Xvel, ItemsID.Snail));
-        			break;
-        		case 2:
-        			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64,Items.fly_Xvel+Items.dynamic_Xvel, ItemsID.Fly));
-        			break;
-        		case 3:
-        			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128,Items.car_Xvel+Items.dynamic_Xvel, ItemsID.Car));
-        			break; 			
-        		}
-
-        	}
-        	
-        	//RN: Power up Counter, add to the Arraylist 
-        	powerupSpawnCounter++;
-        	if(powerupSpawnCounter==500) {
-        		powerupSpawnCounter=0;
-        		this.items.add(new PowerUp(frameWidth, random.nextInt(400)+(frameHeight-400),32,32, -8, ItemsID.PowerUp));
-        	}	
-    			
-    	}else if(this.gameStatus == GameStatus.RNTutorial) {
-    		switch(this.tutorialLevel) {
-    		case 6:
-    			button_next.setEnabled(false);
-    			if(this.items.size() <= 0) {
-    				this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, Items.fly_Xvel, ItemsID.Fly));
-    			}
-    			break;
-    		default:
-    			button_next.setEnabled(true);
-    			break;
-    		}
-    		
-    		button_next.setVisible(true);
-    		button_continue.setVisible(false);
-    		button_saveNquit.setVisible(false);
-			button_redknote.setVisible(false);
-			button_clapperrail.setVisible(false);
-			button_menu.setVisible(true);
-			button_submit.setEnabled(false);
-			button_submit.setVisible(false);
-			button_A.setVisible(false);
-	    	button_B.setVisible(false);
-	    	button_C.setVisible(false);
-	    	button_D.setVisible(false);
-	    	
-	    	
-    	}else if(this.gameStatus == GameStatus.CR) {
-    		//Arrange the button visibility in game mode
-    		button_saveNquit.setVisible(true);
-    		button_redknote.setVisible(false);
-			button_clapperrail.setVisible(false);
-			button_next.setVisible(false);
-			button_menu.setVisible(true);
-			button_continue.setVisible(false);
-			
-			button_submit.setEnabled(false);
-			button_submit.setVisible(false);
-			button_A.setVisible(false);
-	    	button_B.setVisible(false);
-	    	button_C.setVisible(false);
-	    	button_D.setVisible(false);
-	    	
-	    	//CR: add one random item to the array list if it is empty
-    		if(this.CRitems.size() == 0) {
-    			switch(random.nextInt(8)) {
-    			case 0:
-    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , 0, ItemsID.Food));
-    				break;
-    			case 1:
-    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , 0, ItemsID.Food));
-    				break;
-    			case 2:
-    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
-    				break;
-    			case 3:
-    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
-    				break;
-    			case 4:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, 32, 32, 0, ItemsID.Obstacle));
-    				break;
-    			case 5:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200,32, 32, 0, ItemsID.Obstacle));
-    				break;
-    			case 6:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32,32, 32, 0, ItemsID.Obstacle));
-    				break;
-    			case 7:
-    				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32,32, 32, 0, ItemsID.Obstacle));
-    				break;
-    			}
-    		}
-    			
-    		
-    	}else if(this.gameStatus == GameStatus.CRTutorial) {
-    		
-    		button_next.setVisible(true);
-    		button_continue.setVisible(false);
-    		button_saveNquit.setVisible(false);
-			button_redknote.setVisible(false);
-			button_clapperrail.setVisible(false);
-			button_menu.setVisible(true);
-			button_submit.setEnabled(false);
-			button_submit.setVisible(false);
-			button_A.setVisible(false);
-	    	button_B.setVisible(false);
-	    	button_C.setVisible(false);
-	    	button_D.setVisible(false);
-	    	switch(tutorialLevel) {
-	    	case 4:
-//	    		button_next.setEnabled(false);
-	    		if(this.CRitems.size() == 0) {
-	    			switch(random.nextInt(8)) {
-	    			case 0:
-	    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , 0, ItemsID.Food));
-	    				break;
-	    			case 1:
-	    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , 0, ItemsID.Food));
-	    				break;
-	    			case 2:
-	    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 ,0,  ItemsID.Food));
-	    				break;
-	    			case 3:
-	    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
-	    				break;
-	    			}
-	    		}
-	    	case 1:
-	    		button_next.setEnabled(false);
-	    		break;
-	    	default:
-	    		button_next.setEnabled(true);
-	    	}
-    	}
-    	
-    	else if(this.gameStatus == GameStatus.CRQUIZ) {
-    		// Arrane the button in quiz mode
-    		button_A.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[0]);
-    		button_B.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[1]);
-    		button_C.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[2]);
-    		button_D.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[3]);
-    		
-    		button_A.setFont(new Font("Arial", Font.PLAIN, 30));
-			button_B.setFont(new Font("Arial", Font.PLAIN, 30));
-			button_C.setFont(new Font("Arial", Font.PLAIN, 30));
-			button_D.setFont(new Font("Arial", Font.PLAIN, 30));
-			
-    		button_redknote.setVisible(false);
-			button_clapperrail.setVisible(false);
-			button_menu.setVisible(true);
-			button_saveNquit.setVisible(false);
-			button_continue.setVisible(false);
-			button_submit.setVisible(true);
-			button_next.setVisible(false);
-			button_A.setVisible(true);
-	    	button_B.setVisible(true);
-	    	button_C.setVisible(true);
-	    	button_D.setVisible(true);
-			
-		}else if(this.gameStatus == GameStatus.RNQUIZ) {
-			// Arrane the button in quiz mode
-			button_A.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[0]);
-			button_B.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[1]);
-			button_C.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[2]);
-			button_D.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[3]);
-			
-			button_A.setFont(new Font("Arial", Font.PLAIN, 30));
-			button_B.setFont(new Font("Arial", Font.PLAIN, 30));
-			button_C.setFont(new Font("Arial", Font.PLAIN, 30));
-			button_D.setFont(new Font("Arial", Font.PLAIN, 30));
-			
-			button_continue.setVisible(false);
-			button_redknote.setVisible(false);
-			button_clapperrail.setVisible(false);
-			button_menu.setVisible(true);
-			button_next.setVisible(false);
-			button_saveNquit.setVisible(false);
-			button_submit.setVisible(true);
-			button_A.setVisible(true);
-	    	button_B.setVisible(true);
-	    	button_C.setVisible(true);
-	    	button_D.setVisible(true);
-
-		}else if(this.gameStatus == GameStatus.Menu) {
-			//Arrange the button in menu mode
-			button_continue.setVisible(true);
-			button_menu.setVisible(false);
-			button_redknote.setVisible(true);
-			button_clapperrail.setVisible(true);
-			button_saveNquit.setVisible(false);
-			button_next.setVisible(false);
-			button_saveNquit.setVisible(false);
-			button_submit.setEnabled(false);
-			button_submit.setVisible(false);
-	    	button_A.setVisible(false);
-	    	button_B.setVisible(false);
-	    	button_C.setVisible(false);
-	    	button_D.setVisible(false);
+    	switch(this.gameStatus) {
+    	case RN:
+    		updateRK();
+        	break;
+    	case RNTutorial:
+    		updateRKTutorial();
+	    	break;
+    	case CR:
+    		updateCR();
+    		break;
+    	case CRTutorial:
+    		updateCRTutorial();
+    		break;
+    	case CRQUIZ:
+    		updateCRQuiz();
+	    	break;
+    	case RNQUIZ:
+			updateRKQuiz();
+	    	break;
+    	case Menu:
+			updateMenu();
+	    	break;
 		}
     	frame.repaint();	// call the painComponent();
 		try {
@@ -879,7 +1004,9 @@ public class View extends JPanel{
 		}
     }
     
-    //Create Images 
+    /**
+     * Create Images 
+     */
     public void createImages() {
     	BufferedImage bufferedImage;
     	try {
