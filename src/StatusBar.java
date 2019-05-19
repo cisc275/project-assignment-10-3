@@ -2,14 +2,15 @@
 import java.io.Serializable;
 
 public class StatusBar implements Serializable{
-	public static int x;
-	public static int y;
-	public final static int length = 64;
-	private int status = 10;
+	private final int X;
+	private final int Y;
+	public final static int WIDTH = 300;
+	public final static int LENGTH = 32;
+	private int status = 300;
 	
 	public StatusBar(int x, int y) {
-		StatusBar.x = x;
-		StatusBar.y = y;
+		this.X = x;
+		this.Y = y;
 
 	}
 
@@ -21,9 +22,9 @@ public class StatusBar implements Serializable{
 		this.status = status;
 	}
 	public int getX() {
-		return x;
+		return X;
 	}
 	public int getY() {
-		return y;
+		return Y;
 	}
 }

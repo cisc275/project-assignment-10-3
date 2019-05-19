@@ -38,7 +38,7 @@ public class View extends JPanel{
     private Map mapRN = new Map(frameWidth-148, frameWidth-130);            //Creating a map to show migration
     //
     //
-    private StatusBar statusBar= new StatusBar(100,frameHeight-200);      //Status bar for CR game
+    private StatusBar statusBar = new StatusBar(100,frameHeight/2-150);      //Status bar for CR game
     //
     //
     private ScoreBoard scoreBoard = new ScoreBoard();                       // Scoreboard for RK game
@@ -67,18 +67,19 @@ public class View extends JPanel{
     BufferedImage pic_RNFood;                                             //BufferedImage for RN food image
     BufferedImage pic_RNCar;                                              //BufferedImage for RN car image
     BufferedImage pic_RNPlane;                                            //BufferedImage for RN plane image
-    BufferedImage pic_RNFly;                                              //BufferedImage for RN plane image
-    BufferedImage pic_RNSnail;                                            //BufferedImage for RN minimap image
-    BufferedImage pic_power;
+    BufferedImage pic_RNFly;                                              //BufferedImage for RN fly image
+    BufferedImage pic_RNSnail;                                            //BufferedImage for RN snail image
+    BufferedImage pic_power;											  //BufferedImage for RN powerup image
     Image pic_menu;                                                       //BufferedImage for RN snail image
     ArrayList<BufferedImage> pics_redKnot =new ArrayList<>();             //Array list for red knot pics to be drawn to screen
     BufferedImage pic_icon_RN;                                            //BufferedImage for RN image on main menu
     BufferedImage pic_icon_CR;                                            //BufferedImage for CR image on main menu
     Image pic_water;                                                      //BufferedImage for water image
-    BufferedImage redCircle;											  //BufferedImage of a Sign
-    BufferedImage greenCircle;											  //BufferedImage of a Sign
-    BufferedImage arrows;												  //BufferedImage of Arrows
-    BufferedImage x;													  //BuffredImage of an X
+    BufferedImage pic_redCircle;										  //BufferedImage of a Sign
+    BufferedImage pic_greenCircle;										  //BufferedImage of a Sign
+    BufferedImage pic_arrows;											  //BufferedImage of Arrows
+    BufferedImage pic_x;												  //BuffredImage of an X
+    BufferedImage pic_clock;												
     
     Quiz quiz_RN = new Quiz("quiz/RNQuiz.txt");
     Quiz quiz_CR = new Quiz("quiz/CRQuiz.txt");
@@ -398,7 +399,7 @@ public class View extends JPanel{
     	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
     	g.setColor(Color.RED);
     	g.drawLine(frameWidth-130, 35, mapRN.getStatus()+5, mapRN.getStatus_Y()+5);
-    	g.drawImage(x, frameWidth-50, (int)(0.625*(-50)+ 111.25),16,16, this);
+    	g.drawImage(pic_x, frameWidth-50, (int)(0.625*(-50)+ 111.25),16,16, this);
     	
     	//RN: ScoreBoard
     	g.setColor(Color.WHITE);
@@ -432,8 +433,8 @@ public class View extends JPanel{
 			g.drawImage(pic_RNFly, frameWidth/2+100, 350, 64, 64, this);
 			g.drawImage(pic_RNSnail, frameWidth/2+250, 350, 64, 64, this);
 			g.drawImage(pic_power, frameWidth/2+400, 350, 64, 64,this);
-			g.drawImage(greenCircle,frameWidth/2+25,275, 500, 200, this);
-			g.drawImage(redCircle,frameWidth/2-600,250, 625, 225, this);
+			g.drawImage(pic_greenCircle,frameWidth/2+25,275, 500, 200, this);
+			g.drawImage(pic_redCircle,frameWidth/2-600,250, 625, 225, this);
 		case 6:
 			if(tutorialLevel == 6) {
 				iterator = items.iterator();
@@ -495,7 +496,7 @@ public class View extends JPanel{
 			picNumFly=(picNumFly+1)%frameCountFly;
 	    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
 	    	if(tutorialLevel == 1) {
-	    		g.drawImage(arrows, redKnot.getX(), redKnot.getY()+25, 200, 200, this);
+	    		g.drawImage(pic_arrows, redKnot.getX(), redKnot.getY()+25, 200, 200, this);
 	    	}
 	    	break;
 		}
@@ -507,30 +508,42 @@ public class View extends JPanel{
 	 */
 	private void paintCR(Graphics g ) {
 		// CR: Background
-					g.drawImage(pic_water, 0, 0, this);
+		g.drawImage(pic_water, 0, 0, this);
+		
+		//CR: Mini Map
+		g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
+		g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
+		g.drawImage(pic_clapperRail_mini, frameWidth-100, (int)(0.625*(-50)+ 111.25), this);
+	
+		//CR: draw the item in the arraylist
+		iterator = CRitems.iterator();
+		while(iterator.hasNext()) {
+			Items tempItem = iterator.next();
+			if(tempItem.getItemID() == ItemsID.Food) {
+				g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
+			}else {
+				g.drawImage(pic_snake, tempItem.getX(), tempItem.getY(), 64, 64, this);
+			}
+		}
+		//CR: Clapper Rail
+		g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
+		
+		//CR: Status Bar(Time Bar)
+		g.drawRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, StatusBar.WIDTH);
+		g.setColor(Color.PINK);
+		g.fillRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, statusBar.getStatus());
+		g.drawImage(pic_clock, statusBar.getX() - StatusBar.LENGTH/2, statusBar.getY() - StatusBar.LENGTH/2, 32, 32, this);
+		
+		//CR: ScoreBoard
+		g.setColor(Color.WHITE);
+    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.setColor(Color.BLACK);
+    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.setColor(Color.RED); 
+    	Font font = new Font("Serif", Font.BOLD, 50);
+    	g.setFont(font);
+    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
 					
-					//CR: Mini Map
-					g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
-					g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-					g.drawImage(pic_clapperRail_mini, frameWidth-100, (int)(0.625*(-50)+ 111.25), this);
-				
-					//CR: draw the item in the arraylist
-					iterator = CRitems.iterator();
-					while(iterator.hasNext()) {
-						Items tempItem = iterator.next();
-						if(tempItem.getItemID() == ItemsID.Food) {
-							g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
-						}else {
-							g.drawImage(pic_snake, tempItem.getX(), tempItem.getY(), 64, 64, this);
-						}
-					}
-					//CR: Clapper Rail
-					g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
-					
-					//CR: Status Bar
-					for(int i = 0; i < statusBar.getStatus(); i++) {
-						g.drawImage(pic_food, StatusBar.x, (StatusBar.y-i*StatusBar.length), StatusBar.length, StatusBar.length, this);
-					}
 	}
 	
 	/**
@@ -547,13 +560,14 @@ public class View extends JPanel{
 			g.setColor(Color.RED);
 			g.drawImage(pic_food, frameWidth/2-300, frameHeight/2-300, 100, 100, this);
 			g.drawImage(pic_snake, frameWidth/2+200, frameHeight/2-300, 100, 100, this);
-			g.drawImage(greenCircle,frameWidth/2-300, frameHeight/2-300, 100, 100, this);
-			g.drawImage(redCircle,frameWidth/2+200, frameHeight/2-300, 100, 100, this);
+			g.drawImage(pic_greenCircle,frameWidth/2-300, frameHeight/2-300, 100, 100, this);
+			g.drawImage(pic_redCircle,frameWidth/2+200, frameHeight/2-300, 100, 100, this);
 			g.drawString("Tip: Catch Crabs and Avoid Snakes", frameWidth/2-190, 100);
 			g.drawString("Clicl [Next] on the top to Start the game", frameWidth/2-250, frameHeight/2-300);
 			g.drawString("Good job!", frameWidth/2-50, frameHeight/2-200);
 		case 4:
 			if(tutorialLevel == 4) {
+				g.setColor(Color.RED);
 				g.drawString("Now catch that Crab!", frameWidth/2 - 100, 100);
 			}
 			iterator = CRitems.iterator();
@@ -564,11 +578,37 @@ public class View extends JPanel{
 		case 3:
 			if(tutorialLevel == 3) {
 				g.setColor(Color.RED);
-				g.drawRect(StatusBar.x, StatusBar.y-9*StatusBar.length, StatusBar.length, StatusBar.y-StatusBar.length);
-				g.drawString("You need to catch 10 crabs to win this game",StatusBar.x +StatusBar.length , StatusBar.y-9*StatusBar.length);
+				g.drawOval(statusBar.getX()-32, statusBar.getY()-32, StatusBar.LENGTH+64, StatusBar.WIDTH+64);
+				g.drawString("The game will End when you run out of Time", statusBar.getX()-32, statusBar.getY()-32);
+				g.drawOval(ScoreBoard.X-32, ScoreBoard.Y-32, ScoreBoard.LENGTH+64, ScoreBoard.WIDTH+64);
+				g.drawString("The Score Board shows your Score", ScoreBoard.X+ScoreBoard.LENGTH+32, ScoreBoard.WIDTH+16);
 			}
-			for(int i = 0; i < statusBar.getStatus(); i++) {
-				g.drawImage(pic_food, StatusBar.x, (StatusBar.y-i*StatusBar.length), StatusBar.length, StatusBar.length, this);
+			
+			//Status Bar
+			g.setColor(Color.BLACK);
+			g.drawRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, StatusBar.WIDTH);
+			g.setColor(Color.PINK);
+			g.fillRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, StatusBar.WIDTH/2);
+			g.drawImage(pic_clock, statusBar.getX() - StatusBar.LENGTH/2, statusBar.getY() - StatusBar.LENGTH/2, 32, 32, this);
+			
+			//Score Board
+			g.setColor(Color.WHITE);
+	    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+	    	g.setColor(Color.BLACK);
+	    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+	    	g.setColor(Color.RED); 
+	    	Font font = new Font("Serif", Font.BOLD, 50);
+	    	g.setFont(font);
+	    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
+	    	
+			
+			
+			
+			
+			
+	    	if(tutorialLevel == 3) {
+				g.setColor(Color.RED);
+				
 			}
 			
 			
@@ -710,16 +750,16 @@ public class View extends JPanel{
     		
     		switch(random.nextInt(4)) {
     		case 0:
-    			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, Items.plane_Xvel+Items.dynamic_Xvel, ItemsID.Plane));
+    			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, Items.plane_Xvel, ItemsID.Plane));
     			break;
     		case 1:
-    			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, Items.snail_Xvel+Items.dynamic_Xvel, ItemsID.Snail));
+    			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, Items.snail_Xvel, ItemsID.Snail));
     			break;
     		case 2:
-    			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64,Items.fly_Xvel+Items.dynamic_Xvel, ItemsID.Fly));
+    			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64,Items.fly_Xvel, ItemsID.Fly));
     			break;
     		case 3:
-    			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128,Items.car_Xvel+Items.dynamic_Xvel, ItemsID.Car));
+    			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128,Items.car_Xvel, ItemsID.Car));
     			break; 			
     		}
 
@@ -1023,10 +1063,11 @@ public class View extends JPanel{
     		pic_RNFly = ImageIO.read(new File("images/projectile/Fly.png"));
     		pic_RNPlane = ImageIO.read(new File("images/projectile/Plane.png"));
     		pic_RNSnail = ImageIO.read(new File("images/projectile/Snail.png"));
-    		greenCircle=ImageIO.read(new File("images/components/Green Circle.png"));
-    		redCircle=ImageIO.read(new File("images/components/Red Circle.png"));
-    		arrows=ImageIO.read(new File("images/components/Arrows.png"));
-    		x=ImageIO.read(new File("images/components/X.png"));
+    		pic_greenCircle = ImageIO.read(new File("images/components/Green Circle.png"));
+    		pic_redCircle = ImageIO.read(new File("images/components/Red Circle.png"));
+    		pic_arrows = ImageIO.read(new File("images/components/Arrows.png"));
+    		pic_x = ImageIO.read(new File("images/components/X.png"));
+    		pic_clock = ImageIO.read(new File("images/components/Clock.png"));
     		
     		pic_icon_RN = ImageIO.read(new File("images/birds/icon_RN.png"));
     		pic_icon_CR = ImageIO.read(new File("images/birds/icon_CR.png"));

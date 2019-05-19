@@ -14,7 +14,6 @@ public abstract class Items implements Serializable{
 	public static int car_Xvel = -9;
 	public static int fly_Xvel = -8;
 	public static int snail_Xvel = -6;
-	public static int dynamic_Xvel = 0;
 	private ItemsID itemID;
 	
 	//Constructor

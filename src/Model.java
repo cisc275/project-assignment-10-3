@@ -17,11 +17,13 @@ public class Model implements Serializable{
 	private final int RK_BAD_VALUE = 2;
 	private final int RK_POWERUP_VALUE = 30;
 	private final int CR_STATUS_CAP = 0;
-	private final int CR_STATUS_INCREMENT = 1;
+	private final int CR_FOOD_VALUE = 10;
+	private final int CR_OBSTACLE_VALUE = -5;
 	public final static int RK_VELOCITY = 13;
 	private final int RK_MAX_DYNAMIC = -12;
 	private final int RK_MIN_DYNAMIC = -3;
 	private int cr_dynamic_screentime_cap = 45;
+	private int rk_dynamic_Xvel = 0;
 		
 	private int frameWidth;
     private int frameHeight;
@@ -186,12 +188,12 @@ public class Model implements Serializable{
 			iterator = items.iterator();
 			while(iterator.hasNext()) {
 				Items tempItem = iterator.next();
-				tempItem.setX(tempItem.getX()+tempItem.getX_vel());
+				tempItem.setX(tempItem.getX()+tempItem.getX_vel() + rk_dynamic_Xvel);
 				tempItem.setY(tempItem.getY()+Items.Y_VEL);
+				
 				if(!collisionRK(tempItem,redKnot)) {
 				itemsOutOfBounds(tempItem);
 				}
-				
 			}
 			
 			redKnot.setX(redKnot.getX()+redKnot.getxVel());
@@ -271,6 +273,13 @@ public class Model implements Serializable{
 					screenTime();
 				}				
 			}
+			
+			processCounterRN++;
+			if(processCounterRN >= 4) {
+				processCounterRN = 0;
+				statusBar.setStatus(statusBar.getStatus()-1);
+			}
+			
 			// if this condition is true, game end; moves to the quiz
 			if(statusBar.getStatus() <= CR_STATUS_CAP) {
 				gamestatus = GameStatus.CRQUIZ;
@@ -290,7 +299,7 @@ public class Model implements Serializable{
 							screenTime();
 						}				
 					}
-					if(statusBar.getStatus() <= 9) {
+					if(scoreBoard.getScore() >= 10) {
 						tutorialLevel++;
 					}
 				}
@@ -381,9 +390,9 @@ public class Model implements Serializable{
 				// powerup adds 200 to score
 				scoreBoard.setScore(scoreBoard.getScore()+RK_POWERUP_VALUE);
 				iterator.remove();
-				Items.dynamic_Xvel-= 5;
-				if(Items.dynamic_Xvel < RK_MAX_DYNAMIC) {
-					Items.dynamic_Xvel = RK_MAX_DYNAMIC;
+				rk_dynamic_Xvel-=5;
+				if(rk_dynamic_Xvel < RK_MAX_DYNAMIC) {
+					rk_dynamic_Xvel = RK_MAX_DYNAMIC;
 				}
 				break;
 			case Fly:
@@ -391,18 +400,18 @@ public class Model implements Serializable{
 				// flies and snails add 20 to score
 				scoreBoard.setScore(scoreBoard.getScore()+RK_GOOD_VALUE);
 				iterator.remove();
-				Items.dynamic_Xvel--;
-				if(Items.dynamic_Xvel < RK_MAX_DYNAMIC) {
-					Items.dynamic_Xvel = RK_MAX_DYNAMIC;
+				rk_dynamic_Xvel--;
+				if(rk_dynamic_Xvel < RK_MAX_DYNAMIC) {
+					rk_dynamic_Xvel = RK_MAX_DYNAMIC;
 				}
 				break;
 			case Plane:
 			case Car:
 				// hitting cars and planes subtract 1 from score depending on how long the bird is in contact with them
 				scoreBoard.setScore(scoreBoard.getScore()-RK_BAD_VALUE);
-				Items.dynamic_Xvel++;
-				if(Items.dynamic_Xvel > RK_MIN_DYNAMIC) {
-					Items.dynamic_Xvel = RK_MIN_DYNAMIC;
+				rk_dynamic_Xvel++;
+				if(rk_dynamic_Xvel > RK_MIN_DYNAMIC) {
+					rk_dynamic_Xvel = RK_MIN_DYNAMIC;
 				}
 				break;
 			}
@@ -426,10 +435,7 @@ public class Model implements Serializable{
 			switch(item.getItemID()) {
 			case Food:
 				// when CR catches food, increase status bar
-				statusBar.setStatus(statusBar.getStatus()-CR_STATUS_INCREMENT);
-				if(statusBar.getStatus() < CR_STATUS_CAP) {
-					statusBar.setStatus(CR_STATUS_CAP);
-				}
+				scoreBoard.setScore(scoreBoard.getScore()+CR_FOOD_VALUE);
 				iterator.remove();
 				cr_dynamic_screentime_cap -=5;
 				if(cr_dynamic_screentime_cap <= 10) {
@@ -438,9 +444,9 @@ public class Model implements Serializable{
 				break;
 			case Obstacle:
 				// when CR hits obstacle, decrease status bar
-				statusBar.setStatus(statusBar.getStatus()+CR_STATUS_INCREMENT);
-				if(statusBar.getStatus() >= 10) {
-					statusBar.setStatus(10);
+				scoreBoard.setScore(scoreBoard.getScore()+CR_OBSTACLE_VALUE);
+				if(scoreBoard.getScore() < 0) {
+					scoreBoard.setScore(0);
 				}
 				iterator.remove();
 				cr_dynamic_screentime_cap +=5;
