@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -25,8 +27,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 
 public class View extends JPanel{
+	public boolean pauseFlag = true;
+	Timer time; // A timer for a delay to click next
 	//Finding the size of screen for the frame to match
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private final int frameWidth = screenSize.width;
@@ -112,6 +117,12 @@ public class View extends JPanel{
     private final int RK_SPAWN_SPEED = 30;
     
     public View() {
+    	time = new Timer(2000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				button_next.setEnabled(true);
+				pauseFlag = false;
+				((Timer)e.getSource()).stop();
+		}});
 //    	System.out.println(frameWidth);
 //    	System.out.println(frameHeight);
     	background.add(0);
@@ -158,6 +169,10 @@ public class View extends JPanel{
     
     public int getTutorialLevel() {
 		return tutorialLevel;
+	}
+
+	public void setPauseFlag(boolean pauseFlag) {
+		this.pauseFlag = pauseFlag;
 	}
 
 	public Boolean[] getTutorialHitFlag() {
@@ -859,8 +874,11 @@ public class View extends JPanel{
 			}
 			break;
 		default:
-			button_next.setEnabled(true);
-			break;
+			
+			if(pauseFlag) {
+				button_next.setEnabled(false);
+				time.start();
+			}
 		}
 		
 		button_next.setVisible(true);
@@ -875,6 +893,8 @@ public class View extends JPanel{
     	button_B.setVisible(false);
     	button_C.setVisible(false);
     	button_D.setVisible(false);
+    	
+    	
 	}
 	
 	/**
@@ -915,8 +935,12 @@ public class View extends JPanel{
     	case 1:
     		button_next.setEnabled(false);
     		break;
+    		
     	default:
-    		button_next.setEnabled(true);
+    		if(pauseFlag) {
+				button_next.setEnabled(false);
+				time.start();
+			}
     	}
     	
 	}

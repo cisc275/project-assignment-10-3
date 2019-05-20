@@ -156,6 +156,7 @@ public class Controller implements ActionListener, KeyListener{
 			model.setTutorialLevel(model.getTutorialLevel()+1);
 			switch(model.getGamestatus()) {
 			case RNTutorial:
+				view.setPauseFlag(true);
 				if(model.getTutorialLevel() >= 8) {
 					try {
 						fis = new FileInputStream(NewGame);
@@ -170,6 +171,7 @@ public class Controller implements ActionListener, KeyListener{
 				}
 				break;
 			case CRTutorial:
+				view.setPauseFlag(true);
 				if(model.getTutorialLevel() >= 6) {
 					try {
 						fis = new FileInputStream(NewGame);
