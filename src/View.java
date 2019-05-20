@@ -298,7 +298,7 @@ public class View extends JPanel{
     	
     	// make Save and Quit button
     	button_saveNquit = new JButton("Save and Quit");
-    	button_saveNquit.setBounds(frameWidth/2+64, 0, 128, 32); //64 , 32
+    	button_saveNquit.setBounds(frameWidth/2-200, 0, 128, 32); //64 , 32
     	button_saveNquit.setBackground(Color.GRAY);
     	button_saveNquit.setOpaque(false);
     	button_saveNquit.setActionCommand("savequit");
@@ -508,6 +508,8 @@ public class View extends JPanel{
 	    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
 	    	if(tutorialLevel == 1) {
 	    		g.drawImage(pic_arrows, redKnot.getX(), redKnot.getY()+25, 200, 200, this);
+	    		g.drawString("Try using Arrow Keys to Move the Red Knot", frameWidth/2-300, frameHeight/2-350);
+	    		g.drawString("Click [Next] on the top to continue", frameWidth/2-300, frameHeight/2-300);
 	    	}
 	    	break;
 		}
@@ -517,7 +519,7 @@ public class View extends JPanel{
 	 * paint the Clapper Rail frame
 	 * @param g
 	 */
-	private void paintCR(Graphics g ) {
+	private void paintCR(Graphics g) {
 		// CR: Background
 		g.drawImage(pic_water, 0, 0, this);
 		
