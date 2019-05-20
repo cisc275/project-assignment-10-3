@@ -4,8 +4,8 @@ import java.io.Serializable;
 public class RedKnot implements Serializable{
 	private int x = 0;
 	private int y;
-	private int length = 10;
-	private int width = 10;
+	private int length = 200;
+	private int width = 200;
 	private int xVel = 0;
 	private int yVel = 0;
 	

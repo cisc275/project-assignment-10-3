@@ -407,10 +407,12 @@ public class View extends JPanel{
     	//RN: Mini Map
     	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
     	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
-    	g.setColor(Color.RED);
     	g.drawLine(frameWidth-130, 35, mapRN.getStatus()+5, mapRN.getStatus_Y()+5);
     	g.drawImage(pic_x, frameWidth-50, (int)(0.625*(-50)+ 111.25),16,16, this);
+    	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
+    	g.setColor(Color.RED);
+    	
+    	
     	
     	//RN: ScoreBoard
     	g.setColor(Color.WHITE);
