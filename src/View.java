@@ -270,7 +270,7 @@ public class View extends JPanel{
     	
     	// make Clapper Rail button
     	button_clapperrail = new JButton("Clapper Rail", new ImageIcon(pic_icon_CR));  
-    	button_clapperrail.setBounds(frameWidth/2-100, 200, 512, 256);
+    	button_clapperrail.setBounds(frameWidth/2-100, 200, 540, 256);
     	button_clapperrail.setBackground(Color.BLUE);
     	button_clapperrail.setOpaque(false);
     	button_clapperrail.setContentAreaFilled(false);
@@ -281,7 +281,7 @@ public class View extends JPanel{
     	
     	// make Menu button
     	button_menu = new JButton("Menu");
-    	button_menu.setBounds(frameWidth/2-32, 0, 64, 32);
+    	button_menu.setBounds(frameWidth/2-32, 0, 70, 32);
     	button_menu.setBackground(Color.GRAY);
     	button_menu.setOpaque(false);
     	button_menu.setActionCommand("menu");
@@ -314,7 +314,7 @@ public class View extends JPanel{
     	
     	// make Continue button
     	button_continue = new JButton("Continue"); /////////////////////////
-    	button_continue.setBounds(100, frameHeight - 100, 96, 32);
+    	button_continue.setBounds(frameWidth/2 - 48, frameHeight - 300, 96, 32);
     	button_continue.setBackground(Color.GRAY);
     	button_continue.setOpaque(false);
     	button_continue.setActionCommand("continue");
@@ -466,7 +466,7 @@ public class View extends JPanel{
 	    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
 	    	if(tutorialLevel == 5) {
 	    		g.drawOval(ScoreBoard.X-48, ScoreBoard.Y-16, ScoreBoard.LENGTH+100, ScoreBoard.WIDTH+32);
-		    	g.drawString("The Score Board shows your grade", ScoreBoard.X + ScoreBoard.LENGTH+60, ScoreBoard.Y + 32);
+		    	g.drawString("The Score Board shows your score", ScoreBoard.X + ScoreBoard.LENGTH+60, ScoreBoard.Y + 32);
 		    	g.drawString("Click [Next] on the top to continue", ScoreBoard.X + ScoreBoard.LENGTH+60, 85);
 	    	}
 		case 4:
@@ -477,7 +477,7 @@ public class View extends JPanel{
 	    	g.setColor(Color.RED);
 	    	if(tutorialLevel == 4) {
 	    		g.fillRect(frameWidth-140, 85, 80, 4); 
-				g.drawString("Red Knot stops at Delaware Bay", frameWidth-540, 90);
+				g.drawString("Red Knot's stop at the Delaware Bay", frameWidth-590, 90);
 				g.drawString("Click [Next] on the top to continue", frameWidth-570, 135);
 	    	}
 			
@@ -489,7 +489,7 @@ public class View extends JPanel{
 		    	g.drawImage(pic_redKnot_mini, mapRN.getX()+15, 30, this);
 		    	g.setColor(Color.RED);
 				g.fillRect(frameWidth-220, 35, 80, 4); //1220
-				g.drawString("Red Knot migrates from Canada", frameWidth-620, 50); 
+				g.drawString("Red Knot's migrate from Siberia", frameWidth-620, 50); 
 				g.drawString("Click [Next] on the top to continue", frameWidth-620, 95);
 			}
 		case 2:
@@ -499,7 +499,7 @@ public class View extends JPanel{
 		    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
 		    	g.setColor(Color.RED);
 	    		g.drawOval(mapRN.getX()-32, mapRN.getY()-32, 192 , 192);
-	    		g.drawString("Here is a Mini Map shows the migration.", mapRN.getX()-550, mapRN.getY()+80 );
+	    		g.drawString("Here is a Mini Map shows the migration", mapRN.getX()-550, mapRN.getY()+80 );
 	    		g.drawString("Click [Next] on the top to continue", mapRN.getX()-550, mapRN.getY()+125);
 	    	}
 		case 1:
@@ -576,7 +576,7 @@ public class View extends JPanel{
 			g.drawImage(pic_greenCircle,frameWidth/2-300, frameHeight/2-300, 100, 100, this);
 			g.drawImage(pic_redCircle,frameWidth/2+200, frameHeight/2-300, 100, 100, this);
 			g.drawString("Tip: Catch Crabs and Avoid Snakes", frameWidth/2-190, 100);
-			g.drawString("Clicl [Next] on the top to Start the game", frameWidth/2-250, frameHeight/2-300);
+			g.drawString("Click [Next] on the top to Start the game", frameWidth/2-250, frameHeight/2-300);
 			g.drawString("Good job!", frameWidth/2-50, frameHeight/2-200);
 		case 4:
 			if(tutorialLevel == 4) {
@@ -627,13 +627,13 @@ public class View extends JPanel{
 			if(tutorialLevel == 2) {
 				g.setColor(Color.RED);
 				g.fillRect(frameWidth-190, 85, 80, 4);
-				g.drawString("Clapper Rail is non-migratory bird", frameWidth - 625, 100);
+				g.drawString("Clapper Rails are non-migratory birds", frameWidth - 690, 100);
 			}
 		case 1:
 			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
 			g.setColor(Color.RED);
 			if(tutorialLevel == 1) {
-				g.drawString("Hit the circle using the Arrow Keys",frameWidth/2-200 , 150);
+				g.drawString("Hit the circles using the Arrow Keys",frameWidth/2-200 , 150);
 				if(!tutorialHitFlag[0]) {
 					g.fillOval(frameWidth/2-32, frameHeight/2-32-200, 64, 64); //Up
 				}
