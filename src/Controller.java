@@ -17,7 +17,6 @@ public class Controller implements ActionListener, KeyListener{
 	final int frameWidth;
 	final int frameHeight;
 	
-	
 	//Serializable
 	String NewGame = "Serialization/NewGame.txt";
 	String Continue = "Serialization/Continue.txt";
@@ -150,7 +149,7 @@ public class Controller implements ActionListener, KeyListener{
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case "redKnot":
-			model.setGamestatus(GameStatus.RNTutorial);
+			model.setGamestatus(GameStatus.RNTutorial); //RNTutorial
 			model.setTutorialLevel(1);
 			break;
 		case "next":
@@ -183,8 +182,32 @@ public class Controller implements ActionListener, KeyListener{
 						e2.printStackTrace();
 					}
 				}
+			case RNQUIZ:
+				model.getQuiz_RN().setQuestionIndex(model.getQuiz_RN().getQuestionIndex()+1);
+				if(model.getQuiz_RN().getQuestionIndex() >= 2) {
+					model.getQuiz_RN().setQuestionIndex(2);
+					view.button_next.setVisible(false);
+				}
+				model.getQuiz_RN().setQuestionIndex(model.getQuiz_RN().getQuestionIndex());
+				view.group.clearSelection();
+				view.button_next.setEnabled(false);
+				model.setAnswerRightFlag(false);
+				model.setAnswerWrongFlag(false);
+				break;
+			case CRQUIZ:
+				model.getQuiz_CR().setQuestionIndex(model.getQuiz_CR().getQuestionIndex()+1);
+				if(model.getQuiz_CR().getQuestionIndex() >= 2) {
+					model.getQuiz_CR().setQuestionIndex(2);
+					view.button_next.setVisible(false);
+				}
+				model.getQuiz_CR().setQuestionIndex(model.getQuiz_CR().getQuestionIndex());
+				view.button_next.setEnabled(false);
+				view.group.clearSelection();
+				model.setAnswerRightFlag(false);
+				model.setAnswerWrongFlag(false);
+				break;
+				
 			}
-			
 			break;
 		case "clapperRail":
 			model.setTutorialLevel(1);
@@ -220,22 +243,29 @@ public class Controller implements ActionListener, KeyListener{
 			break;
 		case "submit":
 			if(model.getGamestatus().equals(GameStatus.RNQUIZ)) {
-				
 				if(model.getQuiz_RN().getSelected().equals(model.getQuiz_RN().getQuestions().get(model.getQuiz_RN().getQuestionIndex()).correctanswer)) {
 					model.setAnswerRightFlag(true);
 					model.setAnswerWrongFlag(false);
+					model.getScoreBoard().setScore(model.getScoreBoard().getScore()+Quiz.RIGHTANSWERCREDIT);
 				}else {
 					model.setAnswerRightFlag(false);
 					model.setAnswerWrongFlag(true);
+				}
+				if(model.getQuiz_RN().getQuestionIndex() < 2) {
+					view.button_next.setEnabled(true);
 				}
 			}else if (model.getGamestatus().equals(GameStatus.CRQUIZ)){
 				
 				if(model.getQuiz_CR().getSelected().equals(model.getQuiz_CR().getQuestions().get(model.getQuiz_CR().getQuestionIndex()).correctanswer)) {
 					model.setAnswerRightFlag(true);
 					model.setAnswerWrongFlag(false);
+					model.getScoreBoard().setScore(model.getScoreBoard().getScore()+Quiz.RIGHTANSWERCREDIT);
 				}else {
 					model.setAnswerRightFlag(false);
 					model.setAnswerWrongFlag(true);
+				}
+				if(model.getQuiz_CR().getQuestionIndex() < 2) {
+					view.button_next.setEnabled(true);
 				}
 			}
 			break;

@@ -36,11 +36,7 @@ public class View extends JPanel{
     private RedKnot redKnot; //Red Knot
 
     private Map mapRN = new Map(frameWidth-148, frameWidth-130);            //Creating a map to show migration
-    //
-    //
     private StatusBar statusBar = new StatusBar(100,frameHeight/2-150);      //Status bar for CR game
-    //
-    //
     private ScoreBoard scoreBoard = new ScoreBoard();                       // Scoreboard for RK game
     
     //Creating array lists to draw multiple items to the frame during the games
@@ -601,11 +597,6 @@ public class View extends JPanel{
 	    	g.setFont(font);
 	    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
 	    	
-			
-			
-			
-			
-			
 	    	if(tutorialLevel == 3) {
 				g.setColor(Color.RED);
 				
@@ -651,22 +642,37 @@ public class View extends JPanel{
 		//RNQUIZ: background
 		g.drawImage(pic_menu, 0, 0, this);
 		
+		//RNQUIZ: ScoreBoard
+		g.setColor(Color.WHITE);
+    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.setColor(Color.BLACK);
+    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.setColor(Color.RED); 
+    	Font font = new Font("Serif", Font.BOLD, 50);
+    	g.setFont(font);
+    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
+		
 		//RNQUIZ: Question
 		g.setFont(new Font("Serif", Font.PLAIN, 30));
 		g.drawString(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getQuestion(), 200, 200);
 		
 		//RNQUIZ: Check the answer and give the result
+		g.setColor(Color.RED);
+		g.setFont(new Font("Serif", Font.PLAIN, 30));
 		if(answerRightFlag) {
-			g.setFont(new Font("Serif", Font.PLAIN, 30));
-			g.drawString("Good Job! Your Final Score is " + (scoreBoard.getScore()+10), frameWidth/2-300, frameHeight/2+250);
+			g.drawString("Good Job! Your answer is Correct!", frameWidth/2-500, frameHeight/2+250);
+			g.drawString("Click [Next] on the top to the next Question", frameWidth/2-500, frameHeight/2+300);
 			button_submit.setEnabled(false);
 		}else if(answerWrongFlag) {
-			g.setFont(new Font("Serif", Font.PLAIN, 30));
 			g.drawString("Unfortunately The right answer is " + 
-		quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getCorrectanswer()
-		 + " Your Final Score is " + scoreBoard.getScore(), frameWidth/2-500, frameHeight/2+250);
+		quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getCorrectanswer(), frameWidth/2-500, frameHeight/2+250);
+			g.drawString("Click [Next] on the top to the next Question", frameWidth/2-500, frameHeight/2+300);
 			button_submit.setEnabled(false);
 		}
+		if(this.quiz_RN.getQuestionIndex() >= 2 && (answerRightFlag || answerWrongFlag)) {
+			g.drawString("Your Final Score is " + this.scoreBoard.getScore()+ ",   Click [Menu] on the top", frameWidth/2-500, frameHeight/2+350);
+		}
+		
 	}
 	
 	/** 
@@ -681,16 +687,32 @@ public class View extends JPanel{
 		g.setFont(new Font("Serif", Font.PLAIN, 30));
 		g.drawString(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getQuestion(), 200, 200);
 		
+		//CRQUIZ: ScoreBoard
+		g.setColor(Color.WHITE);
+    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.setColor(Color.BLACK);
+    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.setColor(Color.RED); 
+    	Font font = new Font("Serif", Font.BOLD, 50);
+    	g.setFont(font);
+    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
+		
 		//CRQUIZ: Check the answer and give the result
+    	g.setColor(Color.RED);
+    	g.setFont(new Font("Serif", Font.PLAIN, 30));
 		if(answerRightFlag) {
-			g.setFont(new Font("Serif", Font.PLAIN, 30));
-			g.drawString("Your Answer is Correct! " , frameWidth/2-300, frameHeight/2+250);
+			g.drawString("Good Job! Your answer is Correct!", frameWidth/2-500, frameHeight/2+250);
+			g.drawString("Click [Next] on the top to the next Question", frameWidth/2-500, frameHeight/2+300);
 			button_submit.setEnabled(false);
 		}else if(answerWrongFlag) {
-			g.setFont(new Font("Serif", Font.PLAIN, 30));
 			g.drawString("Unfortunately The right answer is " + 
 		quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getCorrectanswer(), frameWidth/2-500, frameHeight/2+250);
+			g.drawString("Click [Next] on the top to the next Question", frameWidth/2-500, frameHeight/2+300);
 			button_submit.setEnabled(false);
+		}
+		
+		if(this.quiz_CR.getQuestionIndex() >= 2 && (answerRightFlag || answerWrongFlag)) {
+			g.drawString("Your Final Score is " + this.scoreBoard.getScore()+ ",   Click [Menu] on the top", frameWidth/2-500, frameHeight/2+350);
 		}
 	}
 	
@@ -734,6 +756,7 @@ public class View extends JPanel{
 		button_saveNquit.setVisible(true);
 		button_redknote.setVisible(false);
 		button_next.setVisible(false);
+		button_next.setEnabled(false);
 		button_clapperrail.setVisible(false);
 		button_menu.setVisible(true);
 		button_submit.setEnabled(false);
@@ -782,6 +805,7 @@ public class View extends JPanel{
 		button_redknote.setVisible(false);
 		button_clapperrail.setVisible(false);
 		button_next.setVisible(false);
+		button_next.setEnabled(false);
 		button_menu.setVisible(true);
 		button_continue.setVisible(false);
 		
@@ -916,13 +940,23 @@ public class View extends JPanel{
 					button_redknote.setVisible(false);
 					button_clapperrail.setVisible(false);
 					button_menu.setVisible(true);
-					button_next.setVisible(false);
+					button_next.setVisible(true);
 					button_saveNquit.setVisible(false);
 					button_submit.setVisible(true);
 					button_A.setVisible(true);
 			    	button_B.setVisible(true);
 			    	button_C.setVisible(true);
 			    	button_D.setVisible(true);
+			    	switch(this.quiz_RN.getQuestionIndex()) {
+			    	case 2:
+			    		if(answerRightFlag || answerWrongFlag) {
+			    			button_menu.setEnabled(true);
+			    		}
+			    		break;
+			    	default:
+			    		button_menu.setEnabled(false);
+			    		break;
+			    	}
 	}
 	
 	/**
@@ -946,11 +980,21 @@ public class View extends JPanel{
 		button_saveNquit.setVisible(false);
 		button_continue.setVisible(false);
 		button_submit.setVisible(true);
-		button_next.setVisible(false);
+		button_next.setVisible(true);
 		button_A.setVisible(true);
     	button_B.setVisible(true);
     	button_C.setVisible(true);
     	button_D.setVisible(true);
+    	switch(this.quiz_CR.getQuestionIndex()) {
+    	case 2:
+    		if(answerRightFlag || answerWrongFlag) {
+    			button_menu.setEnabled(true);
+    		}
+    		break;
+    	default:
+    		button_menu.setEnabled(false);
+    		break;
+    	}
     	
 	}
 	

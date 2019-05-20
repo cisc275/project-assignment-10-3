@@ -202,7 +202,7 @@ public class Model implements Serializable{
 			
 			//Calculate the mini bird location on the mini map
 			processCounterRN++;
-			if(processCounterRN >= 20) {
+			if(processCounterRN >= 20) { //20
 				processCounterRN = 0;
 				
 				mapRN.setStatus(mapRN.getStatus()+1);
@@ -210,8 +210,7 @@ public class Model implements Serializable{
 			}
 			//The RN game end if this condition is true, move to the quiz part
 			if(mapRN.getStatus() >= frameWidth-50) {
-				quiz_RN.setQuestionIndex(r.nextInt(quiz_RN.getQuestions().size()));
-				
+
 				gamestatus = GameStatus.RNQUIZ;
 				mapRN.setStatus(frameWidth-130);
 			}

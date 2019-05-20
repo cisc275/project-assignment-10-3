@@ -6,8 +6,9 @@ public class Quiz implements Serializable{
 	private String filename;
 	ArrayList<Question> questions = new ArrayList<>();
 	private transient Scanner std;
-	private int questionIndex;
+	private int questionIndex = 0;
 	private String selected = "E";
+	public final static int RIGHTANSWERCREDIT = 20;
 	
 	//Constructor
 	public Quiz(String filename) {
@@ -47,6 +48,7 @@ public class Quiz implements Serializable{
 		std.close();
 	}
 	
+	//Getters & Setters
 	
 	public String getSelected() {
 		return selected;
