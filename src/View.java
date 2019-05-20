@@ -489,7 +489,7 @@ public class View extends JPanel{
 		    	g.drawImage(pic_redKnot_mini, mapRN.getX()+15, 30, this);
 		    	g.setColor(Color.RED);
 				g.fillRect(frameWidth-220, 35, 80, 4); //1220
-				g.drawString("Red Knot's migrate from Siberia", frameWidth-620, 50); 
+				g.drawString("Red Knot's migrate from Canada", frameWidth-620, 50); 
 				g.drawString("Click [Next] on the top to continue", frameWidth-620, 95);
 			}
 		case 2:
