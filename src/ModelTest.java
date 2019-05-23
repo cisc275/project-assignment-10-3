@@ -52,22 +52,27 @@ class ModelTest {
 		model.background.add(1);
 		
 		map.setStatus(9950);
+		model.processCounterRN=20;
 		model.updateLocation();
 		
 		model.setGamestatus(GameStatus.RNTutorial);
 		model.setTutorialLevel(6);
 		sb.setScore(11);
+		
 		model.updateLocation();
 		
 		model.setGamestatus(GameStatus.CR);
 		SB.setStatus(-1);
+		model.processCounterRN=4;
 		model.updateLocation();
 		
 		model.setGamestatus(GameStatus.CRTutorial);
 		model.setTutorialLevel(4);
 		model.updateLocation();
 		
-
+//		model.setGamestatus(GameStatus.CRTutorial);
+//		model.setTutorialLevel(1);
+//		model.updateLocation();
 		
 
 		
@@ -113,7 +118,7 @@ class ModelTest {
 		
 		items.get(0).setX(130);
 		items.get(0).setY(130);
-		
+		model.rk_dynamic_Xvel=-20;
 		assertEquals(true,model.collisionRK(items.get(0), RK));
 
 		model.iterator.next();
@@ -121,12 +126,14 @@ class ModelTest {
 		
 		items.get(1).setX(130);
 		items.get(1).setY(130);
-		model.collisionRK(items.get(1), RK);
+		model.rk_dynamic_Xvel=-15;
+		assertEquals(true,model.collisionRK(items.get(1), RK));
 		model.iterator.next();
 		
 		items.get(2).setX(130);
 		items.get(2).setY(130);
 		model.iterator.next();
+		model.rk_dynamic_Xvel=-11;
 		model.collisionRK(items.get(2),RK);
 	}
 
@@ -152,11 +159,14 @@ class ModelTest {
 //		System.out.println(CR.getY());
 		CRitems.get(0).setX(5);
 		CRitems.get(0).setY(20);
+		model.cr_dynamic_screentime_cap=9;
 		assertEquals(true,model.collisionCR(CRitems.get(0), CR));
 		
 		model.iterator.next();
 		CRitems.get(1).setX(5);
 		CRitems.get(1).setY(20);
+		sb.setScore(-1);
+		model.cr_dynamic_screentime_cap=55;
 		assertEquals(true,model.collisionCR(CRitems.get(1), CR));
 	}
 	
@@ -195,7 +205,16 @@ class ModelTest {
 		
 	}
 	
-	
+	@Test
+	void setterTest()
+	{
+		setUp();
+		model.setAnswerRightFlag(true);
+		model.setAnswerWrongFlag(true);
+		model.setTutorialHitFlag(tutorialHitFlag);
+		model.isAnswerRightFlag();
+		model.isAnswerWrongFlag();
+	}
 	
 
 }
