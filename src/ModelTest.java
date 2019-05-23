@@ -48,13 +48,29 @@ class ModelTest {
 	void UpdateLocationTest() {
 		setUp();
 		model.setGamestatus(GameStatus.RN);
+		model.background.add(0);
+		model.background.add(1);
 		
+		map.setStatus(9950);
 		model.updateLocation();
-		assertEquals(0,RK.getX());
+		
+		model.setGamestatus(GameStatus.RNTutorial);
+		model.setTutorialLevel(6);
+		sb.setScore(11);
+		model.updateLocation();
 		
 		model.setGamestatus(GameStatus.CR);
+		SB.setStatus(-1);
 		model.updateLocation();
-		assertEquals(0,model.getScreenTime());
+		
+		model.setGamestatus(GameStatus.CRTutorial);
+		model.setTutorialLevel(4);
+		model.updateLocation();
+		
+
+		
+
+		
 	}
 	
 	@Test
@@ -86,7 +102,7 @@ class ModelTest {
 	}
 	
 	@Test
-	void goodCollisionRKTest() {
+	void collisionRKTest() {
 		setUp();
 		model.iterator=items.iterator();
 		model.iterator.next();
@@ -126,7 +142,7 @@ class ModelTest {
 //	}
 	
 	@Test
-	void goodCollisionCRTest() {
+	void collisionCRTest() {
 		setUp();
 		model.iterator = CRitems.iterator();
 		model.iterator.next();
