@@ -469,7 +469,7 @@ public class Model implements Serializable{
 		screenTime++;
 		System.out.println(cr_dynamic_screentime_cap);
 		if(screenTime >= cr_dynamic_screentime_cap) {
-			iterator.remove();
+			iterator.remove(); 
 			screenTime = 0;
 		}	
 	}
