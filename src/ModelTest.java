@@ -26,13 +26,13 @@ class ModelTest {
 		CR = new ClapperRail(5, 20);
 		items.add(new Food(5,5,5,5, 10, ItemsID.PowerUp));
 		items.add(new Food(6,6,6,6, 10, ItemsID.Fly));
-		items.add(new Food(7,7,7,7,10,ItemsID.Snail));
-		items.add(new Obstacle(7,7,7,7, 10, ItemsID.Plane));
+		items.add(new Obstacle(7,7,7,7, 10, ItemsID.Car));
+		items.add(new Food(6,6,6,6, 10, ItemsID.Fly));
 		
 		
-		CRitems.add(new Food(5,5,5,5,10, ItemsID.Food));
 		CRitems.add(new Food(6,6,6,6,10,ItemsID.Food));
-		CRitems.add(new Food(7,7,7,7,10, ItemsID.Food));
+		CRitems.add(new Food(7,7,7,7,10, ItemsID.Obstacle));
+		CRitems.add(new Obstacle(7,7,7,7,10, ItemsID.Obstacle));
 		
 		
 		RK_Quiz=new Quiz("RNQuiz.txt");
@@ -86,45 +86,62 @@ class ModelTest {
 	}
 	
 	@Test
-	void collisionRKTest() {
+	void goodCollisionRKTest() {
 		setUp();
 		model.iterator=items.iterator();
 		model.iterator.next();
-		model.collisionRK(items.get(0), RK);
+		
+		
+		assertEquals(false,model.collisionRK(items.get(0), RK));
+		assertEquals(0,sb.getScore());
 		
 		items.get(0).setX(130);
 		items.get(0).setY(130);
-		model.collisionRK(items.get(0), RK);
+		
+		assertEquals(true,model.collisionRK(items.get(0), RK));
+
 		model.iterator.next();
+		
+		
 		items.get(1).setX(130);
 		items.get(1).setY(130);
 		model.collisionRK(items.get(1), RK);
 		model.iterator.next();
+		
 		items.get(2).setX(130);
 		items.get(2).setY(130);
-		model.collisionRK(items.get(2), RK);
-		
-		
-		
+		model.iterator.next();
+		model.collisionRK(items.get(2),RK);
 	}
 
-	@Test
-	void goodCollisionTest1() {
-		setUp();
-		model.iterator = items.iterator();
-		model.iterator.next();
-		//model.goodCollision(new Food(0,2,ItemsID.Food), RK);
-		
-		assertEquals(0,sb.getScore());
-		//System.out.println(sb.getScore());
-	}
+//	@Test
+//	void goodCollisionTest1() {
+//		setUp();
+//		model.iterator = items.iterator();
+//		model.iterator.next();
+//		//model.goodCollision(new Food(0,2,ItemsID.Food), RK);
+//		
+//		assertEquals(0,sb.getScore());
+//		//System.out.println(sb.getScore());
+//	}
 	
 	@Test
-	void goodCollisionTest2() {
+	void goodCollisionCRTest() {
 		setUp();
 		model.iterator = CRitems.iterator();
 		model.iterator.next();
-		//assertEquals(true,model.goodCollision(new Food(5,20), CR));
+		assertEquals(false,model.collisionCR(CRitems.get(0), CR));
+		
+//		System.out.println(CR.getX());
+//		System.out.println(CR.getY());
+		CRitems.get(0).setX(5);
+		CRitems.get(0).setY(20);
+		assertEquals(true,model.collisionCR(CRitems.get(0), CR));
+		
+		model.iterator.next();
+		CRitems.get(1).setX(5);
+		CRitems.get(1).setY(20);
+		assertEquals(true,model.collisionCR(CRitems.get(1), CR));
 	}
 	
 	@Test
