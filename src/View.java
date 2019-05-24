@@ -128,7 +128,7 @@ public class View extends JPanel{
     private final int BIRD_GAME_64 = 64;
     private final int BIRD_GAME_128 = 128;
     private final int BIRD_GAME_256 = 256;
-    private final int BIRD_GAME_512 = 512;
+    private final int BIRD_GAME_600 = 600;
     private final int RN_LENGTH = 200;
     private final int RN_WIDTH = 200;
     private final int CR_LENGTH = 200;
@@ -358,10 +358,10 @@ public class View extends JPanel{
     	button_D = new JRadioButton();
     	
     	// set position and size of quiz buttons
-    	button_A.setBounds(frameWidth/2-200, frameHeight/2-128, BIRD_GAME_512, BIRD_GAME_32);
-    	button_B.setBounds(frameWidth/2-200, frameHeight/2-64, BIRD_GAME_512, BIRD_GAME_32);
-    	button_C.setBounds(frameWidth/2-200, frameHeight/2, BIRD_GAME_512, BIRD_GAME_32);
-    	button_D.setBounds(frameWidth/2-200, frameHeight/2+64, BIRD_GAME_512, BIRD_GAME_32);
+    	button_A.setBounds(frameWidth/2-200, frameHeight/2-128, BIRD_GAME_600, BIRD_GAME_32);
+    	button_B.setBounds(frameWidth/2-200, frameHeight/2-64, BIRD_GAME_600, BIRD_GAME_32);
+    	button_C.setBounds(frameWidth/2-200, frameHeight/2, BIRD_GAME_600, BIRD_GAME_32);
+    	button_D.setBounds(frameWidth/2-200, frameHeight/2+64, BIRD_GAME_600, BIRD_GAME_32);
     	
 //    	ButtonGroup group = new ButtonGroup();
     	// make button group of quiz buttons
