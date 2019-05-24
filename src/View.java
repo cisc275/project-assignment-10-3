@@ -49,7 +49,7 @@ public class View extends JPanel{
     ArrayList<Items> CRitems = new ArrayList<>();
     
     ArrayList<Integer> background = new ArrayList<>();
-    
+     
     //Iterators to go through array of items and background images
     Iterator<Integer> itbackground;
     Iterator<Items> iterator;
@@ -115,9 +115,40 @@ public class View extends JPanel{
     
     // constants
     private final int RK_SPAWN_SPEED = 30;
+    private final int TWO_SEC_TIMER = 2000;
+    private final int BIRD_BUTTON_L = 200;
+    private final int BIRD_BUTTON_Y = 256;
+    private final int RN_BUTTON_X = 512;
+    private final int CR_BUTTON_X = 540;
+    private final int FONT_30 = 30;
+    private final int FONT_50 = 50;
+    private final int BIRD_BUTTON_FONT = 40;
+    private final int BIRD_GAME_16 = 16;
+    private final int BIRD_GAME_32 = 32;
+    private final int BIRD_GAME_64 = 64;
+    private final int BIRD_GAME_128 = 128;
+    private final int BIRD_GAME_256 = 256;
+    private final int BIRD_GAME_512 = 512;
+    private final int RN_LENGTH = 200;
+    private final int RN_WIDTH = 200;
+    private final int CR_LENGTH = 200;
+    private final int CR_WIDTH = 200;
+    private final double MAP_X_LOC = (0.625*(-50)+ 111.25);
+    private final int CR_ITEM_LENGTH = 32;
+    private final int CR_ITEM_WIDTH = 32;
+    private final int MENU_LENGTH = 70;
+    private final int SUBMIT_CONT_LENGTH = 96;
+    private final int SB_ROUND = 5;
+    private final int CR_IMG_TUT = 100;
+    private final int QUIZ_Q_LENGTH = 200;
+    private final int QUIZ_Q_WIDTH = 200;
+    private final int RN_TUT_ITEMS = 350;
+	private final int RN_TUT_OBST1 = 300;
+	private final int RN_TUT_OBST2 = 180;
+    
     
     public View() {
-    	time = new Timer(2000, new ActionListener() {
+    	time = new Timer(TWO_SEC_TIMER, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				button_next.setEnabled(true);
 				pauseFlag = false;
@@ -259,29 +290,29 @@ public class View extends JPanel{
 		
 		// make Red Knot button
 		button_redknote = new JButton("Red Knot", new ImageIcon(pic_icon_RN));  
-		button_redknote.setBounds(frameWidth/2-650, 200, 512, 256);
+		button_redknote.setBounds(frameWidth/2-650, BIRD_BUTTON_L, RN_BUTTON_X, BIRD_BUTTON_Y);
     	button_redknote.setBackground(Color.BLUE);
     	button_redknote.setOpaque(false);
     	button_redknote.setContentAreaFilled(false);
     	button_redknote.setBorderPainted(false);
     	button_redknote.setActionCommand("redKnot");
-    	button_redknote.setFont(new Font("Arial", Font.PLAIN, 40));
+    	button_redknote.setFont(new Font("Arial", Font.PLAIN, BIRD_BUTTON_FONT));
     	button_redknote.setVisible(true);
     	
     	// make Clapper Rail button
     	button_clapperrail = new JButton("Clapper Rail", new ImageIcon(pic_icon_CR));  
-    	button_clapperrail.setBounds(frameWidth/2-100, 200, 540, 256);
+    	button_clapperrail.setBounds(frameWidth/2-100, BIRD_BUTTON_L, CR_BUTTON_X, BIRD_BUTTON_Y);
     	button_clapperrail.setBackground(Color.BLUE);
     	button_clapperrail.setOpaque(false);
     	button_clapperrail.setContentAreaFilled(false);
     	button_clapperrail.setBorderPainted(false);
     	button_clapperrail.setActionCommand("clapperRail");
-    	button_clapperrail.setFont(new Font("Arial", Font.PLAIN, 40));
+    	button_clapperrail.setFont(new Font("Arial", Font.PLAIN, BIRD_BUTTON_FONT));
     	button_clapperrail.setVisible(true);
     	
     	// make Menu button
     	button_menu = new JButton("Menu");
-    	button_menu.setBounds(frameWidth/2-32, 0, 70, 32);
+    	button_menu.setBounds(frameWidth/2-32, 0, MENU_LENGTH, BIRD_GAME_32);
     	button_menu.setBackground(Color.GRAY);
     	button_menu.setOpaque(false);
     	button_menu.setActionCommand("menu");
@@ -289,7 +320,7 @@ public class View extends JPanel{
     	
     	// make Submit button
     	button_submit = new JButton("Submit");
-    	button_submit.setBounds(frameWidth/2+200, frameHeight-300, 96, 32);
+    	button_submit.setBounds(frameWidth/2+200, frameHeight-300, SUBMIT_CONT_LENGTH, BIRD_GAME_32);
     	button_submit.setBackground(Color.GRAY);
     	button_submit.setOpaque(false);
     	button_submit.setActionCommand("submit");
@@ -298,7 +329,7 @@ public class View extends JPanel{
     	
     	// make Save and Quit button
     	button_saveNquit = new JButton("Save and Quit");
-    	button_saveNquit.setBounds(frameWidth/2-200, 0, 128, 32); //64 , 32
+    	button_saveNquit.setBounds(frameWidth/2-200, 0, BIRD_GAME_128, BIRD_GAME_32); //64 , 32
     	button_saveNquit.setBackground(Color.GRAY);
     	button_saveNquit.setOpaque(false);
     	button_saveNquit.setActionCommand("savequit");
@@ -306,7 +337,7 @@ public class View extends JPanel{
     	
     	// make Next button
     	button_next = new JButton("Next");
-    	button_next.setBounds(frameWidth/2+64, 0, 64, 32);
+    	button_next.setBounds(frameWidth/2+64, 0, BIRD_GAME_64, BIRD_GAME_32);
     	button_next.setBackground(Color.GRAY);
     	button_next.setOpaque(false);
     	button_next.setActionCommand("next");
@@ -314,7 +345,7 @@ public class View extends JPanel{
     	
     	// make Continue button
     	button_continue = new JButton("Continue"); /////////////////////////
-    	button_continue.setBounds(frameWidth/2 - 48, frameHeight - 300, 96, 32);
+    	button_continue.setBounds(frameWidth/2 - 48, frameHeight - 300, SUBMIT_CONT_LENGTH, BIRD_GAME_32);
     	button_continue.setBackground(Color.GRAY);
     	button_continue.setOpaque(false);
     	button_continue.setActionCommand("continue");
@@ -327,10 +358,10 @@ public class View extends JPanel{
     	button_D = new JRadioButton();
     	
     	// set position and size of quiz buttons
-    	button_A.setBounds(frameWidth/2-200, frameHeight/2-128, 512, 32);
-    	button_B.setBounds(frameWidth/2-200, frameHeight/2-64, 512, 32);
-    	button_C.setBounds(frameWidth/2-200, frameHeight/2, 512, 32);
-    	button_D.setBounds(frameWidth/2-200, frameHeight/2+64, 512, 32);
+    	button_A.setBounds(frameWidth/2-200, frameHeight/2-128, BIRD_GAME_512, BIRD_GAME_32);
+    	button_B.setBounds(frameWidth/2-200, frameHeight/2-64, BIRD_GAME_512, BIRD_GAME_32);
+    	button_C.setBounds(frameWidth/2-200, frameHeight/2, BIRD_GAME_512, BIRD_GAME_32);
+    	button_D.setBounds(frameWidth/2-200, frameHeight/2+64, BIRD_GAME_512, BIRD_GAME_32);
     	
 //    	ButtonGroup group = new ButtonGroup();
     	// make button group of quiz buttons
@@ -402,13 +433,13 @@ public class View extends JPanel{
     	}
     	//RN: Red Knot
     	picNumFly=(picNumFly+1)%frameCountFly;
-    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
+    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), RN_LENGTH, RN_WIDTH, this);
     	
     	//RN: Mini Map
     	g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
     	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
     	g.drawLine(frameWidth-130, 35, mapRN.getStatus()+5, mapRN.getStatus_Y()+5);
-    	g.drawImage(pic_x, frameWidth-50, (int)(0.625*(-50)+ 111.25),16,16, this);
+    	g.drawImage(pic_x, frameWidth-50, (int)MAP_X_LOC,BIRD_GAME_16,BIRD_GAME_16, this);
     	g.drawImage(pic_redKnot_mini, mapRN.getStatus(), mapRN.getStatus_Y(), this);
     	g.setColor(Color.RED);
     	
@@ -416,11 +447,11 @@ public class View extends JPanel{
     	
     	//RN: ScoreBoard
     	g.setColor(Color.WHITE);
-    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
     	g.setColor(Color.BLACK);
-    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
     	g.setColor(Color.RED); 
-    	Font font = new Font("Serif", Font.BOLD, 50);
+    	Font font = new Font("Serif", Font.BOLD, FONT_50);
     	g.setFont(font);
     	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
 	}
@@ -430,7 +461,7 @@ public class View extends JPanel{
 	 * @param g
 	 */
 	private void paintRKTutorial(Graphics g) {
-		g.setFont(new Font("Serif", Font.PLAIN, 30));
+		g.setFont(new Font("Serif", Font.PLAIN, FONT_30));
 		itbackground = background.iterator();
 		while(itbackground.hasNext()) {
 			int tempInt = itbackground.next();
@@ -438,14 +469,15 @@ public class View extends JPanel{
 		}
 		switch(tutorialLevel) {
 		case 7:
+
 			g.setColor(Color.RED);
 			g.drawString("Good Job!", frameWidth/2-50, 100);
 			g.drawString("You are all set! Click The [Next] on the top to Start the Game", frameWidth/2-400, 550);
-			g.drawImage(pic_RNPlane, frameWidth/2-500, 300, 180, 100, this);
-			g.drawImage(pic_RNCar, frameWidth/2-250, 300, 180, 108, this);
-			g.drawImage(pic_RNFly, frameWidth/2+100, 350, 64, 64, this);
-			g.drawImage(pic_RNSnail, frameWidth/2+250, 350, 64, 64, this);
-			g.drawImage(pic_power, frameWidth/2+400, 350, 64, 64,this);
+			g.drawImage(pic_RNPlane, frameWidth/2-500, RN_TUT_OBST1, RN_TUT_OBST2, 100, this);
+			g.drawImage(pic_RNCar, frameWidth/2-250, RN_TUT_OBST1, RN_TUT_OBST2, 108, this);
+			g.drawImage(pic_RNFly, frameWidth/2+100, RN_TUT_ITEMS, BIRD_GAME_64, BIRD_GAME_64, this);
+			g.drawImage(pic_RNSnail, frameWidth/2+250, RN_TUT_ITEMS, BIRD_GAME_64, BIRD_GAME_64, this);
+			g.drawImage(pic_power, frameWidth/2+400, RN_TUT_ITEMS, BIRD_GAME_64, BIRD_GAME_64,this);
 			g.drawImage(pic_greenCircle,frameWidth/2+25,275, 500, 200, this);
 			g.drawImage(pic_redCircle,frameWidth/2-600,250, 625, 225, this);
 		case 6:
@@ -461,9 +493,9 @@ public class View extends JPanel{
 			
 		case 5:
 			g.setColor(Color.WHITE);
-	    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+	    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
 	    	g.setColor(Color.BLACK);
-	    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+	    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
 	    	g.setColor(Color.RED); 
 	    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
 	    	if(tutorialLevel == 5) {
@@ -500,16 +532,16 @@ public class View extends JPanel{
 	    		g.drawImage(pic_map, mapRN.getX(), mapRN.getY(), Color.GRAY, this);
 		    	g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
 		    	g.setColor(Color.RED);
-	    		g.drawOval(mapRN.getX()-32, mapRN.getY()-32, 192 , 192);
+	    		g.drawOval(mapRN.getX()-32, mapRN.getY()-32, 192, 192);
 	    		g.drawString("Here is a Mini Map shows the migration", mapRN.getX()-550, mapRN.getY()+80 );
 	    		g.drawString("Click [Next] on the top to continue", mapRN.getX()-550, mapRN.getY()+125);
 	    	}
 		case 1:
 			g.setColor(Color.RED);
 			picNumFly=(picNumFly+1)%frameCountFly;
-	    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), 200, 200, this);
+	    	g.drawImage(pics_redKnot.get(picNumFly), redKnot.getX(), redKnot.getY(), RN_LENGTH, RN_WIDTH, this);
 	    	if(tutorialLevel == 1) {
-	    		g.drawImage(pic_arrows, redKnot.getX(), redKnot.getY()+25, 200, 200, this);
+	    		g.drawImage(pic_arrows, redKnot.getX(), redKnot.getY()+25, RN_LENGTH, RN_WIDTH, this);
 	    		g.drawString("Try using Arrow Keys to Move the Red Knot", frameWidth/2-300, frameHeight/2-350);
 	    		g.drawString("Click [Next] on the top to continue", frameWidth/2-300, frameHeight/2-300);
 	    	}
@@ -526,34 +558,34 @@ public class View extends JPanel{
 		g.drawImage(pic_water, 0, 0, this);
 		
 		//CR: Mini Map
-		g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
+		g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), BIRD_GAME_128, BIRD_GAME_128, Color.GRAY, this);
 		g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
-		g.drawImage(pic_clapperRail_mini, frameWidth-100, (int)(0.625*(-50)+ 111.25), this);
+		g.drawImage(pic_clapperRail_mini, frameWidth-100, (int)MAP_X_LOC, this);
 	
 		//CR: draw the item in the arraylist
 		iterator = CRitems.iterator();
 		while(iterator.hasNext()) {
 			Items tempItem = iterator.next();
 			if(tempItem.getItemID() == ItemsID.Food) {
-				g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
+				g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), BIRD_GAME_64, BIRD_GAME_64, this);
 			}else {
-				g.drawImage(pic_snake, tempItem.getX(), tempItem.getY(), 64, 64, this);
+				g.drawImage(pic_snake, tempItem.getX(), tempItem.getY(), BIRD_GAME_64, BIRD_GAME_64, this);
 			}
 		}
 		//CR: Clapper Rail
-		g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
+		g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), CR_LENGTH, CR_WIDTH, this);
 		
 		//CR: Status Bar(Time Bar)
 		g.drawRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, StatusBar.WIDTH);
 		g.setColor(Color.PINK);
 		g.fillRect(statusBar.getX(), statusBar.getY(), StatusBar.LENGTH, statusBar.getStatus());
-		g.drawImage(pic_clock, statusBar.getX() - StatusBar.LENGTH/2, statusBar.getY() - StatusBar.LENGTH/2, 32, 32, this);
+		g.drawImage(pic_clock, statusBar.getX() - StatusBar.LENGTH/2, statusBar.getY() - StatusBar.LENGTH/2, BIRD_GAME_32, BIRD_GAME_32, this);
 		
 		//CR: ScoreBoard
 		g.setColor(Color.WHITE);
-    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
     	g.setColor(Color.BLACK);
-    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
     	g.setColor(Color.RED); 
     	Font font = new Font("Serif", Font.BOLD, 50);
     	g.setFont(font);
@@ -566,29 +598,29 @@ public class View extends JPanel{
 	 * @param g
 	 */
 	private void paintCRTutorial(Graphics g) {
-		g.setFont(new Font("Serif", Font.PLAIN, 30));
+		g.setFont(new Font("Serif", Font.PLAIN, FONT_30));
 		// CR: Background
 		g.drawImage(pic_water, 0, 0, this);
 		
 		switch(tutorialLevel) {
 		case 5:
 			g.setColor(Color.RED);
-			g.drawImage(pic_food, frameWidth/2-300, frameHeight/2-300, 100, 100, this);
-			g.drawImage(pic_snake, frameWidth/2+200, frameHeight/2-300, 100, 100, this);
-			g.drawImage(pic_greenCircle,frameWidth/2-300, frameHeight/2-300, 100, 100, this);
-			g.drawImage(pic_redCircle,frameWidth/2+200, frameHeight/2-300, 100, 100, this);
-			g.drawString("Tip: Catch Crabs and Avoid Snakes", frameWidth/2-190, 100);
+			g.drawImage(pic_food, frameWidth/2-300, frameHeight/2-300, CR_IMG_TUT, CR_IMG_TUT, this);
+			g.drawImage(pic_snake, frameWidth/2+200, frameHeight/2-300, CR_IMG_TUT, CR_IMG_TUT, this);
+			g.drawImage(pic_greenCircle,frameWidth/2-300, frameHeight/2-300, CR_IMG_TUT, CR_IMG_TUT, this);
+			g.drawImage(pic_redCircle,frameWidth/2+200, frameHeight/2-300, CR_IMG_TUT, CR_IMG_TUT, this);
+			g.drawString("Tip: Catch Crabs and Avoid Snakes", frameWidth/2-190, CR_IMG_TUT);
 			g.drawString("Click [Next] on the top to Start the game", frameWidth/2-250, frameHeight/2-300);
 			g.drawString("Good job!", frameWidth/2-50, frameHeight/2-200);
 		case 4:
 			if(tutorialLevel == 4) {
 				g.setColor(Color.RED);
-				g.drawString("Now catch that Crab!", frameWidth/2 - 100, 100);
+				g.drawString("Now catch that Crab!", frameWidth/2 - 100, CR_IMG_TUT);
 			}
 			iterator = CRitems.iterator();
 			while(iterator.hasNext()) {
 				Items tempItem = iterator.next();
-				g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), 64, 64, this);
+				g.drawImage(pic_food, tempItem.getX(), tempItem.getY(), BIRD_GAME_64, BIRD_GAME_64, this);
 			}
 		case 3:
 			if(tutorialLevel == 3) {
@@ -608,11 +640,11 @@ public class View extends JPanel{
 			
 			//Score Board
 			g.setColor(Color.WHITE);
-	    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+	    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
 	    	g.setColor(Color.BLACK);
-	    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+	    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
 	    	g.setColor(Color.RED); 
-	    	Font font = new Font("Serif", Font.BOLD, 50);
+	    	Font font = new Font("Serif", Font.BOLD, FONT_50);
 	    	g.setFont(font);
 	    	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
 	    	
@@ -623,30 +655,30 @@ public class View extends JPanel{
 			
 			
 		case 2:
-			g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), 128, 128, Color.GRAY, this);
+			g.drawImage(pic_delaware, mapRN.getX(), mapRN.getY(), BIRD_GAME_128, BIRD_GAME_128, Color.GRAY, this);
 			g.drawRect(mapRN.getX(), mapRN.getY(), pic_map.getWidth(),pic_map.getHeight());
 			g.drawImage(pic_clapperRail_mini, frameWidth-100, 80, this);
 			if(tutorialLevel == 2) {
 				g.setColor(Color.RED);
 				g.fillRect(frameWidth-190, 85, 80, 4);
-				g.drawString("Clapper Rails are non-migratory birds", frameWidth - 690, 100);
+				g.drawString("Clapper Rails are non-migratory birds", frameWidth - 690, CR_IMG_TUT);
 			}
 		case 1:
-			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), 200, 200, this);
+			g.drawImage(pic_clapperRail, clapperRail.getX(), clapperRail.getY(), CR_LENGTH, CR_WIDTH, this);
 			g.setColor(Color.RED);
 			if(tutorialLevel == 1) {
 				g.drawString("Hit the circles using the Arrow Keys",frameWidth/2-200 , 150);
 				if(!tutorialHitFlag[0]) {
-					g.fillOval(frameWidth/2-32, frameHeight/2-32-200, 64, 64); //Up
+					g.fillOval(frameWidth/2-32, frameHeight/2-32-200, BIRD_GAME_64, BIRD_GAME_64); //Up
 				}
 				if(!tutorialHitFlag[1]) {
-					g.fillOval(frameWidth/2-32, frameHeight/2-32+200, 64, 64); //Down
+					g.fillOval(frameWidth/2-32, frameHeight/2-32+200, BIRD_GAME_64, BIRD_GAME_64); //Down
 				}
 				if(!tutorialHitFlag[2]) {
-					g.fillOval(frameWidth/2-32+200, frameHeight/2-32, 64, 64); //Right
+					g.fillOval(frameWidth/2-32+200, frameHeight/2-32, BIRD_GAME_64, BIRD_GAME_64); //Right
 				}
 				if(!tutorialHitFlag[3]) {
-					g.fillOval(frameWidth/2-32-200, frameHeight/2-32, 64, 64); //Left
+					g.fillOval(frameWidth/2-32-200, frameHeight/2-32, BIRD_GAME_64, BIRD_GAME_64); //Left
 				}
 			}
 		break;
@@ -663,21 +695,21 @@ public class View extends JPanel{
 		
 		//RNQUIZ: ScoreBoard
 		g.setColor(Color.WHITE);
-    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+		g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH,SB_ROUND , SB_ROUND);
     	g.setColor(Color.BLACK);
-    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
     	g.setColor(Color.RED); 
-    	Font font = new Font("Serif", Font.BOLD, 50);
+    	Font font = new Font("Serif", Font.BOLD, FONT_50);
     	g.setFont(font);
     	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
 		
 		//RNQUIZ: Question
-		g.setFont(new Font("Serif", Font.PLAIN, 30));
-		g.drawString(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getQuestion(), 200, 200);
+		g.setFont(new Font("Serif", Font.PLAIN, FONT_30));
+		g.drawString(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getQuestion(), QUIZ_Q_LENGTH, QUIZ_Q_WIDTH);
 		
 		//RNQUIZ: Check the answer and give the result
 		g.setColor(Color.RED);
-		g.setFont(new Font("Serif", Font.PLAIN, 30));
+		g.setFont(new Font("Serif", Font.PLAIN, FONT_30));
 		if(answerRightFlag) {
 			g.drawString("Good Job! Your answer is Correct!", frameWidth/2-500, frameHeight/2+250);
 			g.drawString("Click [Next] on the top to the next Question", frameWidth/2-500, frameHeight/2+300);
@@ -703,22 +735,22 @@ public class View extends JPanel{
 		g.drawImage(pic_water, 0, 0, this);
 		
 		//CRQUIZ: Question
-		g.setFont(new Font("Serif", Font.PLAIN, 30));
-		g.drawString(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getQuestion(), 200, 200);
+		g.setFont(new Font("Serif", Font.PLAIN, FONT_30));
+		g.drawString(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getQuestion(), QUIZ_Q_LENGTH, QUIZ_Q_WIDTH);
 		
 		//CRQUIZ: ScoreBoard
 		g.setColor(Color.WHITE);
-    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.fillRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
     	g.setColor(Color.BLACK);
-    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, 5, 5);
+    	g.drawRoundRect(ScoreBoard.X, ScoreBoard.Y, ScoreBoard.LENGTH, ScoreBoard.WIDTH, SB_ROUND, SB_ROUND);
     	g.setColor(Color.RED); 
-    	Font font = new Font("Serif", Font.BOLD, 50);
+    	Font font = new Font("Serif", Font.BOLD, FONT_50);
     	g.setFont(font);
     	g.drawString("Score: " + scoreBoard.getScore(), ScoreBoard.X+10, ScoreBoard.Y+50);
 		
 		//CRQUIZ: Check the answer and give the result
     	g.setColor(Color.RED);
-    	g.setFont(new Font("Serif", Font.PLAIN, 30));
+    	g.setFont(new Font("Serif", Font.PLAIN, FONT_30));
 		if(answerRightFlag) {
 			g.drawString("Good Job! Your answer is Correct!", frameWidth/2-500, frameHeight/2+250);
 			g.drawString("Click [Next] on the top to the next Question", frameWidth/2-500, frameHeight/2+300);
@@ -795,13 +827,13 @@ public class View extends JPanel{
     			this.items.add(new Obstacle(frameWidth, random.nextInt(100)+100, 180, 100, Items.plane_Xvel, ItemsID.Plane));
     			break;
     		case 1:
-    			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , 64, 64, Items.snail_Xvel, ItemsID.Snail));
+    			this.items.add(new Food(frameWidth, random.nextInt(400) + (frameHeight - 400) , BIRD_GAME_64, BIRD_GAME_64, Items.snail_Xvel, ItemsID.Snail));
     			break;
     		case 2:
-    			this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64,Items.fly_Xvel, ItemsID.Fly));
+    			this.items.add(new Food(frameWidth, random.nextInt(100)+100, BIRD_GAME_64, BIRD_GAME_64,Items.fly_Xvel, ItemsID.Fly));
     			break;
     		case 3:
-    			this.items.add(new Obstacle(frameWidth, frameHeight-250, 200, 128,Items.car_Xvel, ItemsID.Car));
+    			this.items.add(new Obstacle(frameWidth, frameHeight-250, RN_LENGTH, BIRD_GAME_128,Items.car_Xvel, ItemsID.Car));
     			break; 			
     		}
 
@@ -839,28 +871,28 @@ public class View extends JPanel{
 		if(this.CRitems.size() == 0) {
 			switch(random.nextInt(8)) {
 			case 0:
-				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , 0, ItemsID.Food));
+				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, CR_ITEM_LENGTH, CR_ITEM_WIDTH , 0, ItemsID.Food));
 				break;
 			case 1:
-				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , 0, ItemsID.Food));
+				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, CR_ITEM_LENGTH, CR_ITEM_WIDTH , 0, ItemsID.Food));
 				break;
 			case 2:
-				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
+				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, CR_ITEM_LENGTH, CR_ITEM_WIDTH , 0, ItemsID.Food));
 				break;
 			case 3:
-				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
+				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, CR_ITEM_LENGTH, CR_ITEM_WIDTH , 0, ItemsID.Food));
 				break;
 			case 4:
-				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, 32, 32, 0, ItemsID.Obstacle));
+				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32+200, CR_ITEM_LENGTH, CR_ITEM_WIDTH, 0, ItemsID.Obstacle));
 				break;
 			case 5:
-				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200,32, 32, 0, ItemsID.Obstacle));
+				this.CRitems.add(new Obstacle(frameWidth/2-32, frameHeight/2-32-200,CR_ITEM_LENGTH, CR_ITEM_WIDTH, 0, ItemsID.Obstacle));
 				break;
 			case 6:
-				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32,32, 32, 0, ItemsID.Obstacle));
+				this.CRitems.add(new Obstacle(frameWidth/2-32+200, frameHeight/2-32,CR_ITEM_LENGTH, CR_ITEM_WIDTH, 0, ItemsID.Obstacle));
 				break;
 			case 7:
-				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32,32, 32, 0, ItemsID.Obstacle));
+				this.CRitems.add(new Obstacle(frameWidth/2-32-200, frameHeight/2-32,CR_ITEM_LENGTH, CR_ITEM_WIDTH, 0, ItemsID.Obstacle));
 				break;
 			}
 		}
@@ -874,7 +906,7 @@ public class View extends JPanel{
 		case 6:
 			button_next.setEnabled(false);
 			if(this.items.size() <= 0) {
-				this.items.add(new Food(frameWidth, random.nextInt(100)+100, 64, 64, Items.fly_Xvel, ItemsID.Fly));
+				this.items.add(new Food(frameWidth, random.nextInt(100)+100, BIRD_GAME_64, BIRD_GAME_64, Items.fly_Xvel, ItemsID.Fly));
 			}
 			break;
 		default:
@@ -891,6 +923,7 @@ public class View extends JPanel{
 		button_redknote.setVisible(false);
 		button_clapperrail.setVisible(false);
 		button_menu.setVisible(true);
+		button_menu.setEnabled(false);
 		button_submit.setEnabled(false);
 		button_submit.setVisible(false);
 		button_A.setVisible(false);
@@ -911,6 +944,7 @@ public class View extends JPanel{
 		button_redknote.setVisible(false);
 		button_clapperrail.setVisible(false);
 		button_menu.setVisible(true);
+		button_menu.setEnabled(false);
 		button_submit.setEnabled(false);
 		button_submit.setVisible(false);
 		button_A.setVisible(false);
@@ -923,16 +957,16 @@ public class View extends JPanel{
     		if(this.CRitems.size() == 0) {
     			switch(random.nextInt(8)) {
     			case 0:
-    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, 32, 32 , 0, ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32+200, CR_ITEM_LENGTH, CR_ITEM_WIDTH , 0, ItemsID.Food));
     				break;
     			case 1:
-    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, 32, 32 , 0, ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32, frameHeight/2-32-200, CR_ITEM_LENGTH, CR_ITEM_WIDTH , 0, ItemsID.Food));
     				break;
     			case 2:
-    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, 32, 32 ,0,  ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32+200, frameHeight/2-32, CR_ITEM_LENGTH, CR_ITEM_WIDTH ,0,  ItemsID.Food));
     				break;
     			case 3:
-    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, 32, 32 , 0, ItemsID.Food));
+    				this.CRitems.add(new Food(frameWidth/2-32-200, frameHeight/2-32, CR_ITEM_LENGTH, CR_ITEM_WIDTH , 0, ItemsID.Food));
     				break;
     			}
     		}
@@ -959,10 +993,10 @@ public class View extends JPanel{
 					button_C.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[2]);
 					button_D.setText(quiz_RN.getQuestions().get(quiz_RN.getQuestionIndex()).getAnswers()[3]);
 					
-					button_A.setFont(new Font("Arial", Font.PLAIN, 30));
-					button_B.setFont(new Font("Arial", Font.PLAIN, 30));
-					button_C.setFont(new Font("Arial", Font.PLAIN, 30));
-					button_D.setFont(new Font("Arial", Font.PLAIN, 30));
+					button_A.setFont(new Font("Arial", Font.PLAIN, FONT_30));
+					button_B.setFont(new Font("Arial", Font.PLAIN, FONT_30));
+					button_C.setFont(new Font("Arial", Font.PLAIN, FONT_30));
+					button_D.setFont(new Font("Arial", Font.PLAIN, FONT_30));
 					
 					button_continue.setVisible(false);
 					button_redknote.setVisible(false);
@@ -997,10 +1031,10 @@ public class View extends JPanel{
 		button_C.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[2]);
 		button_D.setText(quiz_CR.getQuestions().get(quiz_CR.getQuestionIndex()).getAnswers()[3]);
 		
-		button_A.setFont(new Font("Arial", Font.PLAIN, 30));
-		button_B.setFont(new Font("Arial", Font.PLAIN, 30));
-		button_C.setFont(new Font("Arial", Font.PLAIN, 30));
-		button_D.setFont(new Font("Arial", Font.PLAIN, 30));
+		button_A.setFont(new Font("Arial", Font.PLAIN, FONT_30));
+		button_B.setFont(new Font("Arial", Font.PLAIN, FONT_30));
+		button_C.setFont(new Font("Arial", Font.PLAIN, FONT_30));
+		button_D.setFont(new Font("Arial", Font.PLAIN, FONT_30));
 		
 		button_redknote.setVisible(false);
 		button_clapperrail.setVisible(false);

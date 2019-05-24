@@ -22,8 +22,8 @@ public class Model implements Serializable{
 	public final static int RK_VELOCITY = 13;
 	private final int RK_MAX_DYNAMIC = -12;
 	private final int RK_MIN_DYNAMIC = -3;
-	private int cr_dynamic_screentime_cap = 45;
-	private int rk_dynamic_Xvel = 0;
+	int cr_dynamic_screentime_cap = 45;
+	int rk_dynamic_Xvel = 0;
 		
 	private int frameWidth;
     private int frameHeight;
@@ -36,7 +36,7 @@ public class Model implements Serializable{
     Quiz quiz_CR;
     
 	GameStatus gamestatus = GameStatus.Menu;
-	private int processCounterRN = 0;
+	int processCounterRN = 0;
 	
 	private int screenTime = 0;
 	Random r = new Random();
